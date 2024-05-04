@@ -1,4 +1,4 @@
-package com.witelokk.hrapp.auth;
+package com.witelokk.hrapp.data.repository;
 
 import android.content.SharedPreferences;
 
@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.witelokk.hrapp.api.AuthApi;
+import com.witelokk.hrapp.Result;
 import com.witelokk.hrapp.api.model.Token;
 
 import java.io.IOException;

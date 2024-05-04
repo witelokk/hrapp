@@ -1,4 +1,4 @@
-package com.witelokk.hrapp.auth;
+package com.witelokk.ui.auth;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.AndroidViewModel;
+
+import com.witelokk.hrapp.data.repository.LoginRepository;
+import com.witelokk.hrapp.data.repository.LoginRepositoryImpl;
 
 public class LoginViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> isAuthorized = new MutableLiveData<>(false);

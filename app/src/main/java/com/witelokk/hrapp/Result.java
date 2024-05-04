@@ -1,4 +1,4 @@
-package com.witelokk.hrapp.auth;
+package com.witelokk.hrapp;
 
 public class Result<T> {
     private T data;
