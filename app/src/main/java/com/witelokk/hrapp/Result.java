@@ -21,6 +21,6 @@ public class Result<T> {
     }
 
     public boolean isSuccess() {
-        return data != null;
+        return error == null;
     }
 }

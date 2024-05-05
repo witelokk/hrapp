@@ -1,4 +1,4 @@
-package com.witelokk.ui.home;
+package com.witelokk.hrapp.ui.home;
 
 import android.view.LayoutInflater;
 import android.view.View;

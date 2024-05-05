@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface CompaniesRepository {
     LiveData<Result<List<Company>>> getCompanies();
+
+    LiveData<Result<Void>> addCompany(String name, String inn, String kpp);
 }

@@ -1,4 +1,4 @@
-package com.witelokk.ui.home;
+package com.witelokk.hrapp.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,8 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
@@ -41,8 +43,10 @@ public class HomeFragment extends Fragment {
 
         viewModel.loadCompanies();
 
-        binding.fabAddCompany.setOnClickListener(v -> {
+        NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
 
+        binding.fabAddCompany.setOnClickListener(v -> {
+            navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_addCompanyFragment);
         });
     }
 }

@@ -1,4 +1,4 @@
-package com.witelokk.ui.auth;
+package com.witelokk.hrapp.ui.auth;
 
 import android.app.Application;
 import android.content.Context;

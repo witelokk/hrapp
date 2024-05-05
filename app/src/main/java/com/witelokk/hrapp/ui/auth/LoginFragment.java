@@ -1,4 +1,4 @@
-package com.witelokk.ui.auth;
+package com.witelokk.hrapp.ui.auth;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

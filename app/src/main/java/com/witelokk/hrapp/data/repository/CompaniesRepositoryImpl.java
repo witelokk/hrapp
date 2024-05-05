@@ -83,12 +83,12 @@ public class CompaniesRepositoryImpl implements CompaniesRepository {
         companiesApi.createCompany(request).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
-                if (response.code() != 200) {
+                if (response.code() != 201) {
                     responseLiveData.setValue(new Result<>("Can't create company!"));
                     return;
                 }
 
-                responseLiveData.setValue(new Result<>(null));
+                responseLiveData.setValue(new Result<>((Void)null));
             }
 
             @Override
