@@ -20,25 +20,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginRepositoryImpl implements LoginRepository {
-    private SharedPreferences sharedPreferences;
     private AuthApi authApi;
 
-    public LoginRepositoryImpl(SharedPreferences sharedPreferences) {
-        this.sharedPreferences = sharedPreferences;
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://128.199.48.210/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(new OkHttpClient.Builder().addInterceptor(loggingInterceptor).build())
-                .build();
-        this.authApi = retrofit.create(AuthApi.class);
-
-    }
-
-    @Override
-    public String getAccessToken() {
-        return sharedPreferences.getString("access_token", null);
+    public LoginRepositoryImpl(AuthApi authApi) {
+        this.authApi = authApi;
     }
 
     @Override
@@ -49,7 +34,6 @@ public class LoginRepositoryImpl implements LoginRepository {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.code() == 200) {
-                    sharedPreferences.edit().putString("access_token", response.body().getAccessToken()).apply();
                     resultLiveData.setValue(new Result<>(response.body()));
                 } else {
                     try {

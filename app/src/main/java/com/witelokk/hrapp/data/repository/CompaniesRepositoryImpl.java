@@ -25,28 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CompaniesRepositoryImpl implements CompaniesRepository {
     CompaniesApi companiesApi;
 
-    public CompaniesRepositoryImpl(String accessToken) {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-
-        Interceptor authInterceptor = new Interceptor() {
-            @NonNull
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request newRequest  = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer " + accessToken)
-                        .build();
-                return chain.proceed(newRequest);
-            }
-        };
-
-
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://128.199.48.210/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(new OkHttpClient.Builder().addInterceptor(loggingInterceptor).addInterceptor(authInterceptor).build())
-                .build();
-        companiesApi = retrofit.create(CompaniesApi.class);
+    public CompaniesRepositoryImpl(CompaniesApi companiesApi) {
+        this.companiesApi = companiesApi;
     }
 
     public LiveData<Result<List<Company>>> getCompanies() {

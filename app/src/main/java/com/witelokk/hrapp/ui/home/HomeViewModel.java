@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.data.repository.CompaniesRepository;
@@ -14,13 +15,19 @@ import com.witelokk.hrapp.data.repository.CompaniesRepositoryImpl;
 
 import java.util.List;
 
-public class HomeViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
+public class HomeViewModel extends ViewModel {
     private MutableLiveData<List<Company>> companies = new MutableLiveData<>();
+
     private CompaniesRepository repository;
 
-    public HomeViewModel(@NonNull Application application) {
-        super(application);
-        repository = new CompaniesRepositoryImpl(application.getSharedPreferences("prefs", Context.MODE_PRIVATE).getString("access_token", "none"));
+    @Inject
+    HomeViewModel(CompaniesRepository repository) {
+        this.repository = repository;
     }
 
     void loadCompanies() {

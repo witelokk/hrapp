@@ -41,6 +41,8 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        viewModel.checkIfAuthorized();
+
         binding.buttonLogin.setOnClickListener(v -> {
             String email = binding.editTextEmail.getText().toString();
             String password = binding.editTextPassword.getText().toString();
