@@ -1,17 +1,11 @@
 package com.witelokk.hrapp.ui.home;
 
-import android.app.Application;
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.data.repository.CompaniesRepository;
-import com.witelokk.hrapp.data.repository.CompaniesRepositoryImpl;
 
 import java.util.List;
 
@@ -22,6 +16,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class HomeViewModel extends ViewModel {
     private MutableLiveData<List<Company>> companies = new MutableLiveData<>();
+    private MutableLiveData<String> errorLiveData = new MutableLiveData<>();
 
     private CompaniesRepository repository;
 
@@ -31,9 +26,11 @@ public class HomeViewModel extends ViewModel {
     }
 
     void loadCompanies() {
-        repository.getCompanies().observeForever(companies -> {
-            if (companies.isSuccess()) {
-                this.companies.setValue(companies.getData());
+        repository.getCompanies().observeForever(result -> {
+            if (result.isSuccess()) {
+                this.companies.setValue(result.getData());
+            } else {
+                errorLiveData.setValue(result.getError());
             }
         });
     }
@@ -41,5 +38,7 @@ public class HomeViewModel extends ViewModel {
     LiveData<List<Company>> getCompanies() {
         return companies;
     }
+
+    LiveData<String> getErrorLiveData() {return errorLiveData;}
 }
 

@@ -38,9 +38,10 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.textViewName.setText(companies.get(position).getName());
-        holder.binding.textViewInn.setText(companies.get(position).getInn());
-        holder.binding.textViewKpp.setText(companies.get(position).getKpp());
+        Company company = companies.get(position);
+        holder.binding.textViewName.setText(company.getName());
+        holder.binding.textViewInn.setText(holder.itemView.getContext().getString(R.string.inn, company.getInn()));
+        holder.binding.textViewKpp.setText(holder.itemView.getContext().getString(R.string.kpp, company.getKpp()));
 
         if (onItemClickListener != null) {
             holder.binding.getRoot().setOnClickListener(v -> onItemClickListener.onClick(companies.get(position).getId()));
