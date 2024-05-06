@@ -7,10 +7,13 @@ import android.content.SharedPreferences;
 import com.witelokk.hrapp.api.AuthApi;
 import com.witelokk.hrapp.api.CompaniesApi;
 import com.witelokk.hrapp.api.DepartmentsApi;
+import com.witelokk.hrapp.api.EmployeesApi;
 import com.witelokk.hrapp.data.repository.CompaniesRepository;
 import com.witelokk.hrapp.data.repository.CompaniesRepositoryImpl;
 import com.witelokk.hrapp.data.repository.DepartmentsRepository;
 import com.witelokk.hrapp.data.repository.DepartmentsRepositoryImpl;
+import com.witelokk.hrapp.data.repository.EmployeesRepository;
+import com.witelokk.hrapp.data.repository.EmployeesRepositoryImpl;
 import com.witelokk.hrapp.data.repository.LoginRepository;
 import com.witelokk.hrapp.data.repository.LoginRepositoryImpl;
 
@@ -68,6 +71,12 @@ public abstract class AppModule {
 
     @Provides
     @Singleton
+    static EmployeesApi provideEmployeesApi(Retrofit retrofit) {
+        return retrofit.create(EmployeesApi.class);
+    }
+
+    @Provides
+    @Singleton
     static SharedPreferences provideSharedPreferences(Application application) {
         return application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
     }
@@ -111,5 +120,11 @@ public abstract class AppModule {
     @Singleton
     static DepartmentsRepository provideDepartmentsRepository(DepartmentsApi departmentsApi) {
         return new DepartmentsRepositoryImpl(departmentsApi);
+    }
+
+    @Provides
+    @Singleton
+    static EmployeesRepository provideEmployeesRepository(EmployeesApi employeesApi) {
+        return new EmployeesRepositoryImpl(employeesApi);
     }
 }

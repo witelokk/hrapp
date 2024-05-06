@@ -36,5 +36,17 @@
     <fragment
         android:id="@+id/companyFragment"
         android:name="com.witelokk.hrapp.ui.company.CompanyFragment"
-        android:label="CompanyFragment" />
+        android:label="CompanyFragment" >
+        <action
+            android:id="@+id/action_companyFragment_to_departmentFragment"
+            app:destination="@id/departmentFragment">
+            <argument
+                android:name="department_id"
+                app:argType="integer" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/departmentFragment"
+        android:name="com.witelokk.hrapp.ui.department.DepartmentFragment"
+        android:label="DepartmentFragment" />
 </navigation>
