@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.dagger.hilt.android)
+    alias(libs.plugins.navigation.safeargs)
 }
 
 android {

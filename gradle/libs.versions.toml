@@ -7,8 +7,7 @@ appcompat = "1.6.1"
 material = "1.11.0"
 activity = "1.9.0"
 constraintlayout = "2.1.4"
-navigationFragment = "2.8.0-alpha08"
-navigationUi = "2.8.0-alpha08"
+nav = "2.8.0-alpha08"
 lifecycleExtensions = "2.2.0"
 retrofit = "2.11.0"
 converterGson = "2.11.0"
@@ -16,7 +15,6 @@ okhttp = "2.7.5"
 loggingInterceptor = "2.7.5"
 loggingInterceptorVersion = "5.0.0-alpha.14"
 hiltAndroid = "2.51.1"
-hiltLifecycleViewmodel = "1.0.0-alpha03"
 hiltCompiler = "2.51.1"
 
 [libraries]
@@ -27,8 +25,8 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
-navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "nav" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "nav" }
 lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version.ref = "lifecycleExtensions" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
@@ -36,9 +34,9 @@ okhttp = { group = "com.squareup.okhttp", name = "okhttp", version.ref = "okhttp
 logging-interceptor = { group = "com.squareup.okhttp", name = "logging-interceptor", version.ref = "loggingInterceptor" }
 okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptorVersion" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
-hilt-lifecycle-viewmodel = { group = "androidx.hilt", name = "hilt-lifecycle-viewmodel", version.ref = "hiltLifecycleViewmodel" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltCompiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
+navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "nav" }

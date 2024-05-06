@@ -15,6 +15,11 @@ import java.util.ArrayList;
 
 public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesAdapter.ViewHolder> {
     ArrayList<Company> companies = new ArrayList<>();
+    OnCompanyItemClickListener onItemClickListener;
+
+    CompaniesAdapter(OnCompanyItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ItemCompanyBinding binding;
@@ -36,6 +41,10 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesAdapter.View
         holder.binding.textViewName.setText(companies.get(position).getName());
         holder.binding.textViewInn.setText(companies.get(position).getInn());
         holder.binding.textViewKpp.setText(companies.get(position).getKpp());
+
+        if (onItemClickListener != null) {
+            holder.binding.getRoot().setOnClickListener(v -> onItemClickListener.onClick(companies.get(position).getId()));
+        }
     }
 
     @Override

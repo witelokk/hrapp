@@ -21,9 +21,20 @@
         <action
             android:id="@+id/action_homeFragment_to_addCompanyFragment"
             app:destination="@id/addCompanyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_companyFragment"
+            app:destination="@id/companyFragment" >
+            <argument
+                android:name="company_id"
+                app:argType="integer" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/addCompanyFragment"
         android:name="com.witelokk.hrapp.ui.add_company.AddCompanyFragment"
         android:label="AddCompanyFragment" />
+    <fragment
+        android:id="@+id/companyFragment"
+        android:name="com.witelokk.hrapp.ui.company.CompanyFragment"
+        android:label="CompanyFragment" />
 </navigation>

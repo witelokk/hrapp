@@ -33,7 +33,13 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.companiesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        CompaniesAdapter adapter = new CompaniesAdapter();
+
+        NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+
+        CompaniesAdapter adapter = new CompaniesAdapter(companyId -> {
+            HomeFragmentDirections.ActionHomeFragmentToCompanyFragment action = HomeFragmentDirections.actionHomeFragmentToCompanyFragment(companyId);
+            navHostFragment.getNavController().navigate(action);
+        });
         binding.companiesRecyclerView.setAdapter(adapter);
 
         viewModel.getCompanies().observe(requireActivity(), companies -> {
@@ -42,8 +48,6 @@ public class HomeFragment extends Fragment {
         });
 
         viewModel.loadCompanies();
-
-        NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
 
         binding.fabAddCompany.setOnClickListener(v -> {
             navHostFragment.getNavController().navigate(R.id.action_homeFragment_to_addCompanyFragment);
