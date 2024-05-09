@@ -1,5 +1,7 @@
 package com.witelokk.hrapp.ui.add_company;
 
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -17,7 +19,8 @@ public class AddCompanyViewModel extends BaseViewModel {
     private final CompaniesRepository companiesRepository;
 
     @Inject
-    AddCompanyViewModel(CompaniesRepository companiesRepository) {
+    AddCompanyViewModel(SharedPreferences sharedPreferences, CompaniesRepository companiesRepository) {
+        super(sharedPreferences);
         this.companiesRepository = companiesRepository;
     }
 
@@ -30,13 +33,7 @@ public class AddCompanyViewModel extends BaseViewModel {
             if (result.isSuccess()) {
                 isCompanyCreated.setValue(true);
             } else {
-                if (result.getError() instanceof Error.Network) {
-                    setNetworkError();
-                } else if (result.getError() instanceof Error.Unauthorized) {
-                    logout();
-                } else {
-                    setUnknownError();
-                }
+                setError(result.getError());
             }
         });
     }

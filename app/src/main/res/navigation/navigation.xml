@@ -8,11 +8,7 @@
         android:id="@+id/action_to_loginFragment"
         app:destination="@+id/loginFragment"
         app:popUpTo="@id/navigation"
-        app:popUpToInclusive="true">
-        <argument
-            android:name="remove_access_token"
-            app:argType="boolean" />
-    </action>
+        app:popUpToInclusive="true"/>
 
     <fragment
         android:id="@+id/loginFragment"
@@ -33,11 +29,7 @@
             app:destination="@id/addCompanyFragment" />
         <action
             android:id="@+id/action_homeFragment_to_companyFragment"
-            app:destination="@id/companyFragment">
-            <argument
-                android:name="company_id"
-                app:argType="integer" />
-        </action>
+            app:destination="@id/companyFragment"/>
     </fragment>
     <fragment
         android:id="@+id/addCompanyFragment"
@@ -47,16 +39,19 @@
         android:id="@+id/companyFragment"
         android:name="com.witelokk.hrapp.ui.company.CompanyFragment"
         android:label="CompanyFragment">
+        <argument
+            android:name="company_id"
+            app:argType="integer" />
         <action
             android:id="@+id/action_companyFragment_to_departmentFragment"
-            app:destination="@id/departmentFragment">
-            <argument
-                android:name="department_id"
-                app:argType="integer" />
-        </action>
+            app:destination="@id/departmentFragment"/>
     </fragment>
     <fragment
         android:id="@+id/departmentFragment"
         android:name="com.witelokk.hrapp.ui.department.DepartmentFragment"
-        android:label="DepartmentFragment" />
+        android:label="DepartmentFragment">
+        <argument
+            android:name="department_id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

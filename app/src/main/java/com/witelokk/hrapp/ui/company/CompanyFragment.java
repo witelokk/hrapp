@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.witelokk.hrapp.databinding.FragmentCompanyBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
+import com.witelokk.hrapp.ui.home.CompaniesAdapter;
 
 public class CompanyFragment extends BaseFragment<CompanyViewModel> {
     FragmentCompanyBinding binding;
-    CompanyViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +32,8 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        int companyId = getArguments().getInt("company_id");
+        super.onViewCreated(view, savedInstanceState);
+        int companyId = CompanyFragmentArgs.fromBundle(getArguments()).getCompanyId();
         viewModel.setCompanyId(companyId);
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));

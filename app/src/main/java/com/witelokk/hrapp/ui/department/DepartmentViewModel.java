@@ -1,5 +1,7 @@
 package com.witelokk.hrapp.ui.department;
 
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -21,7 +23,8 @@ public class DepartmentViewModel extends BaseViewModel {
     private final MutableLiveData<List<Employee>> employees = new MutableLiveData<>();
 
     @Inject
-    public DepartmentViewModel(EmployeesRepository employeesRepository) {
+    public DepartmentViewModel(SharedPreferences sharedPreferences, EmployeesRepository employeesRepository) {
+        super(sharedPreferences);
         this.employeesRepository = employeesRepository;
     }
 
@@ -42,13 +45,7 @@ public class DepartmentViewModel extends BaseViewModel {
             if (result.isSuccess()) {
                 employees.setValue(result.getData());
             } else {
-                if (result.getError() instanceof Error.Network) {
-                    setNetworkError();
-                } else if (result.getError() instanceof Error.Unauthorized) {
-                    logout();
-                } else {
-                    setUnknownError();
-                }
+                setError(result.getError());
             }
         });
     }

@@ -10,7 +10,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.witelokk.hrapp.NavigationDirections;
+import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.R;
 
 public class BaseFragment<T extends BaseViewModel> extends Fragment {
@@ -25,15 +25,16 @@ public class BaseFragment<T extends BaseViewModel> extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel.getUnauthorizedError().observe(getViewLifecycleOwner(), error -> {
-            Snackbar.make(view, R.string.session_expired, Snackbar.LENGTH_SHORT).show();
-            getNavController().navigate(NavigationDirections.actionToLoginFragment(true));
+        viewModel.getError().observe(getViewLifecycleOwner(), errorEvent -> {
+            Error error = errorEvent.getContent();
+            if (error instanceof Error.Network)
+                Snackbar.make(view, R.string.network_error, Snackbar.LENGTH_LONG).show();
+            else if (error instanceof Error.Unauthorized) {
+                Snackbar.make(view, R.string.session_expired, Snackbar.LENGTH_SHORT).show();
+                getNavController().navigate(R.id.action_to_loginFragment);
+            }
+            else if (error != null)
+                Snackbar.make(view, R.string.unknown_error, Snackbar.LENGTH_LONG).show();
         });
-
-        viewModel.getUnknownError().observe(getViewLifecycleOwner(), error ->
-                Snackbar.make(view, R.string.unknown_error, Snackbar.LENGTH_SHORT).show());
-
-        viewModel.getNetworkError().observe(getViewLifecycleOwner(), error ->
-                Snackbar.make(view, R.string.network_error, Snackbar.LENGTH_SHORT).show());
     }
 }

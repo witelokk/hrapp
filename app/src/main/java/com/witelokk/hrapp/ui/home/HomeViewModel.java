@@ -1,9 +1,10 @@
 package com.witelokk.hrapp.ui.home;
 
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.data.repository.CompaniesRepository;
 import com.witelokk.hrapp.ui.BaseViewModel;
@@ -21,7 +22,8 @@ public class HomeViewModel extends BaseViewModel {
     private final CompaniesRepository repository;
 
     @Inject
-    HomeViewModel(CompaniesRepository repository) {
+    HomeViewModel(SharedPreferences sharedPreferences, CompaniesRepository repository) {
+        super(sharedPreferences);
         this.repository = repository;
     }
 
@@ -31,13 +33,7 @@ public class HomeViewModel extends BaseViewModel {
                 companies.setValue(result.getData());
                 isLoading.setValue(false);
             } else {
-                if (result.getError() instanceof Error.Unauthorized) {
-                    logout();
-                } else if (result.getError() instanceof Error.Network) {
-                    setNetworkError();
-                } else if (result.getError() instanceof Error.Unknown) {
-                    setUnknownError();
-                }
+                setError(result.getError());
             }
         });
     }

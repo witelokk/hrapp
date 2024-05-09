@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.api.model.Token;
@@ -15,7 +17,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class LoginViewModel extends BaseViewModel {
+public class LoginViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isAuthorized = new MutableLiveData<>(false);
     private final MutableLiveData<Void> invalidCredentials = new MutableLiveData<>();
     private final LoginRepository repository;
@@ -42,19 +44,14 @@ public class LoginViewModel extends BaseViewModel {
                 sharedPreferences.edit().putString("access_token", token.getAccessToken()).apply();
                 isAuthorized.setValue(true);
             } else {
-                if (result.getError() instanceof Error.Network) {
-                    setNetworkError();
-                } else if (result.getError() instanceof Error.Unknown) {
-                    setUnknownError();
-                } else if (result.getError() instanceof Error.InvalidCredentials) {
+                if (result.getError() instanceof Error.InvalidCredentials) {
                     invalidCredentials.setValue(null);
+                } else {
+                    // show error
+//                    setError(result.getError());
                 }
             }
         });
-    }
-
-    public void removeAccessToken() {
-        sharedPreferences.edit().remove("access_token").apply();
     }
 
     public void checkIfAuthorized() {

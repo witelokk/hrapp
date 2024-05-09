@@ -23,7 +23,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
     }
 
     @Nullable
@@ -50,13 +50,13 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->
                 binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
-        viewModel.loadCompanies();
-
         binding.fabAddCompany.setOnClickListener(v ->
                 getNavController().navigate(R.id.action_homeFragment_to_addCompanyFragment));
 
         binding.textViewCreateCompany.setOnClickListener(v ->
                 getNavController().navigate(R.id.action_homeFragment_to_addCompanyFragment));
+
+        viewModel.loadCompanies();
     }
 
     private void navigateToCompanyFragment(int companyId) {

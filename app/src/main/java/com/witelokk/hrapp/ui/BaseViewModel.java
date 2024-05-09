@@ -1,35 +1,34 @@
 package com.witelokk.hrapp.ui;
 
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.witelokk.hrapp.Error;
+import com.witelokk.hrapp.Event;
+
 public class BaseViewModel extends ViewModel {
-    private final MutableLiveData<Void> unknownError = new MutableLiveData<>();
-    private final MutableLiveData<Void> networkError = new MutableLiveData<>();
-    private final MutableLiveData<Void> unauthorizedError = new MutableLiveData<>();
+    private final MutableLiveData<Event<Error>> error = new MutableLiveData<>();
+    private final SharedPreferences sharedPreferences;
 
-    public LiveData<Void> getUnknownError() {
-        return unknownError;
+    public BaseViewModel(SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
     }
 
-    public LiveData<Void> getNetworkError() {
-        return networkError;
+    public LiveData<Event<Error>> getError() {
+        return error;
     }
 
-    public LiveData<Void> getUnauthorizedError() {
-        return unauthorizedError;
-    }
+    protected void setError(Error error) {
+        if (error instanceof Error.Unauthorized) {
+            sharedPreferences
+                    .edit()
+                    .remove("access_token")
+                    .apply();
+        }
 
-    protected void setUnknownError() {
-        unknownError.setValue(null);
-    }
-
-    protected void setNetworkError() {
-        networkError.setValue(null);
-    }
-
-    protected void logout() {
-        unauthorizedError.setValue(null);
+        this.error.setValue(new Event<>(error));
     }
 }

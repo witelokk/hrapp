@@ -31,7 +31,8 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        int departmentId = getArguments().getInt("department_id");
+        super.onViewCreated(view, savedInstanceState);
+        int departmentId = DepartmentFragmentArgs.fromBundle(getArguments()).getDepartmentId();
         viewModel.setDepartmentId(departmentId);
 
         binding.recyclerViewEmployees.setLayoutManager(new LinearLayoutManager(requireContext()));

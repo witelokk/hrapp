@@ -1,5 +1,7 @@
 package com.witelokk.hrapp.ui.company;
 
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -21,7 +23,8 @@ public class CompanyViewModel extends BaseViewModel {
     private int companyId;
 
     @Inject
-    CompanyViewModel(DepartmentsRepository departmentsRepository) {
+    CompanyViewModel(SharedPreferences sharedPreferences, DepartmentsRepository departmentsRepository) {
+        super(sharedPreferences);
         this.departmentsRepository = departmentsRepository;
     }
 
@@ -38,13 +41,7 @@ public class CompanyViewModel extends BaseViewModel {
             if (result.isSuccess()) {
                 departments.setValue(result.getData());
             } else {
-                if (result.getError() instanceof Error.Network) {
-                    setNetworkError();
-                } else if (result.getError() instanceof Error.Unauthorized) {
-                    logout();
-                } else {
-                    setUnknownError();
-                }
+                setError(result.getError());
             }
         });
     }

@@ -7,15 +7,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.databinding.FragmentLoginBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
-public class LoginFragment extends BaseFragment<LoginViewModel> {
-    FragmentLoginBinding binding;
+public class LoginFragment extends Fragment {
+    private FragmentLoginBinding binding;
+    private LoginViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +47,6 @@ public class LoginFragment extends BaseFragment<LoginViewModel> {
         viewModel.getInvalidCredentials().observe(getViewLifecycleOwner(), none ->
                 Snackbar.make(view, R.string.invalid_credentials, Snackbar.LENGTH_SHORT).show());
 
-        if (getArguments() != null && getArguments().getBoolean("remove_access_token")) {
-            viewModel.removeAccessToken();
-            getArguments().remove("remove_access_token");
-        }
         viewModel.checkIfAuthorized();
 
         binding.buttonLogin.setOnClickListener(v -> {
@@ -55,5 +55,10 @@ public class LoginFragment extends BaseFragment<LoginViewModel> {
 
             viewModel.login(email, password);
         });
+    }
+
+    private NavController getNavController() {
+        NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+        return navHostFragment.getNavController();
     }
 }
