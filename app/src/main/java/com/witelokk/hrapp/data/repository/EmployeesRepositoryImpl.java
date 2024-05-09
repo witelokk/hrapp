@@ -1,8 +1,10 @@
 package com.witelokk.hrapp.data.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.Result;
 import com.witelokk.hrapp.api.EmployeesApi;
 import com.witelokk.hrapp.api.model.CreateEmployeeRequest;
@@ -13,7 +15,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.List;
 
 public class EmployeesRepositoryImpl implements EmployeesRepository {
@@ -29,21 +31,19 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
         MutableLiveData<Result<List<Employee>>> resultLiveData = new MutableLiveData<>();
         employeesApi.getEmployeesByCompany(companyId).enqueue(new Callback<List<Employee>>() {
             @Override
-            public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
-                if (response.isSuccessful()) {
-                    resultLiveData.setValue(new Result<>(response.body()));
+            public void onResponse(@NonNull Call<List<Employee>> call, @NonNull Response<List<Employee>> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
                 } else {
-                    try {
-                        resultLiveData.setValue(new Result<>(response.errorBody().string()));
-                    } catch (IOException e) {
-                        resultLiveData.setValue(new Result<>("Unknown error occurred"));
-                    }
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Employee>> call, Throwable t) {
-                resultLiveData.setValue(new Result<>("Network error occurred"));
+            public void onFailure(@NonNull Call<List<Employee>> call, @NonNull Throwable t) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });
         return resultLiveData;
@@ -54,21 +54,19 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
         MutableLiveData<Result<List<Employee>>> resultLiveData = new MutableLiveData<>();
         employeesApi.getEmployeesByDepartment(departmentId).enqueue(new Callback<List<Employee>>() {
             @Override
-            public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
-                if (response.isSuccessful()) {
-                    resultLiveData.setValue(new Result<>(response.body()));
+            public void onResponse(@NonNull Call<List<Employee>> call, @NonNull Response<List<Employee>> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
                 } else {
-                    try {
-                        resultLiveData.setValue(new Result<>(response.errorBody().string()));
-                    } catch (IOException e) {
-                        resultLiveData.setValue(new Result<>("Unknown error occurred"));
-                    }
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Employee>> call, Throwable t) {
-                resultLiveData.setValue(new Result<>("Network error occurred"));
+            public void onFailure(@NonNull Call<List<Employee>> call, @NonNull Throwable t) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });
         return resultLiveData;
@@ -79,21 +77,19 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
         MutableLiveData<Result<Employee>> resultLiveData = new MutableLiveData<>();
         employeesApi.getEmployee(employeeId).enqueue(new Callback<Employee>() {
             @Override
-            public void onResponse(Call<Employee> call, Response<Employee> response) {
-                if (response.isSuccessful()) {
-                    resultLiveData.setValue(new Result<>(response.body()));
+            public void onResponse(@NonNull Call<Employee> call, @NonNull Response<Employee> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
                 } else {
-                    try {
-                        resultLiveData.setValue(new Result<>(response.errorBody().string()));
-                    } catch (IOException e) {
-                        resultLiveData.setValue(new Result<>("Unknown error occurred"));
-                    }
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Employee> call, Throwable t) {
-                resultLiveData.setValue(new Result<>("Network error occurred"));
+            public void onFailure(@NonNull Call<Employee> call, @NonNull Throwable t) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });
         return resultLiveData;
@@ -104,21 +100,19 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
         employeesApi.deleteEmployee(employeeId).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    resultLiveData.setValue(new Result<>(null));
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
                 } else {
-                    try {
-                        resultLiveData.setValue(new Result<>(response.errorBody().string()));
-                    } catch (IOException e) {
-                        resultLiveData.setValue(new Result<>("Unknown error occurred"));
-                    }
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                resultLiveData.setValue(new Result<>("Network error occurred"));
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });
         return resultLiveData;
@@ -129,21 +123,20 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
         employeesApi.editEmployee(employeeId, new EditEmployeeRequest(name)).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    resultLiveData.setValue(new Result<>(null));
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
                 } else {
-                    try {
-                        resultLiveData.setValue(new Result<>(response.errorBody().string()));
-                    } catch (IOException e) {
-                        resultLiveData.setValue(new Result<>("Unknown error occurred"));
-                    }
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
+
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                resultLiveData.setValue(new Result<>("Network error occurred"));
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });
         return resultLiveData;
@@ -154,21 +147,20 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
         employeesApi.createEmployee(new CreateEmployeeRequest(name)).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    resultLiveData.setValue(new Result<>(null));
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success());
                 } else {
-                    try {
-                        resultLiveData.setValue(new Result<>(response.errorBody().string()));
-                    } catch (IOException e) {
-                        resultLiveData.setValue(new Result<>("Unknown error occurred"));
-                    }
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
+
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                resultLiveData.setValue(new Result<>("Network error occurred"));
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });
         return resultLiveData;

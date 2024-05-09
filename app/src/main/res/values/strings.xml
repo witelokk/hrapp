@@ -3,4 +3,8 @@
     <string name="inn">INN: %s</string>
     <string name="kpp">KPP: %s</string>
     <string name="create_company">Create your first company</string>
+    <string name="network_error">Server is unavailable</string>
+    <string name="invalid_credentials">Invalid email or password</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="session_expired">Session has expired</string>
 </resources>

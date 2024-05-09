@@ -7,15 +7,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.witelokk.hrapp.databinding.FragmentDepartmentBinding;
+import com.witelokk.hrapp.ui.BaseFragment;
 
-public class DepartmentFragment extends Fragment {
+public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
     FragmentDepartmentBinding binding;
-    DepartmentViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,12 +35,11 @@ public class DepartmentFragment extends Fragment {
         viewModel.setDepartmentId(departmentId);
 
         binding.recyclerViewEmployees.setLayoutManager(new LinearLayoutManager(requireContext()));
-        EmployeesAdapter adapter = new EmployeesAdapter(employeeId -> {});
-        binding.recyclerViewEmployees.setAdapter(adapter);
 
         viewModel.getEmployees().observe(requireActivity(), employees -> {
-            adapter.employees.addAll(employees);
-            adapter.notifyDataSetChanged();
+            EmployeesAdapter adapter = new EmployeesAdapter(employees, employeeId -> {
+            });
+            binding.recyclerViewEmployees.setAdapter(adapter);
         });
 
         viewModel.loadEmployees();

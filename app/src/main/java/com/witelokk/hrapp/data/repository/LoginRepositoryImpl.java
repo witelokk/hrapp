@@ -1,26 +1,22 @@
 package com.witelokk.hrapp.data.repository;
 
-import android.content.SharedPreferences;
-
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.api.AuthApi;
 import com.witelokk.hrapp.Result;
 import com.witelokk.hrapp.api.model.Token;
 
-import java.io.IOException;
+import java.net.HttpURLConnection;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginRepositoryImpl implements LoginRepository {
-    private AuthApi authApi;
+    private final AuthApi authApi;
 
     public LoginRepositoryImpl(AuthApi authApi) {
         this.authApi = authApi;
@@ -32,21 +28,19 @@ public class LoginRepositoryImpl implements LoginRepository {
 
         authApi.getToken(email, password).enqueue(new Callback<Token>() {
             @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                if (response.code() == 200) {
-                    resultLiveData.setValue(new Result<>(response.body()));
+            public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
+                if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
+                    resultLiveData.setValue(Result.error(new Error.InvalidCredentials()));
                 } else {
-                    try {
-                        resultLiveData.setValue(new Result<>(String.format("ERROR %d: %s", response.code(), response.errorBody().string())));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Token> call, Throwable throwable) {
-                resultLiveData.setValue(new Result<>(throwable.getMessage()));
+            public void onFailure(@NonNull Call<Token> call, @NonNull Throwable t) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });
 

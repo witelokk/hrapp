@@ -2,21 +2,32 @@ package com.witelokk.hrapp;
 
 public class Result<T> {
     private T data;
-    private String error;
+    private Error error;
 
-    public Result(T data) {
-        this.data = data;
+    private Result() {
     }
 
-    public Result(String error) {
-        this.error = error;
+    public static Result<Void> success() {
+        return new Result<>();
+    }
+
+    public static <T> Result<T> success(T data) {
+        Result<T> result = new Result<>();
+        result.data = data;
+        return result;
+    }
+
+    public static <T> Result<T> error(Error error) {
+        Result<T> result = new Result<>();
+        result.error = error;
+        return result;
     }
 
     public T getData() {
         return data;
     }
 
-    public String getError() {
+    public Error getError() {
         return error;
     }
 

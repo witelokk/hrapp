@@ -7,16 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.witelokk.hrapp.MainActivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.databinding.FragmentLoginBinding;
+import com.witelokk.hrapp.ui.BaseFragment;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends BaseFragment<LoginViewModel> {
     FragmentLoginBinding binding;
-    LoginViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,12 +34,19 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel.getIsAuthorized().observe(requireActivity(), isAuthorized -> {
+        viewModel.getIsAuthorized().observe(getViewLifecycleOwner(), isAuthorized -> {
             if (isAuthorized) {
-                ((MainActivity) requireActivity()).navController.navigate(R.id.action_loginFragment_to_homeFragment);
+                getNavController().navigate(R.id.action_loginFragment_to_homeFragment);
             }
         });
 
+        viewModel.getInvalidCredentials().observe(getViewLifecycleOwner(), none ->
+                Snackbar.make(view, R.string.invalid_credentials, Snackbar.LENGTH_SHORT).show());
+
+        if (getArguments() != null && getArguments().getBoolean("remove_access_token")) {
+            viewModel.removeAccessToken();
+            getArguments().remove("remove_access_token");
+        }
         viewModel.checkIfAuthorized();
 
         binding.buttonLogin.setOnClickListener(v -> {

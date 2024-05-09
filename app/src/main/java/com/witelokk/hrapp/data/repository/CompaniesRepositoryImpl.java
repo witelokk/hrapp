@@ -4,23 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.api.CompaniesApi;
 import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.Result;
 import com.witelokk.hrapp.api.model.CreateCompanyRequest;
 
-import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.List;
 
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CompaniesRepositoryImpl implements CompaniesRepository {
     CompaniesApi companiesApi;
@@ -30,53 +24,51 @@ public class CompaniesRepositoryImpl implements CompaniesRepository {
     }
 
     public LiveData<Result<List<Company>>> getCompanies() {
-        MutableLiveData<Result<List<Company>>> companiesLiveData = new MutableLiveData<>();
+        MutableLiveData<Result<List<Company>>> resultLiveData = new MutableLiveData<>();
 
         companiesApi.getCompanies().enqueue(new Callback<List<Company>>() {
             @Override
-            public void onResponse(Call<List<Company>> call, retrofit2.Response<List<Company>> response) {
-                if (response.code() != 200) {
-                    try {
-                        companiesLiveData.setValue(new Result(response.errorBody().string()));
-                    } catch (IOException e) {
-                        companiesLiveData.setValue(new Result(e.getMessage()));
-                    }
-                    return;
+            public void onResponse(@NonNull Call<List<Company>> call, @NonNull retrofit2.Response<List<Company>> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
-
-                companiesLiveData.setValue(new Result(response.body()));
             }
 
             @Override
-            public void onFailure(Call<List<Company>> call, Throwable throwable) {
-                companiesLiveData.setValue(new Result(throwable.getMessage()));
+            public void onFailure(@NonNull Call<List<Company>> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });
 
-        return companiesLiveData;
+        return resultLiveData;
     }
 
     public LiveData<Result<Void>> addCompany(String name, String inn, String kpp) {
-        MutableLiveData<Result<Void>> responseLiveData = new MutableLiveData<>();
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
 
         CreateCompanyRequest request = new CreateCompanyRequest(name, inn, kpp);
         companiesApi.createCompany(request).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
-                if (response.code() != 201) {
-                    responseLiveData.setValue(new Result<>("Can't create company!"));
-                    return;
+            public void onResponse(@NonNull Call<Void> call, @NonNull retrofit2.Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(null));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
-
-                responseLiveData.setValue(new Result<>((Void)null));
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable throwable) {
-                responseLiveData.setValue(new Result<>("Can't create company!"));
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Unknown()));
             }
         });
 
-        return responseLiveData;
+        return resultLiveData;
     }
 }

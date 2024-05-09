@@ -2,11 +2,11 @@ package com.witelokk.hrapp.ui.department;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.witelokk.hrapp.api.model.Department;
+import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.api.model.Employee;
 import com.witelokk.hrapp.data.repository.EmployeesRepository;
+import com.witelokk.hrapp.ui.BaseViewModel;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class DepartmentViewModel extends ViewModel {
-    private EmployeesRepository employeesRepository;
+public class DepartmentViewModel extends BaseViewModel {
+    private final EmployeesRepository employeesRepository;
     private int departmentId;
-    private MutableLiveData<List<Employee>> employees = new MutableLiveData<>();
+    private final MutableLiveData<List<Employee>> employees = new MutableLiveData<>();
 
     @Inject
     public DepartmentViewModel(EmployeesRepository employeesRepository) {
@@ -42,7 +42,13 @@ public class DepartmentViewModel extends ViewModel {
             if (result.isSuccess()) {
                 employees.setValue(result.getData());
             } else {
-                // show error
+                if (result.getError() instanceof Error.Network) {
+                    setNetworkError();
+                } else if (result.getError() instanceof Error.Unauthorized) {
+                    logout();
+                } else {
+                    setUnknownError();
+                }
             }
         });
     }

@@ -12,9 +12,9 @@ public interface DepartmentsRepository {
 
     LiveData<Result<List<Department>>> getDepartmentsByCompany(int companyId);
 
-    LiveData<Result<Boolean>> createDepartment(String name, int companyId);
+    LiveData<Result<Void>> createDepartment(String name, int companyId);
 
-    LiveData<Result<Boolean>> editDepartment(int departmentId, String name, int companyId);
+    LiveData<Result<Void>> editDepartment(int departmentId, String name, int companyId);
 
-    LiveData<Result<Boolean>> deleteDepartment(int departmentId);
+    LiveData<Result<Void>> deleteDepartment(int departmentId);
 }

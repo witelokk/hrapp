@@ -7,15 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.witelokk.hrapp.databinding.FragmentCompanyBinding;
-import com.witelokk.hrapp.R;
+import com.witelokk.hrapp.ui.BaseFragment;
 
-public class CompanyFragment extends Fragment {
+public class CompanyFragment extends BaseFragment<CompanyViewModel> {
     FragmentCompanyBinding binding;
     CompanyViewModel viewModel;
 
@@ -37,18 +35,14 @@ public class CompanyFragment extends Fragment {
         int companyId = getArguments().getInt("company_id");
         viewModel.setCompanyId(companyId);
 
-        NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
-
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        DepartmentsAdapter adapter = new DepartmentsAdapter(departmentId -> {
-            CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(departmentId);
-            navHostFragment.getNavController().navigate(action);
-        });
-        binding.recyclerView.setAdapter(adapter);
 
         viewModel.getDepartments().observe(requireActivity(), departments -> {
-            adapter.departments.addAll(departments);
-            adapter.notifyDataSetChanged();
+            DepartmentsAdapter adapter = new DepartmentsAdapter(departments, departmentId -> {
+                CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(departmentId);
+                getNavController().navigate(action);
+            });
+            binding.recyclerView.setAdapter(adapter);
         });
 
         viewModel.loadDepartments();

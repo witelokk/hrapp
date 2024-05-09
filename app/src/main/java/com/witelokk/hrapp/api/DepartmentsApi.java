@@ -28,5 +28,5 @@ public interface DepartmentsApi {
     Call<List<Department>> getDepartmentsByCompany(@Path("company_id") int companyId);
 
     @POST("/departments/")
-    Call<Department> createDepartment(@Body CreateDepartmentRequest request);
+    Call<Void> createDepartment(@Body CreateDepartmentRequest request);
 }

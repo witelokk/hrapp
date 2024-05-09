@@ -4,26 +4,36 @@
     android:id="@+id/navigation"
     app:startDestination="@id/loginFragment">
 
+    <action
+        android:id="@+id/action_to_loginFragment"
+        app:destination="@+id/loginFragment"
+        app:popUpTo="@id/navigation"
+        app:popUpToInclusive="true">
+        <argument
+            android:name="remove_access_token"
+            app:argType="boolean" />
+    </action>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.witelokk.hrapp.ui.auth.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/navigation"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.witelokk.hrapp.ui.home.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_addCompanyFragment"
             app:destination="@id/addCompanyFragment" />
         <action
             android:id="@+id/action_homeFragment_to_companyFragment"
-            app:destination="@id/companyFragment" >
+            app:destination="@id/companyFragment">
             <argument
                 android:name="company_id"
                 app:argType="integer" />
@@ -36,7 +46,7 @@
     <fragment
         android:id="@+id/companyFragment"
         android:name="com.witelokk.hrapp.ui.company.CompanyFragment"
-        android:label="CompanyFragment" >
+        android:label="CompanyFragment">
         <action
             android:id="@+id/action_companyFragment_to_departmentFragment"
             app:destination="@id/departmentFragment">

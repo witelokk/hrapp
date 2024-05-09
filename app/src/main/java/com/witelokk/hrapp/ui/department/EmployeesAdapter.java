@@ -8,18 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.witelokk.hrapp.R;
-import com.witelokk.hrapp.api.model.Department;
 import com.witelokk.hrapp.api.model.Employee;
-import com.witelokk.hrapp.databinding.ItemDepartmentBinding;
 import com.witelokk.hrapp.databinding.ItemEmployeeBinding;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.ViewHolder> {
-    ArrayList<Employee> employees = new ArrayList<>();
-    OnEmployeeItemClickListener onItemClickListener;
+    private final List<Employee> employees;
+    private final OnEmployeeItemClickListener onItemClickListener;
 
-    EmployeesAdapter(OnEmployeeItemClickListener onItemClickListener) {
+    EmployeesAdapter(List<Employee> employees, OnEmployeeItemClickListener onItemClickListener) {
+        this.employees = employees;
         this.onItemClickListener = onItemClickListener;
     }
 

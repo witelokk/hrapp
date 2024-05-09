@@ -8,24 +8,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.witelokk.hrapp.R;
-import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.api.model.Department;
-import com.witelokk.hrapp.databinding.ItemCompanyBinding;
 import com.witelokk.hrapp.databinding.ItemDepartmentBinding;
-import com.witelokk.hrapp.ui.home.OnCompanyItemClickListener;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DepartmentsAdapter extends RecyclerView.Adapter<DepartmentsAdapter.ViewHolder> {
-    ArrayList<Department> departments = new ArrayList<>();
-    OnDepartmentItemClickListener onItemClickListener;
+    private final List<Department> departments;
+    private final OnDepartmentItemClickListener onItemClickListener;
 
-    DepartmentsAdapter(OnDepartmentItemClickListener onItemClickListener) {
+    DepartmentsAdapter(List<Department> departments, OnDepartmentItemClickListener onItemClickListener) {
+        this.departments = departments;
         this.onItemClickListener = onItemClickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ItemDepartmentBinding binding;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = ItemDepartmentBinding.bind(itemView);

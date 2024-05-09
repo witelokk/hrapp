@@ -11,18 +11,20 @@ import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.databinding.ItemCompanyBinding;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesAdapter.ViewHolder> {
-    ArrayList<Company> companies = new ArrayList<>();
-    OnCompanyItemClickListener onItemClickListener;
+    private final List<Company> companies;
+    private final OnCompanyItemClickListener onItemClickListener;
 
-    CompaniesAdapter(OnCompanyItemClickListener onItemClickListener) {
+    CompaniesAdapter(List<Company> companies, OnCompanyItemClickListener onItemClickListener) {
+        this.companies = companies;
         this.onItemClickListener = onItemClickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ItemCompanyBinding binding;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = ItemCompanyBinding.bind(itemView);
