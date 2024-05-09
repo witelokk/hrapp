@@ -7,4 +7,8 @@
     <string name="invalid_credentials">Invalid email or password</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="session_expired">Session has expired</string>
+    <string name="password">Password</string>
+    <string name="email">E-mail</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
 </resources>
