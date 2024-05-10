@@ -46,7 +46,7 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesAdapter.View
         holder.binding.textViewKpp.setText(holder.itemView.getContext().getString(R.string.kpp, company.getKpp()));
 
         if (onItemClickListener != null) {
-            holder.binding.getRoot().setOnClickListener(v -> onItemClickListener.onClick(companies.get(position).getId()));
+            holder.binding.getRoot().setOnClickListener(v -> onItemClickListener.onClick(companies.get(position)));
         }
     }
 

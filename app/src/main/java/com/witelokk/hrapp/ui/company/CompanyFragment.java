@@ -33,19 +33,31 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int companyId = CompanyFragmentArgs.fromBundle(getArguments()).getCompanyId();
-        viewModel.setCompanyId(companyId);
+
+        CompanyFragmentArgs args = CompanyFragmentArgs.fromBundle(getArguments());
+
+        binding.toolbar.setTitle(args.getCompanyName());
+        viewModel.setCompanyId(args.getCompanyId());
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        viewModel.getDepartments().observe(requireActivity(), departments -> {
-            DepartmentsAdapter adapter = new DepartmentsAdapter(departments, department -> {
-                CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action =
-                        CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getCompanyId(), department.getName());
-                getNavController().navigate(action);
-            });
-            binding.recyclerView.setAdapter(adapter);
+        viewModel.getDepartments().observe(getViewLifecycleOwner(), departments -> {
+            if (departments.isEmpty()) {
+                binding.textNoDepartments.setVisibility(View.VISIBLE);
+                binding.recyclerView.setAdapter(null);
+            } else {
+                binding.textNoDepartments.setVisibility(View.GONE);
+                DepartmentsAdapter adapter = new DepartmentsAdapter(departments, department -> {
+                    CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action =
+                            CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getCompanyId(), department.getName());
+                    getNavController().navigate(action);
+                });
+                binding.recyclerView.setAdapter(adapter);
+            }
         });
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->
+            binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
         viewModel.loadDepartments();
     }

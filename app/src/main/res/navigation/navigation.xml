@@ -42,6 +42,9 @@
         <argument
             android:name="company_id"
             app:argType="integer" />
+        <argument
+            android:name="company_name"
+            app:argType="string" />
         <action
             android:id="@+id/action_companyFragment_to_departmentFragment"
             app:destination="@id/departmentFragment"/>

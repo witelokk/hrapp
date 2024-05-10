@@ -13,4 +13,7 @@
     <string name="register">Register</string>
     <string name="add_employee">Add employee</string>
     <string name="no_employees_yet">No employees</string>
+    <string name="no_departments">No departments</string>
+    <string name="add_department">Add department</string>
+    <string name="departments">Departments</string>
 </resources>

@@ -19,6 +19,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class CompanyViewModel extends BaseViewModel {
     private final MutableLiveData<List<Department>> departments = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(true);
     private final DepartmentsRepository departmentsRepository;
     private int companyId;
 
@@ -36,10 +37,15 @@ public class CompanyViewModel extends BaseViewModel {
         return departments;
     }
 
+    public LiveData<Boolean> getIsLoading() {
+        return isLoading;
+    }
+
     public void loadDepartments() {
         departmentsRepository.getDepartmentsByCompany(companyId).observeForever(result -> {
             if (result.isSuccess()) {
                 departments.setValue(result.getData());
+                isLoading.setValue(false);
             } else {
                 setError(result.getError());
             }

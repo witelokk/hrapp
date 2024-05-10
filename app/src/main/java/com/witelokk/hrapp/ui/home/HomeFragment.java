@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.witelokk.hrapp.R;
+import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.databinding.FragmentHomeBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
@@ -59,8 +60,8 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
         viewModel.loadCompanies();
     }
 
-    private void navigateToCompanyFragment(int companyId) {
-        HomeFragmentDirections.ActionHomeFragmentToCompanyFragment action = HomeFragmentDirections.actionHomeFragmentToCompanyFragment(companyId);
+    private void navigateToCompanyFragment(Company company) {
+        HomeFragmentDirections.ActionHomeFragmentToCompanyFragment action = HomeFragmentDirections.actionHomeFragmentToCompanyFragment(company.getId(), company.getName());
         getNavController().navigate(action);
     }
 }
