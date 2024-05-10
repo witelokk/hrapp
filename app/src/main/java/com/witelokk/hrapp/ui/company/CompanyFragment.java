@@ -39,8 +39,9 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         viewModel.getDepartments().observe(requireActivity(), departments -> {
-            DepartmentsAdapter adapter = new DepartmentsAdapter(departments, departmentId -> {
-                CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(departmentId);
+            DepartmentsAdapter adapter = new DepartmentsAdapter(departments, department -> {
+                CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action =
+                        CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getCompanyId(), department.getName());
                 getNavController().navigate(action);
             });
             binding.recyclerView.setAdapter(adapter);

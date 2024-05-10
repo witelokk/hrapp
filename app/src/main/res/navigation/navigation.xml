@@ -53,5 +53,8 @@
         <argument
             android:name="department_id"
             app:argType="integer" />
+        <argument
+            android:name="department_name"
+            app:argType="string" />
     </fragment>
 </navigation>

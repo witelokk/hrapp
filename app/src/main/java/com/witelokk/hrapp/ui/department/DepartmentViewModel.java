@@ -21,6 +21,7 @@ public class DepartmentViewModel extends BaseViewModel {
     private final EmployeesRepository employeesRepository;
     private int departmentId;
     private final MutableLiveData<List<Employee>> employees = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(true);
 
     @Inject
     public DepartmentViewModel(SharedPreferences sharedPreferences, EmployeesRepository employeesRepository) {
@@ -40,10 +41,15 @@ public class DepartmentViewModel extends BaseViewModel {
         return employees;
     }
 
+    public LiveData<Boolean> getIsLoading() {
+        return isLoading;
+    }
+
     public void loadEmployees() {
         employeesRepository.getEmployeesByDepartment(departmentId).observeForever(result -> {
             if (result.isSuccess()) {
                 employees.setValue(result.getData());
+                isLoading.setValue(false);
             } else {
                 setError(result.getError());
             }

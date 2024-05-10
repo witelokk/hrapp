@@ -32,16 +32,24 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int departmentId = DepartmentFragmentArgs.fromBundle(getArguments()).getDepartmentId();
+
+        DepartmentFragmentArgs args = DepartmentFragmentArgs.fromBundle(getArguments());
+
+        binding.toolbar.setTitle(args.getDepartmentName());
+
+        int departmentId = args.getDepartmentId();
         viewModel.setDepartmentId(departmentId);
 
-        binding.recyclerViewEmployees.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        viewModel.getEmployees().observe(requireActivity(), employees -> {
+        viewModel.getEmployees().observe(getViewLifecycleOwner(), employees -> {
             EmployeesAdapter adapter = new EmployeesAdapter(employees, employeeId -> {
             });
-            binding.recyclerViewEmployees.setAdapter(adapter);
+            binding.recyclerView.setAdapter(adapter);
         });
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->
+                binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
         viewModel.loadEmployees();
     }

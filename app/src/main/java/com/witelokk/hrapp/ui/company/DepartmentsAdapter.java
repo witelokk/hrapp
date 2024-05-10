@@ -43,7 +43,7 @@ public class DepartmentsAdapter extends RecyclerView.Adapter<DepartmentsAdapter.
         holder.binding.textViewName.setText(departments.get(position).getName());
 
         if (onItemClickListener != null) {
-            holder.binding.getRoot().setOnClickListener(v -> onItemClickListener.onClick(departments.get(position).getId()));
+            holder.binding.getRoot().setOnClickListener(v -> onItemClickListener.onClick(departments.get(position)));
         }
     }
 
