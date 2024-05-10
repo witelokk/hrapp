@@ -43,9 +43,13 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         viewModel.getEmployees().observe(getViewLifecycleOwner(), employees -> {
-            EmployeesAdapter adapter = new EmployeesAdapter(employees, employeeId -> {
-            });
-            binding.recyclerView.setAdapter(adapter);
+            if (employees.isEmpty()) {
+                binding.textNoEmployees.setVisibility(View.VISIBLE);
+            } else {
+                EmployeesAdapter adapter = new EmployeesAdapter(employees, employeeId -> {
+                });
+                binding.recyclerView.setAdapter(adapter);
+            }
         });
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->

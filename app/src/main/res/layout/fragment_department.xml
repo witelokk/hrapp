@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="@string/add_employee"
         android:src="@drawable/baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -47,7 +48,7 @@
         android:id="@+id/textNoEmployees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No employees yet."
+        android:text="@string/no_employees_yet"
         android:textAppearance="?android:textAppearanceMedium"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"

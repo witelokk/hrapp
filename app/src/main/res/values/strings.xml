@@ -11,4 +11,6 @@
     <string name="email">E-mail</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="add_employee">Add employee</string>
+    <string name="no_employees_yet">No employees</string>
 </resources>
