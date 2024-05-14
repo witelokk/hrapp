@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 public class Token {
     @SerializedName("access_token")
     String accessToken;
+    @SerializedName("refresh_token")
+    String refreshToken;
     @SerializedName("token_type")
     String tokenType;
 
@@ -17,15 +19,11 @@ public class Token {
         return accessToken;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
     public String getTokenType() {
         return tokenType;
-    }
-
-    public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
     }
 }

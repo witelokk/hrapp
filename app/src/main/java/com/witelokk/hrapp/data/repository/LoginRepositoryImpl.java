@@ -26,7 +26,7 @@ public class LoginRepositoryImpl implements LoginRepository {
     public LiveData<Result<Token>> getAccessToken(String email, String password) {
         MutableLiveData<Result<Token>> resultLiveData = new MutableLiveData<>();
 
-        authApi.getToken(email, password).enqueue(new Callback<Token>() {
+        authApi.getToken("password", email, password).enqueue(new Callback<Token>() {
             @Override
             public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
                 if (response.isSuccessful()) {
@@ -46,4 +46,6 @@ public class LoginRepositoryImpl implements LoginRepository {
 
         return resultLiveData;
     }
+
+
 }

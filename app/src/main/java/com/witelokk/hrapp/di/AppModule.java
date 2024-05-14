@@ -8,6 +8,7 @@ import com.witelokk.hrapp.api.AuthApi;
 import com.witelokk.hrapp.api.CompaniesApi;
 import com.witelokk.hrapp.api.DepartmentsApi;
 import com.witelokk.hrapp.api.EmployeesApi;
+import com.witelokk.hrapp.api.model.Token;
 import com.witelokk.hrapp.data.repository.CompaniesRepository;
 import com.witelokk.hrapp.data.repository.CompaniesRepositoryImpl;
 import com.witelokk.hrapp.data.repository.DepartmentsRepository;
@@ -16,6 +17,8 @@ import com.witelokk.hrapp.data.repository.EmployeesRepository;
 import com.witelokk.hrapp.data.repository.EmployeesRepositoryImpl;
 import com.witelokk.hrapp.data.repository.LoginRepository;
 import com.witelokk.hrapp.data.repository.LoginRepositoryImpl;
+
+import java.net.HttpURLConnection;
 
 import javax.inject.Singleton;
 
@@ -26,6 +29,7 @@ import dagger.hilt.components.SingletonComponent;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -81,17 +85,50 @@ public abstract class AppModule {
         return application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
     }
 
-
     @Provides
     @Singleton
-    static Interceptor provideAuthInterceptor(SharedPreferences sharedPreferences) {
+    static Interceptor provideAuthInterceptor(SharedPreferences sharedPreferences, String baseUrl) {
         return chain -> {
             Request originalRequest = chain.request();
             String accessToken = sharedPreferences.getString("access_token", null);
+            Response response = null;
+
             if (accessToken != null) {
                 Request newRequest = originalRequest.newBuilder().header("Authorization", "Bearer " + accessToken).build();
+                response = chain.proceed(newRequest);
+            }
+
+            if (response != null && response.code() != HttpURLConnection.HTTP_UNAUTHORIZED) {
+                return response;
+            }
+
+            // Try refreshing token
+            String refreshToken = sharedPreferences.getString("refresh_token", null);
+
+            if (refreshToken == null) {
+                if (response == null)
+                    return chain.proceed(originalRequest);
+                else
+                    return response;
+            }
+
+            if (response != null)
+                response.close();
+
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
+            AuthApi authApi = retrofit.create(AuthApi.class);
+            retrofit2.Response<Token> tokenResponse = authApi.refreshToken("refresh_token", refreshToken).execute();
+            if (tokenResponse.isSuccessful() && tokenResponse.body() != null) {
+                sharedPreferences
+                        .edit()
+                        .putString("access_token", tokenResponse.body().getAccessToken())
+                        .putString("refresh_token", tokenResponse.body().getRefreshToken())
+                        .apply();
+                Request newRequest = originalRequest.newBuilder()
+                        .header("Authorization", "Bearer " + tokenResponse.body().getAccessToken()).build();
                 return chain.proceed(newRequest);
             }
+
             return chain.proceed(originalRequest);
         };
     }

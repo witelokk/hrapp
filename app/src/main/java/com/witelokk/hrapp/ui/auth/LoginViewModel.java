@@ -42,6 +42,7 @@ public class LoginViewModel extends ViewModel {
             if (result.isSuccess()) {
                 Token token = result.getData();
                 sharedPreferences.edit().putString("access_token", token.getAccessToken()).apply();
+                sharedPreferences.edit().putString("refresh_token", token.getRefreshToken()).apply();
                 isAuthorized.setValue(true);
             } else {
                 if (result.getError() instanceof Error.InvalidCredentials) {

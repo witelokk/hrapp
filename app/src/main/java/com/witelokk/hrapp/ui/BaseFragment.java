@@ -32,8 +32,7 @@ public class BaseFragment<T extends BaseViewModel> extends Fragment {
             else if (error instanceof Error.Unauthorized) {
                 Snackbar.make(view, R.string.session_expired, Snackbar.LENGTH_SHORT).show();
                 getNavController().navigate(R.id.action_to_loginFragment);
-            }
-            else if (error != null)
+            } else if (error != null)
                 Snackbar.make(view, R.string.unknown_error, Snackbar.LENGTH_LONG).show();
         });
     }
