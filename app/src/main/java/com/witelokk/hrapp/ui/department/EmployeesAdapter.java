@@ -12,6 +12,7 @@ import com.witelokk.hrapp.api.model.Employee;
 import com.witelokk.hrapp.databinding.ItemEmployeeBinding;
 
 import java.util.List;
+import java.util.Locale;
 
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.ViewHolder> {
     private final List<Employee> employees;
@@ -43,7 +44,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.View
         holder.binding.textViewName.setText(employee.getName());
         if (employee.getCurrentInfo() != null) {
             holder.binding.textViewPosition.setText(employee.getCurrentInfo().getPosition());
-            holder.binding.textViewSalary.setText(String.valueOf(employee.getCurrentInfo().getSalary()));
+            holder.binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) employee.getCurrentInfo().getSalary()));
         }
 
         if (onItemClickListener != null) {

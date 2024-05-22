@@ -28,7 +28,10 @@
     <string name="logout">Logout</string>
     <string name="edit_company">Edit Company</string>
     <string name="delete_company">Delete Company</string>
+    <string name="edit_department">Edit Department</string>
+    <string name="delete_department">Delete Department</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="delete_company_confirmation">Do you really want to delete this company?</string>
+    <string name="delete_department_confirmation">Do you really want to delete this department?</string>
 </resources>

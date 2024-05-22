@@ -50,7 +50,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
         ((MenuHost)requireActivity()).addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-                menuInflater.inflate(R.menu.home_menu, menu);
+                menuInflater.inflate(R.menu.menu_home, menu);
             }
 
             @Override
