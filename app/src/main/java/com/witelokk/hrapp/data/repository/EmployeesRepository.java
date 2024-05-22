@@ -12,7 +12,7 @@ public interface EmployeesRepository {
 
     LiveData<Result<List<Employee>>> getEmployeesByDepartment(int departmentId);
 
-    LiveData<Result<Employee>> getEmployee(int employeeId);
+    LiveData<Result<Employee>> getEmployee(int employeeId, boolean includeActions);
 
     LiveData<Result<Void>> deleteEmployee(int employeeId);
 

@@ -4,11 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.witelokk.hrapp.api.ActionsApi;
 import com.witelokk.hrapp.api.AuthApi;
 import com.witelokk.hrapp.api.CompaniesApi;
 import com.witelokk.hrapp.api.DepartmentsApi;
 import com.witelokk.hrapp.api.EmployeesApi;
 import com.witelokk.hrapp.api.model.Token;
+import com.witelokk.hrapp.data.repository.ActionsRepository;
+import com.witelokk.hrapp.data.repository.ActionsRepositoryImpl;
 import com.witelokk.hrapp.data.repository.CompaniesRepository;
 import com.witelokk.hrapp.data.repository.CompaniesRepositoryImpl;
 import com.witelokk.hrapp.data.repository.DepartmentsRepository;
@@ -77,6 +80,12 @@ public abstract class AppModule {
     @Singleton
     static EmployeesApi provideEmployeesApi(Retrofit retrofit) {
         return retrofit.create(EmployeesApi.class);
+    }
+
+    @Provides
+    @Singleton
+    static ActionsApi provideActionsApi(Retrofit retrofit) {
+        return retrofit.create(ActionsApi.class);
     }
 
     @Provides
@@ -163,5 +172,11 @@ public abstract class AppModule {
     @Singleton
     static EmployeesRepository provideEmployeesRepository(EmployeesApi employeesApi) {
         return new EmployeesRepositoryImpl(employeesApi);
+    }
+
+    @Provides
+    @Singleton
+    static ActionsRepository provideActionsRepository(ActionsApi actionsApi) {
+        return new ActionsRepositoryImpl(actionsApi);
     }
 }

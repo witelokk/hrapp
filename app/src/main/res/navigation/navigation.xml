@@ -59,5 +59,16 @@
         <argument
             android:name="department_name"
             app:argType="string" />
+        <action
+            android:id="@+id/action_departmentFragment_to_employeeFragment"
+            app:destination="@id/employeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeFragment"
+        android:name="com.witelokk.hrapp.ui.employee.EmployeeFragment"
+        android:label="EmployeeFragment">
+        <argument
+            android:name="employee_id"
+            app:argType="integer" />
     </fragment>
 </navigation>

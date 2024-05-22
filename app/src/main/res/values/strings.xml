@@ -16,4 +16,13 @@
     <string name="no_departments">No departments</string>
     <string name="add_department">Add department</string>
     <string name="departments">Departments</string>
+    <string name="add_action">Add action</string>
+    <string name="no_actions">No actions</string>
+    <string name="personal_information">Personal information</string>
+    <string name="personal_information_data">Birth date: %s\nGender: %s\nAddress: %s\nSnils: %s\nINN: %s\nPassport: %s issued by %s at %s, </string>
+    <string name="recruitment">Recruitment</string>
+    <string name="salary_change">Salary Change</string>
+    <string name="position_transfer">Position Transfer</string>
+    <string name="department_transfer">Department Transfer</string>
+    <string name="dismissal">Dismissal</string>
 </resources>

@@ -16,11 +16,13 @@ import com.witelokk.hrapp.ui.home.CompaniesAdapter;
 
 public class CompanyFragment extends BaseFragment<CompanyViewModel> {
     FragmentCompanyBinding binding;
+    CompanyFragmentArgs args;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(CompanyViewModel.class);
+        args = CompanyFragmentArgs.fromBundle(getArguments());
+        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getCompanyId()), CompanyViewModel.class);
     }
 
     @Nullable
@@ -34,8 +36,6 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CompanyFragmentArgs args = CompanyFragmentArgs.fromBundle(getArguments());
-
         binding.toolbar.setTitle(args.getCompanyName());
         viewModel.setCompanyId(args.getCompanyId());
 
@@ -48,16 +48,14 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
             } else {
                 binding.textNoDepartments.setVisibility(View.GONE);
                 DepartmentsAdapter adapter = new DepartmentsAdapter(departments, department -> {
-                    CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action =
-                            CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getCompanyId(), department.getName());
+                    CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getCompanyId(), department.getName());
                     getNavController().navigate(action);
                 });
                 binding.recyclerView.setAdapter(adapter);
             }
         });
 
-        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->
-            binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
         viewModel.loadDepartments();
     }

@@ -15,11 +15,13 @@ import com.witelokk.hrapp.ui.BaseFragment;
 
 public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
     FragmentDepartmentBinding binding;
+    DepartmentFragmentArgs args;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(DepartmentViewModel.class);
+        args = DepartmentFragmentArgs.fromBundle(getArguments());
+        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getDepartmentId()), DepartmentViewModel.class);
     }
 
     @Nullable
@@ -33,8 +35,6 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        DepartmentFragmentArgs args = DepartmentFragmentArgs.fromBundle(getArguments());
-
         binding.toolbar.setTitle(args.getDepartmentName());
 
         int departmentId = args.getDepartmentId();
@@ -47,13 +47,13 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
                 binding.textNoEmployees.setVisibility(View.VISIBLE);
             } else {
                 EmployeesAdapter adapter = new EmployeesAdapter(employees, employeeId -> {
+                    getNavController().navigate(DepartmentFragmentDirections.actionDepartmentFragmentToEmployeeFragment(employeeId));
                 });
                 binding.recyclerView.setAdapter(adapter);
             }
         });
 
-        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->
-                binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
         viewModel.loadEmployees();
     }

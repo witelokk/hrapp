@@ -73,9 +73,9 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
     }
 
     @Override
-    public LiveData<Result<Employee>> getEmployee(int employeeId) {
+    public LiveData<Result<Employee>> getEmployee(int employeeId, boolean includeActions) {
         MutableLiveData<Result<Employee>> resultLiveData = new MutableLiveData<>();
-        employeesApi.getEmployee(employeeId).enqueue(new Callback<Employee>() {
+        employeesApi.getEmployee(employeeId, includeActions).enqueue(new Callback<Employee>() {
             @Override
             public void onResponse(@NonNull Call<Employee> call, @NonNull Response<Employee> response) {
                 if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {

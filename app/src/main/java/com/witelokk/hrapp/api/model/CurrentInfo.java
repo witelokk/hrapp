@@ -6,15 +6,15 @@ public class CurrentInfo {
     @SerializedName("position")
     String position;
 
-    @SerializedName("department_id")
-    int departmentId;
+    @SerializedName("department")
+    Department department;
 
     @SerializedName("salary")
     float salary;
 
-    public CurrentInfo(String position, int departmentId, float salary) {
+    public CurrentInfo(String position, Department department, float salary) {
         this.position = position;
-        this.departmentId = departmentId;
+        this.department = department;
         this.salary = salary;
     }
 
@@ -22,8 +22,8 @@ public class CurrentInfo {
         return position;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public Department getDepartment() {
+        return department;
     }
 
     public float getSalary() {
