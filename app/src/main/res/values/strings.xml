@@ -26,4 +26,9 @@
     <string name="department_transfer">Department Transfer</string>
     <string name="dismissal">Dismissal</string>
     <string name="logout">Logout</string>
+    <string name="edit_company">Edit Company</string>
+    <string name="delete_company">Delete Company</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_company_confirmation">Do you really want to delete this company?</string>
 </resources>
