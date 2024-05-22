@@ -22,13 +22,14 @@ public class BaseViewModel extends ViewModel {
     }
 
     protected void setError(Error error) {
-        if (error instanceof Error.Unauthorized) {
-            sharedPreferences
-                    .edit()
-                    .remove("access_token")
-                    .apply();
-        }
-
+        if (error instanceof Error.Unauthorized) logout();
         this.error.setValue(new Event<>(error));
+    }
+
+    public void logout() {
+        sharedPreferences
+                .edit()
+                .remove("access_token")
+                .apply();
     }
 }
