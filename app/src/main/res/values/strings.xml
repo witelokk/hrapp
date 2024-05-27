@@ -2,7 +2,7 @@
     <string name="app_name">HRApp</string>
     <string name="inn">INN: %s</string>
     <string name="kpp">KPP: %s</string>
-    <string name="create_company">Create your first company</string>
+    <string name="create_company">Create Company</string>
     <string name="network_error">Server is unavailable</string>
     <string name="invalid_credentials">Invalid email or password</string>
     <string name="unknown_error">Unknown Error</string>
@@ -16,7 +16,7 @@
     <string name="no_departments">No departments</string>
     <string name="add_department">Add department</string>
     <string name="departments">Departments</string>
-    <string name="add_action">Add action</string>
+    <string name="to_add_action">Add action</string>
     <string name="no_actions">No actions</string>
     <string name="personal_information">Personal information</string>
     <string name="personal_information_data">Birth date: %s\nGender: %s\nAddress: %s\nSnils: %s\nINN: %s\nPassport: %s issued by %s at %s, </string>
@@ -28,12 +28,26 @@
     <string name="logout">Logout</string>
     <string name="to_logout">Logout</string>
     <string name="edit_company">Edit Company</string>
+    <string name="to_edit_company">Edit Company</string>
     <string name="delete_company">Delete Company</string>
-    <string name="edit_department">Edit Department</string>
+    <string name="to_edit_department">Edit Department</string>
     <string name="delete_department">Delete Department</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="delete_company_confirmation">Do you really want to delete this company?</string>
     <string name="delete_department_confirmation">Do you really want to delete this department?</string>
     <string name="logout_confirmation">Do you really want to logout?</string>
+    <string name="company_name">Name</string>
+    <string name="company_name_empty_error">Name cannot be empty</string>
+    <string name="inn_length_error">INN must be 10 characters long</string>
+    <string name="kpp_length_error">KPP must be 9 characters long</string>
+    <string name="create">Create</string>
+    <string name="to_edit">Edit</string>
+    <string name="actions">Actions</string>
+    <string name="inn_hint">INN (10 characters)</string>
+    <string name="kpp_hint">KPP (9 characters)</string>
+    <string name="add_action">Add action</string>
+    <string name="reports">Reports</string>
+    <string name="type">Type</string>
+    <string name="generate">Generate</string>
 </resources>

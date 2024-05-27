@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.api.model.Company;
-import com.witelokk.hrapp.databinding.DialogDeleteCompanyBinding;
 import com.witelokk.hrapp.databinding.DialogLogoutBinding;
 import com.witelokk.hrapp.databinding.FragmentHomeBinding;
 import com.witelokk.hrapp.ui.BaseFragment;

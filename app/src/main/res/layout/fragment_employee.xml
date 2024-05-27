@@ -5,51 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarSize"-->
-<!--        app:title="Employee Name"-->
-<!--        app:titleTextColor="@android:color/white"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent" />-->
-
-
-<!--    <ProgressBar-->
-<!--        android:id="@+id/progress_bar"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="@string/add_action"
+        android:contentDescription="@string/to_add_action"
         android:src="@drawable/baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/textNoActions"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/no_actions"-->
-<!--        android:textAppearance="?android:textAppearanceMedium"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -202,12 +167,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
-                android:text="Actions"
+                android:text="@string/actions"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
+                tools:listitem="@layout/item_recruitment_action"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="true"

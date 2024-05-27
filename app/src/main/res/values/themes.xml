@@ -6,5 +6,10 @@
 <!--        <color name="icon_color">#000000</color>-->
     </style>
 
+    <style name="Theme.App.FullScreenDialog" parent="Base.Theme.HRApp">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
     <style name="Theme.HRApp" parent="Base.Theme.HRApp" />
 </resources>

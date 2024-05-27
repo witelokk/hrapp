@@ -2,6 +2,7 @@ package com.witelokk.hrapp.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class Employee {
@@ -18,7 +19,7 @@ public class Employee {
     private CurrentInfo currentInfo;
 
     @SerializedName("birthdate")
-    private String birthdate;
+    private Date birthdate;
 
     @SerializedName("inn")
     private String inn;
@@ -33,7 +34,7 @@ public class Employee {
     private String passportNumber;
 
     @SerializedName("passport_date")
-    private String passportDate;
+    private Date passportDate;
 
     @SerializedName("passport_issuer")
     private String passwordIssuer;
@@ -41,7 +42,7 @@ public class Employee {
     @SerializedName("actions")
     private List<Action> actions;
 
-    public Employee(int id, String name, String gender, CurrentInfo currentInfo, String birthdate, String inn, String snils, String address, String passportNumber, String passportDate, String passwordIssuer, List<Action> actions) {
+    public Employee(int id, String name, String gender, CurrentInfo currentInfo, Date birthdate, String inn, String snils, String address, String passportNumber, Date passportDate, String passwordIssuer, List<Action> actions) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -72,7 +73,7 @@ public class Employee {
         return currentInfo;
     }
 
-    public String getBirthdate() {
+    public Date getBirthdate() {
         return birthdate;
     }
 
@@ -92,7 +93,7 @@ public class Employee {
         return passportNumber;
     }
 
-    public String getPassportDate() {
+    public Date getPassportDate() {
         return passportDate;
     }
 

@@ -15,6 +15,7 @@ import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.databinding.FragmentEmployeeBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
+import java.text.DateFormat;
 import java.util.Locale;
 
 public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
@@ -53,11 +54,13 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
             else
                 binding.imageView.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.female));
 
-            binding.textViewPersonalInformationData.setText(getString(R.string.personal_information_data, employee.getBirthdate().toString(), employee.getGender(), employee.getAddress(), employee.getSnils(), employee.getInn(), employee.getPassportNumber(), employee.getPasswordIssuer(), employee.getPassportDate().toString()));
+            binding.textViewPersonalInformationData.setText(getString(R.string.personal_information_data, DateFormat.getDateInstance().format(employee.getBirthdate()), employee.getGender(), employee.getAddress(), employee.getSnils(), employee.getInn(), employee.getPassportNumber(), employee.getPasswordIssuer(), DateFormat.getDateInstance().format(employee.getPassportDate())));
 
             ActionsAdapter adapter = new ActionsAdapter(employee.getActions(), actionId -> {});
             binding.recyclerView.setAdapter(adapter);
         });
+
+        binding.fabAddAction.setOnClickListener(v -> getNavController().navigate(R.id.action_employeeFragment_to_selectActionToAddFragment));
 
 //
 //        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->

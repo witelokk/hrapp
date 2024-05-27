@@ -9,6 +9,7 @@ import com.witelokk.hrapp.api.CompaniesApi;
 import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.Result;
 import com.witelokk.hrapp.api.model.CreateCompanyRequest;
+import com.witelokk.hrapp.api.model.EditCompanyRequest;
 
 import java.net.HttpURLConnection;
 import java.util.List;
@@ -47,11 +48,62 @@ public class CompaniesRepositoryImpl implements CompaniesRepository {
         return resultLiveData;
     }
 
+    @Override
+    public LiveData<Result<Company>> getCompany(int companyId) {
+        MutableLiveData<Result<Company>> resultLiveData = new MutableLiveData<>();
+
+        companiesApi.getCompany(companyId).enqueue(new Callback<Company>() {
+            @Override
+            public void onResponse(@NonNull Call<Company> call, @NonNull retrofit2.Response<Company> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Company> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
     public LiveData<Result<Void>> addCompany(String name, String inn, String kpp) {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
 
         CreateCompanyRequest request = new CreateCompanyRequest(name, inn, kpp);
         companiesApi.createCompany(request).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull retrofit2.Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(null));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Unknown()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
+    @Override
+    public LiveData<Result<Void>> editCompany(int companyId, String name, String inn, String kpp) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
+
+        EditCompanyRequest request = new EditCompanyRequest(name, inn, kpp);
+        companiesApi.editCompany(companyId, request).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull retrofit2.Response<Void> response) {
                 if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {

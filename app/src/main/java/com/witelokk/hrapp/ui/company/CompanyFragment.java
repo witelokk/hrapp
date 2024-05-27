@@ -1,6 +1,5 @@
 package com.witelokk.hrapp.ui.company;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.witelokk.hrapp.R;
+import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.databinding.DialogDeleteCompanyBinding;
 import com.witelokk.hrapp.databinding.FragmentCompanyBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
@@ -60,9 +60,14 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.menu_edit) {
-
+                    Company company = viewModel.getCompany().getValue();
+                    CompanyFragmentDirections.ActionCompanyFragmentToAddCompanyFragment action = CompanyFragmentDirections.actionCompanyFragmentToAddCompanyFragment(args.getCompanyId(), company.getName(), company.getInn(), company.getKpp());
+                    getNavController().navigate(action);
                 } else if (menuItem.getItemId() == R.id.menu_delete) {
                     showDeleteDialog();
+                } else if (menuItem.getItemId() == R.id.menu_reports) {
+                    CompanyFragmentDirections.ActionCompanyFragmentToReportsFragment action = CompanyFragmentDirections.actionCompanyFragmentToReportsFragment(args.getCompanyId());
+                    getNavController().navigate(action);
                 }
                 return false;
             }
@@ -86,7 +91,7 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
-        viewModel.loadDepartments();
+        viewModel.loadData();
     }
 
     void showDeleteDialog() {
@@ -98,7 +103,8 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
         dialogBuilder.setPositiveButton(R.string.delete, (dialog, whichButton) -> {
             // delete company
         });
-        dialogBuilder.setNegativeButton(R.string.cancel, (dialog, whichButton) -> {});
+        dialogBuilder.setNegativeButton(R.string.cancel, (dialog, whichButton) -> {
+        });
 
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();

@@ -19,7 +19,7 @@ public interface CompaniesApi {
     Call<List<Company>> getCompanies();
 
     @GET("/companies/{company_id}")
-    Call<Company> getCompany(@Path("company_id") int companyIid);
+    Call<Company> getCompany(@Path("company_id") int companyId);
 
     @POST("/companies")
     Call<Void> createCompany(@Body CreateCompanyRequest createCompanyRequest);

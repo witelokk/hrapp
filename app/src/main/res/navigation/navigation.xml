@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/loginFragment">
 
@@ -8,7 +9,7 @@
         android:id="@+id/action_to_loginFragment"
         app:destination="@+id/loginFragment"
         app:popUpTo="@id/navigation"
-        app:popUpToInclusive="true"/>
+        app:popUpToInclusive="true" />
 
     <fragment
         android:id="@+id/loginFragment"
@@ -29,12 +30,32 @@
             app:destination="@id/addCompanyFragment" />
         <action
             android:id="@+id/action_homeFragment_to_companyFragment"
-            app:destination="@id/companyFragment"/>
+            app:destination="@id/companyFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCompanyFragment"
-        android:name="com.witelokk.hrapp.ui.add_company.AddCompanyFragment"
-        android:label="AddCompanyFragment" />
+        android:name="com.witelokk.hrapp.ui.add_edit_company.AddEditCompanyFragment"
+        android:label="AddCompanyFragment">
+        <argument
+            android:name="company_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="company_name"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="company_inn"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="company_kpp"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <fragment
         android:id="@+id/companyFragment"
         android:name="com.witelokk.hrapp.ui.company.CompanyFragment"
@@ -47,7 +68,26 @@
             app:argType="string" />
         <action
             android:id="@+id/action_companyFragment_to_departmentFragment"
-            app:destination="@id/departmentFragment"/>
+            app:destination="@id/departmentFragment" />
+        <action
+            android:id="@+id/action_companyFragment_to_addCompanyFragment"
+            app:destination="@id/addCompanyFragment" >
+            <argument
+                android:name="company_id"
+                app:argType="integer" />
+            <argument
+                android:name="company_name"
+                app:argType="string" />
+            <argument
+                android:name="company_inn"
+                app:argType="string" />
+            <argument
+                android:name="company_kpp"
+                app:argType="string" />
+        </action>
+        <action
+            android:id="@+id/action_companyFragment_to_reportsFragment"
+            app:destination="@id/reportsFragment" />
     </fragment>
     <fragment
         android:id="@+id/departmentFragment"
@@ -69,6 +109,21 @@
         android:label="EmployeeFragment">
         <argument
             android:name="employee_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_employeeFragment_to_selectActionToAddFragment"
+            app:destination="@id/selectActionToAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectActionToAddFragment"
+        android:name="com.witelokk.hrapp.ui.reports.select_action_to_add.SelectActionToAddFragment"
+        android:label="SelectActionToAddFragment" />
+    <fragment
+        android:id="@+id/reportsFragment"
+        android:name="com.witelokk.hrapp.ui.reports.ReportsFragment"
+        android:label="ReportsFragment" >
+        <argument
+            android:name="company_id"
             app:argType="integer" />
     </fragment>
 </navigation>
