@@ -50,4 +50,5 @@
     <string name="reports">Reports</string>
     <string name="type">Type</string>
     <string name="generate">Generate</string>
+    <string name="user_already_exist">User with such email already exists</string>
 </resources>

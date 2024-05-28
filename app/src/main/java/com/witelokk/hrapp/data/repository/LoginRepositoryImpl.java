@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.api.AuthApi;
 import com.witelokk.hrapp.Result;
+import com.witelokk.hrapp.api.model.CreateUserRequest;
 import com.witelokk.hrapp.api.model.Token;
 
 import java.net.HttpURLConnection;
@@ -47,5 +48,28 @@ public class LoginRepositoryImpl implements LoginRepository {
         return resultLiveData;
     }
 
+    @Override
+    public LiveData<Result<Void>> createUser(String email, String password) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
 
+        authApi.createUser(new CreateUserRequest(email, password)).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else if (response.code() == HttpURLConnection.HTTP_CONFLICT) {
+                    resultLiveData.setValue(Result.error(new Error.UserAlreadyExists()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
 }

@@ -8,4 +8,5 @@ import com.witelokk.hrapp.Result;
 
 public interface LoginRepository {
     LiveData<Result<Token>> getAccessToken(String email, String password);
+    LiveData<Result<Void>> createUser(String email, String password);
 }

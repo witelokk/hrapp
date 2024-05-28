@@ -50,4 +50,5 @@
     <string name="type">Тип</string>
     <string name="reports">Отчеты</string>
     <string name="generate">Сгенерировать</string>
+    <string name="user_already_exist">Пользователь с такой почтой уже существует</string>
 </resources>

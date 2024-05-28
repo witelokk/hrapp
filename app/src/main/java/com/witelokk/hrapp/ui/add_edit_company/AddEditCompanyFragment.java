@@ -28,7 +28,7 @@ public class AddEditCompanyFragment extends BaseFragment<AddEditCompanyViewModel
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentAddCompanyBinding.inflate(inflater, container, false);
+        binding = FragmentAddEditCompanyBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

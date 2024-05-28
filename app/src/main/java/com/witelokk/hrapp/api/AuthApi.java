@@ -10,7 +10,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface AuthApi {
-    @POST("auth/")
+    @POST("auth/user")
     Call<Void> createUser(@Body CreateUserRequest createUserRequest);
 
     @FormUrlEncoded

@@ -15,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.databinding.FragmentLoginBinding;
-import com.witelokk.hrapp.ui.BaseFragment;
 
 public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
@@ -44,8 +43,20 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        viewModel.getInvalidCredentials().observe(getViewLifecycleOwner(), none ->
-                Snackbar.make(view, R.string.invalid_credentials, Snackbar.LENGTH_SHORT).show());
+        viewModel.getInvalidCredentials().observe(getViewLifecycleOwner(), event -> {
+            if (event.getContent())
+                Snackbar.make(view, R.string.invalid_credentials, Snackbar.LENGTH_SHORT).show();
+        });
+
+        viewModel.getUnknownError().observe(getViewLifecycleOwner(), event -> {
+            if (event.getContent())
+                Snackbar.make(view, R.string.unknown_error, Snackbar.LENGTH_SHORT).show();
+        });
+
+        viewModel.getUserAlreadyExists().observe(getViewLifecycleOwner(), event -> {
+            if (event.getContent())
+                Snackbar.make(view, R.string.user_already_exist, Snackbar.LENGTH_SHORT).show();
+        });
 
         viewModel.checkIfAuthorized();
 
@@ -54,6 +65,13 @@ public class LoginFragment extends Fragment {
             String password = binding.editTextPassword.getText().toString();
 
             viewModel.login(email, password);
+        });
+
+        binding.buttonRegister.setOnClickListener(v -> {
+            String email = binding.editTextEmail.getText().toString();
+            String password = binding.editTextPassword.getText().toString();
+
+            viewModel.registerAndLogin(email, password);
         });
     }
 
