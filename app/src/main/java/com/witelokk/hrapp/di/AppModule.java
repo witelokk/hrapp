@@ -9,6 +9,7 @@ import com.witelokk.hrapp.api.AuthApi;
 import com.witelokk.hrapp.api.CompaniesApi;
 import com.witelokk.hrapp.api.DepartmentsApi;
 import com.witelokk.hrapp.api.EmployeesApi;
+import com.witelokk.hrapp.api.ReportsApi;
 import com.witelokk.hrapp.api.model.Token;
 import com.witelokk.hrapp.data.repository.ActionsRepository;
 import com.witelokk.hrapp.data.repository.ActionsRepositoryImpl;
@@ -20,6 +21,8 @@ import com.witelokk.hrapp.data.repository.EmployeesRepository;
 import com.witelokk.hrapp.data.repository.EmployeesRepositoryImpl;
 import com.witelokk.hrapp.data.repository.LoginRepository;
 import com.witelokk.hrapp.data.repository.LoginRepositoryImpl;
+import com.witelokk.hrapp.data.repository.ReportsRepositoryImpl;
+import com.witelokk.hrapp.data.repository.ReportsRepository;
 
 import java.net.HttpURLConnection;
 
@@ -86,6 +89,12 @@ public abstract class AppModule {
     @Singleton
     static ActionsApi provideActionsApi(Retrofit retrofit) {
         return retrofit.create(ActionsApi.class);
+    }
+
+    @Provides
+    @Singleton
+    static ReportsApi providReportsApi(Retrofit retrofit) {
+        return retrofit.create(ReportsApi.class);
     }
 
     @Provides
@@ -178,5 +187,11 @@ public abstract class AppModule {
     @Singleton
     static ActionsRepository provideActionsRepository(ActionsApi actionsApi) {
         return new ActionsRepositoryImpl(actionsApi);
+    }
+
+    @Provides
+    @Singleton
+    static ReportsRepository provideReportsRepository(ReportsApi reportsApi) {
+        return new ReportsRepositoryImpl(reportsApi);
     }
 }
