@@ -82,12 +82,14 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
             } else {
                 binding.textNoDepartments.setVisibility(View.GONE);
                 DepartmentsAdapter adapter = new DepartmentsAdapter(departments, department -> {
-                    CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getCompanyId(), department.getName());
+                    CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getId());
                     getNavController().navigate(action);
                 });
                 binding.recyclerView.setAdapter(adapter);
             }
         });
+
+        binding.fabAddDepartment.setOnClickListener(v -> getNavController().navigate(CompanyFragmentDirections.actionCompanyFragmentToAddEditDepartmentFragment(args.getCompanyId())));
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 

@@ -3,6 +3,7 @@
     <string name="inn">INN: %s</string>
     <string name="kpp">KPP: %s</string>
     <string name="create_company">Create Company</string>
+    <string name="create_department">Create Department</string>
     <string name="network_error">Server is unavailable</string>
     <string name="invalid_credentials">Invalid email or password</string>
     <string name="unknown_error">Unknown Error</string>
@@ -28,6 +29,7 @@
     <string name="logout">Logout</string>
     <string name="to_logout">Logout</string>
     <string name="edit_company">Edit Company</string>
+    <string name="edit_department">Edit Department</string>
     <string name="to_edit_company">Edit Company</string>
     <string name="delete_company">Delete Company</string>
     <string name="to_edit_department">Edit Department</string>
@@ -37,7 +39,7 @@
     <string name="delete_company_confirmation">Do you really want to delete this company?</string>
     <string name="delete_department_confirmation">Do you really want to delete this department?</string>
     <string name="logout_confirmation">Do you really want to logout?</string>
-    <string name="company_name">Name</string>
+    <string name="name">Name</string>
     <string name="company_name_empty_error">Name cannot be empty</string>
     <string name="inn_length_error">INN must be 10 characters long</string>
     <string name="kpp_length_error">KPP must be 9 characters long</string>

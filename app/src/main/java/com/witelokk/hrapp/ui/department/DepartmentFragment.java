@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.witelokk.hrapp.R;
+import com.witelokk.hrapp.api.model.Department;
 import com.witelokk.hrapp.databinding.DialogDeleteDepartmentBinding;
 import com.witelokk.hrapp.databinding.FragmentDepartmentBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
@@ -46,8 +47,6 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.toolbar.setTitle(args.getDepartmentName());
-
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
         ((MenuHost) requireActivity()).addMenuProvider(new MenuProvider() {
             @Override
@@ -58,7 +57,9 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.menu_edit) {
-
+                    Department department = viewModel.getDepartment().getValue();
+                    if (department != null)
+                        getNavController().navigate(DepartmentFragmentDirections.actionDepartmentFragmentToAddEditDepartmentFragment(department.getCompanyId(), viewModel.getDepartmentId(), department.getName()));
                 } else if (menuItem.getItemId() == R.id.menu_delete) {
                     showDeleteDialog();
                 }
@@ -66,9 +67,12 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
-
         int departmentId = args.getDepartmentId();
         viewModel.setDepartmentId(departmentId);
+
+        viewModel.getDepartment().observe(getViewLifecycleOwner(), department -> {
+            binding.toolbar.setTitle(department.getName());
+        });
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -85,7 +89,7 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
-        viewModel.loadEmployees();
+        viewModel.loadData();
     }
 
     void showDeleteDialog() {
@@ -97,7 +101,8 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
         dialogBuilder.setPositiveButton(R.string.delete, (dialog, whichButton) -> {
             // delete company
         });
-        dialogBuilder.setNegativeButton(R.string.cancel, (dialog, whichButton) -> {});
+        dialogBuilder.setNegativeButton(R.string.cancel, (dialog, whichButton) -> {
+        });
 
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();
