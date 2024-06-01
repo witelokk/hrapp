@@ -41,7 +41,9 @@
     <string name="delete_department_confirmation">Вы действительно хотите удалить этот отдел?</string>
     <string name="logout_confirmation">Вы действительно хотите выйти?</string>
     <string name="name">Название</string>
-    <string name="company_name_empty_error">Название не может быть пустым</string>
+    <string name="employee_name">ФИО</string>
+    <string name="empty_field_error">Поле не может быть пустым</string>
+    <string name="field_length_error">Поле должно быть длиной %d символов</string>
     <string name="inn_length_error">ИНН должен быть длиной 10 символов</string>
     <string name="kpp_length_error">КПП должен быть длиной 9 символов</string>
     <string name="create">Создать</string>
@@ -54,4 +56,19 @@
     <string name="generate">Сгенерировать</string>
     <string name="user_already_exist">Пользователь с такой почтой уже существует</string>
     <string name="report_filename">Отчет</string>
+    <string name="create_employee">Добавление сотрудника</string>
+    <string name="gender">Пол</string>
+    <string name="snils">СНИЛС</string>
+    <string name="address">Адрес</string>
+    <string name="passport_number">Номер паспорта</string>
+    <string name="passport_issuer">Паспорт выдан</string>
+    <string name="birthdate">Дата рождения</string>
+    <string name="recruitment_date">Дата приема на работу</string>
+    <string name="position">Должность</string>
+    <string name="salary">Зарплата</string>
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+    <string name="add">Добавить</string>
+    <string name="inn_hint_employee">ИНН</string>
+    <string name="passport_issue_date">Дата выдачи паспорта</string>
 </resources>

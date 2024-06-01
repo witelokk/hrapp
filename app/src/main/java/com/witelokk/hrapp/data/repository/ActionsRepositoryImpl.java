@@ -8,12 +8,15 @@ import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.Result;
 import com.witelokk.hrapp.api.ActionsApi;
 import com.witelokk.hrapp.api.model.Action;
+import com.witelokk.hrapp.api.model.CreateRecruitmentActionRequest;
 
 import java.net.HttpURLConnection;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ActionsRepositoryImpl implements ActionsRepository {
     private final ActionsApi actionsApi;
@@ -39,6 +42,32 @@ public class ActionsRepositoryImpl implements ActionsRepository {
 
             @Override
             public void onFailure(@NonNull Call<List<Action>> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
+    @Override
+    public LiveData<Result<Void>> createRecruitmentAction(int employeeId, int departmentId, Date recruitmentDate, String position, float salary) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
+
+        CreateRecruitmentActionRequest createRecruitmentActionRequest = new CreateRecruitmentActionRequest(recruitmentDate, departmentId, position, salary);
+        actionsApi.createAction(employeeId, createRecruitmentActionRequest).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
                 resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });

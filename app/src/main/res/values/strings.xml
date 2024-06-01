@@ -40,7 +40,9 @@
     <string name="delete_department_confirmation">Do you really want to delete this department?</string>
     <string name="logout_confirmation">Do you really want to logout?</string>
     <string name="name">Name</string>
-    <string name="company_name_empty_error">Name cannot be empty</string>
+    <string name="employee_name">Name</string>
+    <string name="empty_field_error">Field can\'t be empty</string>
+    <string name="field_length_error">Field must be %d characters long</string>
     <string name="inn_length_error">INN must be 10 characters long</string>
     <string name="kpp_length_error">KPP must be 9 characters long</string>
     <string name="create">Create</string>
@@ -54,4 +56,19 @@
     <string name="generate">Generate</string>
     <string name="user_already_exist">User with such email already exists</string>
     <string name="report_filename">Report</string>
+    <string name="create_employee">Add employee</string>
+    <string name="gender">Gender</string>
+    <string name="snils">SNILS</string>
+    <string name="address">Address</string>
+    <string name="passport_number">Passport Number</string>
+    <string name="passport_issuer">Passport Issuer</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="recruitment_date">Recruitment Date</string>
+    <string name="position">Position</string>
+    <string name="salary">Salary</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="add">Add</string>
+    <string name="inn_hint_employee">INN</string>
+    <string name="passport_issue_date">Passport Issue Date</string>
 </resources>

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.witelokk.hrapp.api.ActionsApi;
 import com.witelokk.hrapp.api.AuthApi;
 import com.witelokk.hrapp.api.CompaniesApi;
@@ -57,8 +59,14 @@ public abstract class AppModule {
 
     @Provides
     @Singleton
-    static Retrofit provideRetrofit(String baseUrl, OkHttpClient okHttpClient) {
-        return new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(okHttpClient).build();
+    static Gson provideGson() {
+        return new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+    }
+
+    @Provides
+    @Singleton
+    static Retrofit provideRetrofit(String baseUrl, OkHttpClient okHttpClient, Gson gson) {
+        return new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(okHttpClient).build();
     }
 
     @Provides
@@ -124,26 +132,18 @@ public abstract class AppModule {
             String refreshToken = sharedPreferences.getString("refresh_token", null);
 
             if (refreshToken == null) {
-                if (response == null)
-                    return chain.proceed(originalRequest);
-                else
-                    return response;
+                if (response == null) return chain.proceed(originalRequest);
+                else return response;
             }
 
-            if (response != null)
-                response.close();
+            if (response != null) response.close();
 
             Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
             AuthApi authApi = retrofit.create(AuthApi.class);
             retrofit2.Response<Token> tokenResponse = authApi.refreshToken("refresh_token", refreshToken).execute();
             if (tokenResponse.isSuccessful() && tokenResponse.body() != null) {
-                sharedPreferences
-                        .edit()
-                        .putString("access_token", tokenResponse.body().getAccessToken())
-                        .putString("refresh_token", tokenResponse.body().getRefreshToken())
-                        .apply();
-                Request newRequest = originalRequest.newBuilder()
-                        .header("Authorization", "Bearer " + tokenResponse.body().getAccessToken()).build();
+                sharedPreferences.edit().putString("access_token", tokenResponse.body().getAccessToken()).putString("refresh_token", tokenResponse.body().getRefreshToken()).apply();
+                Request newRequest = originalRequest.newBuilder().header("Authorization", "Bearer " + tokenResponse.body().getAccessToken()).build();
                 return chain.proceed(newRequest);
             }
 

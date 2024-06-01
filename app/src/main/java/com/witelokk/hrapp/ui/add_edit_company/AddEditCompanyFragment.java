@@ -76,7 +76,7 @@ public class AddEditCompanyFragment extends BaseFragment<AddEditCompanyViewModel
     private boolean validateName() {
         boolean isValid = !binding.editTextName.getText().toString().isEmpty();
         if (!isValid) {
-            binding.textInputLayoutName.setError(getString(R.string.company_name_empty_error));
+            binding.textInputLayoutName.setError(getString(R.string.empty_field_error));
         } else {
             binding.textInputLayoutName.setErrorEnabled(false);
         }

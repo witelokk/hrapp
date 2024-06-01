@@ -32,5 +32,5 @@ public interface EmployeesApi {
     Call<Void> editEmployee(@Path("employee_id") int employeeId, @Body EditEmployeeRequest editEmployeeRequest);
 
     @POST("/employees/")
-    Call<Void> createEmployee(@Body CreateEmployeeRequest createEmployeeRequest);
+    Call<Employee> createEmployee(@Body CreateEmployeeRequest createEmployeeRequest);
 }

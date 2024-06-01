@@ -16,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.net.HttpURLConnection;
+import java.util.Date;
 import java.util.List;
 
 public class EmployeesRepositoryImpl implements EmployeesRepository {
@@ -143,15 +144,17 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
     }
 
     @Override
-    public LiveData<Result<Void>> createEmployee(String name) {
-        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
-        employeesApi.createEmployee(new CreateEmployeeRequest(name)).enqueue(new Callback<Void>() {
+    public LiveData<Result<Employee>> createEmployee(String name, String gender, Date birthdate, String inn, String snils, String address, String passportIssuer, String passportNumber, Date passportDate) {
+        MutableLiveData<Result<Employee>> resultLiveData = new MutableLiveData<>();
+
+        CreateEmployeeRequest createEmployeeRequest = new CreateEmployeeRequest(name, gender, birthdate, inn, snils, address, passportIssuer, passportNumber, passportDate);
+        employeesApi.createEmployee(createEmployeeRequest).enqueue(new Callback<Employee>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+            public void onResponse(@NonNull Call<Employee> call, @NonNull Response<Employee> response) {
                 if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     resultLiveData.setValue(Result.error(new Error.Unauthorized()));
                 } else if (response.isSuccessful()) {
-                    resultLiveData.setValue(Result.success());
+                    resultLiveData.setValue(Result.success(response.body()));
                 } else {
                     resultLiveData.setValue(Result.error(new Error.Unknown()));
                 }
@@ -159,7 +162,7 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Employee> call, @NonNull Throwable t) {
                 resultLiveData.setValue(Result.error(new Error.Network()));
             }
         });

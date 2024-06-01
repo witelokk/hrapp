@@ -87,6 +87,11 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
             }
         });
 
+        binding.fabAddEmployee.setOnClickListener(v -> {
+            DepartmentFragmentDirections.ActionDepartmentFragmentToAddEmployeeFragment action = DepartmentFragmentDirections.actionDepartmentFragmentToAddEmployeeFragment(args.getDepartmentId());
+            getNavController().navigate(action);
+        });
+
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
         viewModel.loadData();

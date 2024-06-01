@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import com.witelokk.hrapp.Result;
 import com.witelokk.hrapp.api.model.Employee;
 
+import java.util.Date;
 import java.util.List;
 
 public interface EmployeesRepository {
@@ -18,5 +19,5 @@ public interface EmployeesRepository {
 
     LiveData<Result<Void>> editEmployee(int employeeId, String name);
 
-    LiveData<Result<Void>> createEmployee(String name);
+    LiveData<Result<Employee>> createEmployee(String name, String gender, Date birthdate, String inn, String snils, String address, String passportIssuer, String passportNumber, Date passportDate);
 }

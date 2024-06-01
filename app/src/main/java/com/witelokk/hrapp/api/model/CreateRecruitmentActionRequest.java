@@ -8,8 +8,8 @@ public class CreateRecruitmentActionRequest {
     @SerializedName("action_type")
     private final String actionType = "recruitment";
 
-    @SerializedName("recruitment_date")
-    private Date recruitmentDate;
+    @SerializedName("date")
+    private Date date;
 
     @SerializedName("department_id")
     private int departmentId;
@@ -20,12 +20,19 @@ public class CreateRecruitmentActionRequest {
     @SerializedName("salary")
     private float salary;
 
-    public Date getRecruitmentDate() {
-        return recruitmentDate;
+    public CreateRecruitmentActionRequest(Date date, int departmentId, String position, float salary) {
+        this.date = date;
+        this.departmentId = departmentId;
+        this.position = position;
+        this.salary = salary;
     }
 
-    public void setRecruitmentDate(Date recruitmentDate) {
-        this.recruitmentDate = recruitmentDate;
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getDepartmentId() {
