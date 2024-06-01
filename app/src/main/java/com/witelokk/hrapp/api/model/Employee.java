@@ -1,11 +1,16 @@
 package com.witelokk.hrapp.api.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
 
-public class Employee {
+public class Employee implements Parcelable {
     @SerializedName("id")
     private int id;
 
@@ -103,5 +108,26 @@ public class Employee {
 
     public List<Action> getActions() {
         return actions;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(gender);
+        dest.writeParcelable(currentInfo, 0);
+        dest.writeLong(birthdate.getTime());
+        dest.writeString(inn);
+        dest.writeString(snils);
+        dest.writeString(address);
+        dest.writeString(passportNumber);
+        dest.writeLong(passportDate.getTime());
+        dest.writeString(passwordIssuer);
+        dest.writeList(actions);
     }
 }

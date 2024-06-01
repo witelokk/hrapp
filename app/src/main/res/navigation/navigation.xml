@@ -130,6 +130,9 @@
         <action
             android:id="@+id/action_employeeFragment_to_selectActionToAddFragment"
             app:destination="@id/selectActionToAddFragment" />
+        <action
+            android:id="@+id/action_employeeFragment_to_editEmployeeFragment"
+            app:destination="@id/editEmployeeFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectActionToAddFragment"
@@ -167,5 +170,13 @@
         <argument
             android:name="department_id"
             app:argType="integer"/>
+    </fragment>
+    <fragment
+        android:id="@+id/editEmployeeFragment"
+        android:name="com.witelokk.hrapp.ui.edit_employee.EditEmployeeFragment"
+        android:label="EditEmployeeFragment" >
+        <argument
+            android:name="employee"
+            app:argType="com.witelokk.hrapp.api.model.Employee" />
     </fragment>
 </navigation>

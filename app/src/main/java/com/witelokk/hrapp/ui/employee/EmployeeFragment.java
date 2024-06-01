@@ -16,11 +16,12 @@ import com.witelokk.hrapp.databinding.FragmentEmployeeBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
-    FragmentEmployeeBinding binding;
-    EmployeeFragmentArgs args;
+    private FragmentEmployeeBinding binding;
+    private EmployeeFragmentArgs args;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +59,11 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
 
             ActionsAdapter adapter = new ActionsAdapter(employee.getActions(), actionId -> {});
             binding.recyclerView.setAdapter(adapter);
+        });
+
+        binding.cardViewPersonalInfo.setOnClickListener(v -> {
+            com.witelokk.hrapp.ui.employee.EmployeeFragmentDirections.ActionEmployeeFragmentToEditEmployeeFragment action = EmployeeFragmentDirections.actionEmployeeFragmentToEditEmployeeFragment(viewModel.getEmployee().getValue());
+            getNavController().navigate(action);
         });
 
         binding.fabAddAction.setOnClickListener(v -> getNavController().navigate(R.id.action_employeeFragment_to_selectActionToAddFragment));

@@ -1,8 +1,13 @@
 package com.witelokk.hrapp.api.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
-public class CurrentInfo {
+public class CurrentInfo implements Parcelable {
     @SerializedName("position")
     String position;
 
@@ -28,5 +33,17 @@ public class CurrentInfo {
 
     public float getSalary() {
         return salary;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(position);
+        dest.writeInt(department.getId());
+        dest.writeFloat(salary);
     }
 }

@@ -120,9 +120,10 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
     }
 
     @Override
-    public LiveData<Result<Void>> editEmployee(int employeeId, String name) {
+    public LiveData<Result<Void>> editEmployee(int employeeId, String name, String gender, Date birthdate, String inn, String snils, String address, String passportIssuer, String passportNumber, Date passportDate) {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
-        employeesApi.editEmployee(employeeId, new EditEmployeeRequest(name)).enqueue(new Callback<Void>() {
+        EditEmployeeRequest editEmployeeRequest = new EditEmployeeRequest(name, gender, birthdate, inn, snils, address, passportIssuer, passportNumber, passportDate);
+        employeesApi.editEmployee(employeeId, editEmployeeRequest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {

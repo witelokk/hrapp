@@ -71,4 +71,5 @@
     <string name="add">Добавить</string>
     <string name="inn_hint_employee">ИНН</string>
     <string name="passport_issue_date">Дата выдачи паспорта</string>
+    <string name="edit_employee">Редактировать сотрудника</string>
 </resources>

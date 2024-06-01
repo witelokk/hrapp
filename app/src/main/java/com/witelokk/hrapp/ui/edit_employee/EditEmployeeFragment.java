@@ -1,45 +1,44 @@
-package com.witelokk.hrapp.ui.add_employee;
+package com.witelokk.hrapp.ui.edit_employee;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.witelokk.hrapp.R;
-import com.witelokk.hrapp.databinding.FragmentAddEmployeeBinding;
+import com.witelokk.hrapp.databinding.FragmentEditEmployeeBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
-public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
-    private FragmentAddEmployeeBinding binding;
+public class EditEmployeeFragment extends BaseFragment<EditEmployeeViewModel> {
+    private FragmentEditEmployeeBinding binding;
+    private EditEmployeeFragmentArgs args;
     private final DateFormat dateFormat = SimpleDateFormat.getDateInstance();
-
-    AddEmployeeFragmentArgs args;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(AddEmployeeViewModel.class);
-        args = AddEmployeeFragmentArgs.fromBundle(getArguments());
+        viewModel = new ViewModelProvider(requireActivity()).get(EditEmployeeViewModel.class);
+        args = EditEmployeeFragmentArgs.fromBundle(getArguments());
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentAddEmployeeBinding.inflate(inflater, container, false);
+        binding = FragmentEditEmployeeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -47,8 +46,15 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, Arrays.asList(getString(R.string.male), getString(R.string.female)));
-        binding.editTextGender.setAdapter(genderAdapter);
+        binding.editTextName.setText(args.getEmployee().getName());
+        binding.editTextGender.setText(Objects.equals(args.getEmployee().getGender(), "male") ? R.string.male: R.string.female);
+        binding.editTextBirthdate.setText(dateFormat.format(args.getEmployee().getBirthdate()));
+        binding.editTextInn.setText(args.getEmployee().getInn());
+        binding.editTextSnils.setText(args.getEmployee().getSnils());
+        binding.editTextAddress.setText(args.getEmployee().getAddress());
+        binding.editTextPassportNumber.setText(args.getEmployee().getPassportNumber());
+        binding.editTextPassportIssuer.setText(args.getEmployee().getPasswordIssuer());
+        binding.editTextPassportDate.setText(dateFormat.format(args.getEmployee().getPassportDate()));
 
         View.OnClickListener dateClickListener = v -> {
             MaterialDatePicker<Long> materialDatePicker = MaterialDatePicker.Builder.datePicker().build();
@@ -61,9 +67,8 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
 
         binding.editTextBirthdate.setOnClickListener(dateClickListener);
         binding.editTextPassportDate.setOnClickListener(dateClickListener);
-        binding.editTextRecruitmentDate.setOnClickListener(dateClickListener);
 
-        binding.buttonEditCreate.setOnClickListener(v -> {
+        binding.buttonEdit.setOnClickListener(v -> {
             if (!validateFields()) {
                 return;
             }
@@ -75,26 +80,20 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
             String address = binding.editTextAddress.getText().toString();
             String passportIssuer = binding.editTextPassportIssuer.getText().toString();
             String passportNumber = binding.editTextPassportNumber.getText().toString();
-            String position = binding.editTextPosition.getText().toString();
-            float salary = Float.parseFloat(binding.editTextSalary.getText().toString());
             Date birthdate;
             Date passportDate;
-            Date recruitmentDate;
             try {
                 birthdate = dateFormat.parse(binding.editTextBirthdate.getText().toString());
                 passportDate = dateFormat.parse(binding.editTextPassportDate.getText().toString());
-                recruitmentDate = dateFormat.parse(binding.editTextRecruitmentDate.getText().toString());
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-            int departmentId = args.getDepartmentId();
-            viewModel.addEmployee(departmentId, name, gender, birthdate, inn, snils, address, passportIssuer, passportNumber, passportDate, recruitmentDate, position, salary);
+            viewModel.editEmployee(args.getEmployee().getId(), name, gender, birthdate, inn, snils, address, passportIssuer, passportNumber, passportDate);
         });
 
-        viewModel.getIsCreated().observe(getViewLifecycleOwner(), isCreated -> {
-            if (isCreated) {
+        viewModel.getIsChanged().observe(getViewLifecycleOwner(), isChanged -> {
+            if (isChanged)
                 getNavController().navigateUp();
-            }
         });
     }
 
@@ -108,11 +107,8 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
         boolean isPassportNumberValid = validateLength(binding.textInputLayoutPassportNumber, 10);
         boolean isPassportIssuerValid = validateNotEmpty(binding.textInputLayoutPassportIssuer);
         boolean isPassportDateValid = validateNotEmpty(binding.textInputLayoutPassportDate);
-        boolean isRecruitmentDateValid = validateNotEmpty(binding.textInputLayoutRecruitmentDate);
-        boolean isPositionValid = validateNotEmpty(binding.textInputLayoutPosition);
-        boolean isSalaryValid = validateNotEmpty(binding.textInputLayoutSalary);
 
-        return isNameValid && isGenderValid && isBirthdateValid && isInnValid && isSnilsValid && isAddressValid && isPassportNumberValid && isPassportIssuerValid && isPassportDateValid && isRecruitmentDateValid && isPositionValid && isSalaryValid;
+        return isNameValid && isGenderValid && isBirthdateValid && isInnValid && isSnilsValid && isAddressValid && isPassportNumberValid && isPassportIssuerValid && isPassportDateValid;
     }
 
     private boolean validateNotEmpty(TextInputLayout inputLayout) {
@@ -134,4 +130,5 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
         }
         return isValid;
     }
+
 }

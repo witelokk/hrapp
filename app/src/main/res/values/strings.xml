@@ -71,4 +71,5 @@
     <string name="add">Add</string>
     <string name="inn_hint_employee">INN</string>
     <string name="passport_issue_date">Passport Issue Date</string>
+    <string name="edit_employee">Edit Employee</string>
 </resources>
