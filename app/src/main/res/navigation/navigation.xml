@@ -133,11 +133,26 @@
         <action
             android:id="@+id/action_employeeFragment_to_editEmployeeFragment"
             app:destination="@id/editEmployeeFragment" />
+        <action
+            android:id="@+id/action_employeeFragment_to_departmentTransferActionFragment"
+            app:destination="@id/departmentTransferActionFragment">
+            <argument
+                android:name="department_transfer_action"
+                app:argType="com.witelokk.hrapp.api.model.Action"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/selectActionToAddFragment"
-        android:name="com.witelokk.hrapp.ui.reports.select_action_to_add.SelectActionToAddFragment"
-        android:label="SelectActionToAddFragment" />
+        android:name="com.witelokk.hrapp.ui.select_action_to_add.SelectActionToAddFragment"
+        android:label="SelectActionToAddFragment" >
+        <action
+            android:id="@+id/action_selectActionToAddFragment_to_departmentTransferActionFragment"
+            app:destination="@id/departmentTransferActionFragment"
+            app:popUpTo="@id/employeeFragment" />
+        <argument
+            android:name="employee"
+            app:argType="com.witelokk.hrapp.api.model.Employee" />
+    </fragment>
     <fragment
         android:id="@+id/reportsFragment"
         android:name="com.witelokk.hrapp.ui.reports.ReportsFragment"
@@ -178,5 +193,18 @@
         <argument
             android:name="employee"
             app:argType="com.witelokk.hrapp.api.model.Employee" />
+    </fragment>
+    <fragment
+        android:id="@+id/departmentTransferActionFragment"
+        android:name="com.witelokk.hrapp.ui.department_transfer_action.DepartmentTransferActionFragment"
+        android:label="DepartmentTransferActionFragment">
+        <argument
+            android:name="employee"
+            app:argType="com.witelokk.hrapp.api.model.Employee" />
+        <argument
+            android:name="department_transfer_action"
+            android:defaultValue="@null"
+            app:argType="com.witelokk.hrapp.api.model.Action"
+            app:nullable="true" />
     </fragment>
 </navigation>

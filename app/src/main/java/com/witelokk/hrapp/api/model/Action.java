@@ -2,9 +2,10 @@ package com.witelokk.hrapp.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Action {
+public class Action implements Serializable {
 
     static public class DepartmentTransferAction {
         @SerializedName("previous_department")

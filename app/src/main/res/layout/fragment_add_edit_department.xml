@@ -13,7 +13,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar2">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextName"
@@ -23,7 +23,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar2"
+        android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:text="@string/create"
-            app:layout_constraintBottom_toBottomOf="@+id/materialToolbar2"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

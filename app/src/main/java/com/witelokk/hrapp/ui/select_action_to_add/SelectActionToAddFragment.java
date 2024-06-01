@@ -9,17 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.witelokk.hrapp.api.model.Action;
 import com.witelokk.hrapp.databinding.FragmentSelectActionTypeBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 import com.witelokk.hrapp.ui.BaseViewModel;
 
 public class SelectActionToAddFragment extends BaseFragment<BaseViewModel> {
     FragmentSelectActionTypeBinding binding;
+    SelectActionToAddFragmentArgs args;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(SelectActionToAddViewModel.class);
+        args = SelectActionToAddFragmentArgs.fromBundle(getArguments());
     }
 
     @Nullable
@@ -27,5 +30,14 @@ public class SelectActionToAddFragment extends BaseFragment<BaseViewModel> {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentSelectActionTypeBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.cardViewDepartmentTransfer.setOnClickListener(v -> {
+            getNavController().navigate(SelectActionToAddFragmentDirections.actionSelectActionToAddFragmentToDepartmentTransferActionFragment(args.getEmployee()));
+        });
     }
 }

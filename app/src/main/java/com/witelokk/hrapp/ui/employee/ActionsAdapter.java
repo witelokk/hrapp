@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewbinding.ViewBinding;
 
 import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.api.model.Action;
@@ -29,7 +30,6 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
     }
 
     public abstract static class ViewHolder extends RecyclerView.ViewHolder {
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
@@ -161,7 +161,7 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
         holder.setAction(action);
 
         if (onItemClickListener != null) {
-//            holder.binding.getRoot().setOnClickListener(v -> onItemClickListener.onClick(actions.get(position).getId()));
+            holder.itemView.setOnClickListener(v -> onItemClickListener.onClick(actions.get(position)));
         }
     }
 

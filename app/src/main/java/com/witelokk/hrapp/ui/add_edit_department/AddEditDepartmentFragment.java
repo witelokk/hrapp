@@ -37,14 +37,14 @@ public class AddEditDepartmentFragment extends BaseFragment<AddEditDepartmentVie
         super.onViewCreated(view, savedInstanceState);
 
         if (args.getDepartmentId() != -1) {
-            binding.materialToolbar2.setTitle(R.string.edit_company);
+            binding.toolbar.setTitle(R.string.edit_company);
             binding.buttonEditCreate.setText(R.string.to_edit);
         }
 
         if (args.getDepartmentName() != null)
             binding.editTextName.setText(args.getDepartmentName());
 
-        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.materialToolbar2);
+        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.toolbar);
 
         viewModel.getIsCompanyCreated().observe(requireActivity(), isCompanyCreated -> {
             if (isCompanyCreated) {

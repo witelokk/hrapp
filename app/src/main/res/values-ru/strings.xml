@@ -32,9 +32,9 @@
     <string name="edit_company">Редактирование компанию</string>
     <string name="edit_department">Редактирование отдела</string>
     <string name="to_edit_company">Редактировать компанию</string>
-    <string name="delete_company">Удалить компанию</string>
+    <string name="delete_company">Удаление компанию</string>
     <string name="to_edit_department">Редактировать отдел</string>
-    <string name="delete_department">Удалить отдел</string>
+    <string name="delete_department">Удаление отдел</string>
     <string name="delete">Удалить</string>
     <string name="cancel">Отмена</string>
     <string name="delete_company_confirmation">Вы действительно хотите удалить эту компанию?</string>
@@ -72,4 +72,10 @@
     <string name="inn_hint_employee">ИНН</string>
     <string name="passport_issue_date">Дата выдачи паспорта</string>
     <string name="edit_employee">Редактировать сотрудника</string>
+    <string name="to_transfer">Перевести</string>
+    <string name="new_department">Новый отдел</string>
+    <string name="date">Дата</string>
+    <string name="save">Сохранить</string>
+    <string name="delete_action">Удаление действия</string>
+    <string name="delete_action_confirmation">Вы действительно хотите удалить это действие?</string>
 </resources>

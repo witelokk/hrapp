@@ -114,24 +114,4 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
 
         return isNameValid && isGenderValid && isBirthdateValid && isInnValid && isSnilsValid && isAddressValid && isPassportNumberValid && isPassportIssuerValid && isPassportDateValid && isRecruitmentDateValid && isPositionValid && isSalaryValid;
     }
-
-    private boolean validateNotEmpty(TextInputLayout inputLayout) {
-        boolean isValid = inputLayout.getEditText().getText().length() != 0;
-        if (!isValid) {
-            inputLayout.setError(getText(R.string.empty_field_error));
-        } else {
-            inputLayout.setErrorEnabled(false);
-        }
-        return isValid;
-    }
-
-    private boolean validateLength(TextInputLayout inputLayout, int length) {
-        boolean isValid = inputLayout.getEditText().getText().length() == length;
-        if (!isValid) {
-            inputLayout.setError(getString(R.string.field_length_error, length));
-        } else {
-            inputLayout.setErrorEnabled(false);
-        }
-        return isValid;
-    }
 }

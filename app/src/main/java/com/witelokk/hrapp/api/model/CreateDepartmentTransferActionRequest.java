@@ -7,17 +7,22 @@ import java.util.Date;
 public class CreateDepartmentTransferActionRequest {
     @SerializedName("action_type")
     private final String actionType = "department_transfer";
-    @SerializedName("transfer_date")
-    private Date transferDate;
+    @SerializedName("date")
+    private Date date;
     @SerializedName("new_department_id")
     private int newDepartmentId;
 
-    public Date getTransferDate() {
-        return transferDate;
+    public CreateDepartmentTransferActionRequest(Date date, int newDepartmentId) {
+        this.date = date;
+        this.newDepartmentId = newDepartmentId;
     }
 
-    public void setTransferDate(Date transferDate) {
-        this.transferDate = transferDate;
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getNewDepartmentId() {

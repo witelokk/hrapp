@@ -18,6 +18,7 @@ import com.witelokk.hrapp.ui.BaseFragment;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Objects;
 
 public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
     private FragmentEmployeeBinding binding;
@@ -57,7 +58,11 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
 
             binding.textViewPersonalInformationData.setText(getString(R.string.personal_information_data, DateFormat.getDateInstance().format(employee.getBirthdate()), employee.getGender(), employee.getAddress(), employee.getSnils(), employee.getInn(), employee.getPassportNumber(), employee.getPasswordIssuer(), DateFormat.getDateInstance().format(employee.getPassportDate())));
 
-            ActionsAdapter adapter = new ActionsAdapter(employee.getActions(), actionId -> {});
+            ActionsAdapter adapter = new ActionsAdapter(employee.getActions(), action -> {
+                if (Objects.equals(action.getType(), "department_transfer")){
+                    getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToDepartmentTransferActionFragment(action, viewModel.getEmployee().getValue()));
+                }
+            });
             binding.recyclerView.setAdapter(adapter);
         });
 
@@ -66,7 +71,10 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
             getNavController().navigate(action);
         });
 
-        binding.fabAddAction.setOnClickListener(v -> getNavController().navigate(R.id.action_employeeFragment_to_selectActionToAddFragment));
+        binding.fabAddAction.setOnClickListener(v -> {
+            EmployeeFragmentDirections.ActionEmployeeFragmentToSelectActionToAddFragment action = EmployeeFragmentDirections.actionEmployeeFragmentToSelectActionToAddFragment(viewModel.getEmployee().getValue());
+            getNavController().navigate(action);
+        });
 
 //
 //        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->

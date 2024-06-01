@@ -37,14 +37,14 @@ public class AddEditCompanyFragment extends BaseFragment<AddEditCompanyViewModel
         super.onViewCreated(view, savedInstanceState);
 
         if (args.getCompanyId() != -1) {
-            binding.materialToolbar2.setTitle(R.string.edit_company);
+            binding.toolbar.setTitle(R.string.edit_company);
             binding.buttonEditCreate.setText(R.string.to_edit);
             binding.editTextName.setText(args.getCompanyName());
             binding.editTextInn.setText(args.getCompanyInn());
             binding.editTextKpp.setText(args.getCompanyKpp());
         }
 
-        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.materialToolbar2);
+        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.toolbar);
 
         viewModel.getIsCompanyCreated().observe(requireActivity(), isCompanyCreated -> {
             if (isCompanyCreated) {

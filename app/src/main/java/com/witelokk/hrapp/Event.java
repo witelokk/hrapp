@@ -1,5 +1,7 @@
 package com.witelokk.hrapp;
 
+import javax.annotation.Nullable;
+
 public class Event<T> {
     private final T content;
     private boolean hasBeenHandled = false;
@@ -8,6 +10,7 @@ public class Event<T> {
         this.content = content;
     }
 
+    @Nullable
     public T getContent() {
         if (hasBeenHandled)
             return null;

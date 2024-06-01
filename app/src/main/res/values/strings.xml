@@ -72,4 +72,10 @@
     <string name="inn_hint_employee">INN</string>
     <string name="passport_issue_date">Passport Issue Date</string>
     <string name="edit_employee">Edit Employee</string>
+    <string name="to_transfer">Transfer</string>
+    <string name="new_department">New Department</string>
+    <string name="date">Date</string>
+    <string name="save">Save</string>
+    <string name="delete_action">Delete action</string>
+    <string name="delete_action_confirmation">Do you really want to delete this action?</string>
 </resources>

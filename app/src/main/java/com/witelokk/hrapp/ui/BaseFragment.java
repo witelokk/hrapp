@@ -11,6 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.R;
 
@@ -41,5 +42,26 @@ public class BaseFragment<T extends BaseViewModel> extends Fragment {
             } else if (error != null)
                 Snackbar.make(view, R.string.unknown_error, Snackbar.LENGTH_LONG).show();
         });
+    }
+
+
+    protected boolean validateNotEmpty(TextInputLayout inputLayout) {
+        boolean isValid = inputLayout.getEditText().getText().length() != 0;
+        if (!isValid) {
+            inputLayout.setError(getText(R.string.empty_field_error));
+        } else {
+            inputLayout.setErrorEnabled(false);
+        }
+        return isValid;
+    }
+
+    protected boolean validateLength(TextInputLayout inputLayout, int length) {
+        boolean isValid = inputLayout.getEditText().getText().length() == length;
+        if (!isValid) {
+            inputLayout.setError(getString(R.string.field_length_error, length));
+        } else {
+            inputLayout.setErrorEnabled(false);
+        }
+        return isValid;
     }
 }
