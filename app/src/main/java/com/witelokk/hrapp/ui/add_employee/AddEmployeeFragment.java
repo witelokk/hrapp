@@ -9,6 +9,9 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -40,6 +43,12 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentAddEmployeeBinding.inflate(inflater, container, false);
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            binding.scrollView.setPaddingRelative(0, 0, 0, systemBars.bottom);
+            binding.scrollView.setClipToPadding(false);
+            return insets;
+        });
         return binding.getRoot();
     }
 

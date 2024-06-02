@@ -30,6 +30,7 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -75,25 +76,25 @@
                     android:id="@+id/edit_text_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:hint="@string/gender" />
+                    android:hint="@string/gender"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout_birthdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:focusable="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_birthdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/birthdate"
-                    android:focusable="false"
                     android:clickable="true"
                     android:cursorVisible="false"
+                    android:focusable="false"
+                    android:hint="@string/birthdate"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,9 +108,9 @@
                     android:id="@+id/edit_text_inn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/inn_hint_employee"
                     android:inputType="number"
-                    android:maxLength="12"
-                    android:hint="@string/inn_hint_employee" />
+                    android:maxLength="12" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -122,9 +123,9 @@
                     android:id="@+id/edit_text_snils"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/snils"
                     android:inputType="number"
-                    android:maxLength="11"
-                    android:hint="@string/snils" />
+                    android:maxLength="11" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -150,9 +151,9 @@
                     android:id="@+id/edit_text_passport_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/passport_number"
                     android:inputType="number"
-                    android:maxLength="10"
-                    android:hint="@string/passport_number" />
+                    android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -172,17 +173,17 @@
                 android:id="@+id/text_input_layout_passport_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:focusable="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_passport_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/passport_issue_date"
-                    android:focusable="false"
                     android:clickable="true"
                     android:cursorVisible="false"
+                    android:focusable="false"
+                    android:hint="@string/passport_issue_date"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -197,17 +198,17 @@
                 android:id="@+id/text_input_layout_recruitment_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:focusable="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_recruitment_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/recruitment_date"
-                    android:focusable="false"
                     android:clickable="true"
                     android:cursorVisible="false"
+                    android:focusable="false"
+                    android:hint="@string/recruitment_date"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -224,21 +225,21 @@
                     android:hint="@string/position" />
             </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/text_input_layout_salary"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edit_text_salary"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableEnd="@drawable/baseline_currency_ruble_24"
-                                android:inputType="numberDecimal"
-                                android:hint="@string/salary" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_salary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/baseline_currency_ruble_24"
+                    android:hint="@string/salary"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

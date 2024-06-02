@@ -13,8 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,6 +51,13 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ((ViewGroup.MarginLayoutParams)binding.fabAddCompany.getLayoutParams()).bottomMargin+=systemBars.bottom;
+            binding.companiesRecyclerView.setPaddingRelative(0, 0, 0, systemBars.bottom);
+            binding.companiesRecyclerView.setClipToPadding(false);
+            return insets;
+        });
         return binding.getRoot();
     }
 
@@ -55,6 +65,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.companiesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
 
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.toolbar);
         ((MenuHost)requireActivity()).addMenuProvider(new MenuProvider() {
