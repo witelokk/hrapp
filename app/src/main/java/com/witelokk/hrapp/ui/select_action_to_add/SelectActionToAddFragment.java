@@ -36,6 +36,8 @@ public class SelectActionToAddFragment extends BaseFragment<BaseViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.materialToolbar.setSubtitle(args.getEmployee().getName());
+
         binding.cardViewDepartmentTransfer.setOnClickListener(v -> {
             getNavController().navigate(SelectActionToAddFragmentDirections.actionSelectActionToAddFragmentToDepartmentTransferActionFragment(args.getEmployee()));
         });
