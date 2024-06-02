@@ -54,7 +54,7 @@ public abstract class AppModule {
     @Provides
     @Singleton
     static OkHttpClient provideOkHttpClient(Interceptor authInterceptor, HttpLoggingInterceptor loggingInterceptor) {
-        return new OkHttpClient.Builder().addInterceptor(loggingInterceptor).addInterceptor(authInterceptor).build();
+        return new OkHttpClient.Builder().addInterceptor(loggingInterceptor).addInterceptor(authInterceptor).retryOnConnectionFailure(true).build();
     }
 
     @Provides

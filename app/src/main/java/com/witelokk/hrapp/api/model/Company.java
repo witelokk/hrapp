@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class Company {
     @SerializedName("id")
     private int id;
@@ -38,5 +40,18 @@ public class Company {
 
     public String getKpp() {
         return kpp;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Company company = (Company) o;
+        return id == company.id && Objects.equals(name, company.name) && Objects.equals(inn, company.inn) && Objects.equals(kpp, company.kpp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, inn, kpp);
     }
 }

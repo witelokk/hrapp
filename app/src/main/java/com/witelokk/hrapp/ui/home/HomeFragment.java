@@ -1,5 +1,6 @@
 package com.witelokk.hrapp.ui.home;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,16 +26,22 @@ import com.witelokk.hrapp.databinding.DialogLogoutBinding;
 import com.witelokk.hrapp.databinding.FragmentHomeBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class HomeFragment extends BaseFragment<HomeViewModel> {
-    FragmentHomeBinding binding;
+    private FragmentHomeBinding binding;
+    @Inject
+    SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(sharedPreferences.getString("access_token", ""), HomeViewModel.class);
     }
 
     @Nullable
@@ -65,14 +72,12 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
+        CompaniesAdapter adapter = new CompaniesAdapter(new ArrayList<>(), HomeFragment.this::navigateToCompanyFragment);
+        binding.companiesRecyclerView.setAdapter(adapter);
 
         viewModel.getCompanies().observe(requireActivity(), companies -> {
-            if (companies.isEmpty()) {
-                binding.textViewCreateCompany.setVisibility(View.VISIBLE);
-            } else {
-                CompaniesAdapter adapter = new CompaniesAdapter(companies, HomeFragment.this::navigateToCompanyFragment);
-                binding.companiesRecyclerView.setAdapter(adapter);
-            }
+            adapter.setCompanies(companies);
+            binding.textViewCreateCompany.setVisibility(companies.isEmpty()? View.VISIBLE: View.GONE);
         });
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->

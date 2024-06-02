@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.witelokk.hrapp.R;
@@ -14,7 +15,7 @@ import com.witelokk.hrapp.databinding.ItemCompanyBinding;
 import java.util.List;
 
 public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesAdapter.ViewHolder> {
-    private final List<Company> companies;
+    private List<Company> companies;
     private final OnCompanyItemClickListener onItemClickListener;
 
     CompaniesAdapter(List<Company> companies, OnCompanyItemClickListener onItemClickListener) {
@@ -53,5 +54,38 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesAdapter.View
     @Override
     public int getItemCount() {
         return companies.size();
+    }
+
+    public void setCompanies(List<Company> companies) {
+        DiffUtil.Callback callback = new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return CompaniesAdapter.this.companies.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return companies.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                Company oldCompany = CompaniesAdapter.this.companies.get(oldItemPosition);
+                Company newCompany = companies.get(newItemPosition);
+                return oldCompany.getId() == newCompany.getId();
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                Company oldCompany = CompaniesAdapter.this.companies.get(oldItemPosition);
+                Company newCompany = companies.get(newItemPosition);
+                return oldCompany.equals(newCompany);
+            }
+        };
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback);
+        this.companies.clear();
+        this.companies.addAll(companies);
+        diffResult.dispatchUpdatesTo(this);
     }
 }
