@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.witelokk.hrapp.R;
@@ -25,6 +26,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ItemEmployeeBinding binding;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = ItemEmployeeBinding.bind(itemView);
@@ -55,5 +57,38 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.View
     @Override
     public int getItemCount() {
         return employees.size();
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        DiffUtil.Callback callback = new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return EmployeesAdapter.this.employees.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return employees.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                Employee oldCompany = EmployeesAdapter.this.employees.get(oldItemPosition);
+                Employee newCompany = employees.get(newItemPosition);
+                return oldCompany.getId() == newCompany.getId();
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                Employee oldCompany = EmployeesAdapter.this.employees.get(oldItemPosition);
+                Employee newCompany = employees.get(newItemPosition);
+                return oldCompany.equals(newCompany);
+            }
+        };
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback);
+        this.employees.clear();
+        this.employees.addAll(employees);
+        diffResult.dispatchUpdatesTo(this);
     }
 }

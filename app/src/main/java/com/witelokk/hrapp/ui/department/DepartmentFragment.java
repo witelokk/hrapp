@@ -25,6 +25,8 @@ import com.witelokk.hrapp.databinding.DialogDeleteDepartmentBinding;
 import com.witelokk.hrapp.databinding.FragmentDepartmentBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
+import java.util.ArrayList;
+
 public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
     FragmentDepartmentBinding binding;
     DepartmentFragmentArgs args;
@@ -77,15 +79,14 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        EmployeesAdapter adapter = new EmployeesAdapter(new ArrayList<>(), employeeId -> {
+            getNavController().navigate(DepartmentFragmentDirections.actionDepartmentFragmentToEmployeeFragment(employeeId));
+        });
+        binding.recyclerView.setAdapter(adapter);
+
         viewModel.getEmployees().observe(getViewLifecycleOwner(), employees -> {
-            if (employees.isEmpty()) {
-                binding.textNoEmployees.setVisibility(View.VISIBLE);
-            } else {
-                EmployeesAdapter adapter = new EmployeesAdapter(employees, employeeId -> {
-                    getNavController().navigate(DepartmentFragmentDirections.actionDepartmentFragmentToEmployeeFragment(employeeId));
-                });
-                binding.recyclerView.setAdapter(adapter);
-            }
+            adapter.setEmployees(employees);
+            binding.textNoEmployees.setVisibility(employees.isEmpty()? View.VISIBLE: View.GONE);
         });
 
         binding.fabAddEmployee.setOnClickListener(v -> {
