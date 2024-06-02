@@ -59,7 +59,7 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
                 if (menuItem.getItemId() == R.id.menu_edit) {
                     Department department = viewModel.getDepartment().getValue();
                     if (department != null)
-                        getNavController().navigate(DepartmentFragmentDirections.actionDepartmentFragmentToAddEditDepartmentFragment(department.getCompanyId(), viewModel.getDepartmentId(), department.getName()));
+                        getNavController().navigate(DepartmentFragmentDirections.actionDepartmentFragmentToAddEditDepartmentFragment(department.getCompanyId(), viewModel.getDepartment().getValue()));
                 } else if (menuItem.getItemId() == R.id.menu_delete) {
                     showDeleteDialog();
                 }

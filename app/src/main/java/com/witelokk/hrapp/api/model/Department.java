@@ -2,9 +2,10 @@ package com.witelokk.hrapp.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Department {
+public class Department implements Serializable {
     @SerializedName("id")
     private int id;
     @SerializedName("name")

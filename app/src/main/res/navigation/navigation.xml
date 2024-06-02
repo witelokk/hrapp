@@ -112,11 +112,8 @@
                 android:name="company_id"
                 app:argType="integer" />
             <argument
-                android:name="department_id"
-                app:argType="integer"/>
-            <argument
-                android:name="department_name"
-                app:argType="string"/>
+                android:name="department"
+                app:argType="com.witelokk.hrapp.api.model.Department"/>
         </action>
         <action
             android:id="@+id/action_departmentFragment_to_addEmployeeFragment"
@@ -186,14 +183,10 @@
             android:name="company_id"
             app:argType="integer" />
         <argument
-            android:name="department_id"
-            app:argType="integer"
-            android:defaultValue="-1"/>
-        <argument
-            android:name="department_name"
-            app:argType="string"
+            android:name="department"
+            app:argType="com.witelokk.hrapp.api.model.Department"
             app:nullable="true"
-            android:defaultValue="null"/>
+            android:defaultValue="@null"/>
     </fragment>
     <fragment
         android:id="@+id/addEmployeeFragment"

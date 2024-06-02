@@ -36,18 +36,16 @@ public class AddEditDepartmentFragment extends BaseFragment<AddEditDepartmentVie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (args.getDepartmentId() != -1) {
+        if (args.getDepartment() != null) {
             binding.toolbar.setTitle(R.string.edit_company);
             binding.buttonEditCreate.setText(R.string.to_edit);
+            binding.editTextName.setText(args.getDepartment().getName());
         }
-
-        if (args.getDepartmentName() != null)
-            binding.editTextName.setText(args.getDepartmentName());
 
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.toolbar);
 
-        viewModel.getIsCompanyCreated().observe(requireActivity(), isCompanyCreated -> {
-            if (isCompanyCreated) {
+        viewModel.getIsDone().observe(getViewLifecycleOwner(), isDoneEvent -> {
+            if (isDoneEvent.getContent() == Boolean.TRUE) {
                 getNavController().navigateUp();
             }
         });
@@ -60,8 +58,8 @@ public class AddEditDepartmentFragment extends BaseFragment<AddEditDepartmentVie
             if (isNameValid) {
                 String name = binding.editTextName.getText().toString();
 
-                if (args.getDepartmentId() != -1) {
-                    viewModel.editDepartment(args.getDepartmentId(), args.getCompanyId(), name);
+                if (args.getDepartment() != null) {
+                    viewModel.editDepartment(args.getDepartment().getCompanyId(), args.getCompanyId(), name);
                 } else {
                     viewModel.createDepartment(args.getCompanyId(), name);
                 }
