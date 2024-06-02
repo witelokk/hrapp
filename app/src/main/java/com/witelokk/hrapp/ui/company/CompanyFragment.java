@@ -25,6 +25,8 @@ import com.witelokk.hrapp.databinding.DialogDeleteCompanyBinding;
 import com.witelokk.hrapp.databinding.FragmentCompanyBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
+import java.util.ArrayList;
+
 public class CompanyFragment extends BaseFragment<CompanyViewModel> {
     FragmentCompanyBinding binding;
     CompanyFragmentArgs args;
@@ -81,18 +83,16 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        DepartmentsAdapter adapter = new DepartmentsAdapter(new ArrayList<>(), department -> {
+            CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getId());
+            getNavController().navigate(action);
+        });
+        binding.recyclerView.setAdapter(adapter);
+
+
         viewModel.getDepartments().observe(getViewLifecycleOwner(), departments -> {
-            if (departments.isEmpty()) {
-                binding.textNoDepartments.setVisibility(View.VISIBLE);
-                binding.recyclerView.setAdapter(null);
-            } else {
-                binding.textNoDepartments.setVisibility(View.GONE);
-                DepartmentsAdapter adapter = new DepartmentsAdapter(departments, department -> {
-                    CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getId());
-                    getNavController().navigate(action);
-                });
-                binding.recyclerView.setAdapter(adapter);
-            }
+            adapter.setDepartments(departments);
+            binding.textNoDepartments.setVisibility(departments.isEmpty()? View.VISIBLE: View.GONE);
         });
 
         binding.fabAddDepartment.setOnClickListener(v -> getNavController().navigate(CompanyFragmentDirections.actionCompanyFragmentToAddEditDepartmentFragment(args.getCompany().getId())));

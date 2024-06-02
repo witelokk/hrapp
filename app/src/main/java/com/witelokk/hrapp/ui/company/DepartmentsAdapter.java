@@ -5,16 +5,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.witelokk.hrapp.R;
+import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.api.model.Department;
 import com.witelokk.hrapp.databinding.ItemDepartmentBinding;
+import com.witelokk.hrapp.ui.home.CompaniesAdapter;
 
 import java.util.List;
 
 public class DepartmentsAdapter extends RecyclerView.Adapter<DepartmentsAdapter.ViewHolder> {
-    private final List<Department> departments;
+    private List<Department> departments;
     private final OnDepartmentItemClickListener onItemClickListener;
 
     DepartmentsAdapter(List<Department> departments, OnDepartmentItemClickListener onItemClickListener) {
@@ -50,5 +53,38 @@ public class DepartmentsAdapter extends RecyclerView.Adapter<DepartmentsAdapter.
     @Override
     public int getItemCount() {
         return departments.size();
+    }
+
+    public void setDepartments(List<Department> departments) {
+        DiffUtil.Callback callback = new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return DepartmentsAdapter.this.departments.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return departments.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                Department oldCompany = DepartmentsAdapter.this.departments.get(oldItemPosition);
+                Department newCompany = departments.get(newItemPosition);
+                return oldCompany.getId() == newCompany.getId();
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                Department oldCompany = DepartmentsAdapter.this.departments.get(oldItemPosition);
+                Department newCompany = departments.get(newItemPosition);
+                return oldCompany.equals(newCompany);
+            }
+        };
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback);
+        this.departments.clear();
+        this.departments.addAll(departments);
+        diffResult.dispatchUpdatesTo(this);
     }
 }
