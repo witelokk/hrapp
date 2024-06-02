@@ -50,7 +50,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.View
         }
 
         if (onItemClickListener != null) {
-            holder.binding.getRoot().setOnClickListener(v -> onItemClickListener.onClick(employees.get(position).getId()));
+            holder.binding.getRoot().setOnClickListener(v -> onItemClickListener.onClick(employees.get(position)));
         }
     }
 

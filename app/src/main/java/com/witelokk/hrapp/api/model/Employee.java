@@ -7,10 +7,11 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Employee implements Parcelable {
+public class Employee implements Serializable {
     @SerializedName("id")
     private int id;
 
@@ -108,26 +109,5 @@ public class Employee implements Parcelable {
 
     public List<Action> getActions() {
         return actions;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeString(gender);
-        dest.writeParcelable(currentInfo, 0);
-        dest.writeLong(birthdate.getTime());
-        dest.writeString(inn);
-        dest.writeString(snils);
-        dest.writeString(address);
-        dest.writeString(passportNumber);
-        dest.writeLong(passportDate.getTime());
-        dest.writeString(passwordIssuer);
-        dest.writeList(actions);
     }
 }

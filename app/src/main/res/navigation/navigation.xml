@@ -124,9 +124,6 @@
         android:name="com.witelokk.hrapp.ui.employee.EmployeeFragment"
         tools:layout="@layout/fragment_employee"
         android:label="EmployeeFragment">
-        <argument
-            android:name="employee_id"
-            app:argType="integer" />
         <action
             android:id="@+id/action_employeeFragment_to_selectActionToAddFragment"
             app:destination="@id/selectActionToAddFragment" />
@@ -147,6 +144,9 @@
                 android:name="position_transfer_action"
                 app:argType="com.witelokk.hrapp.api.model.Action"/>
         </action>
+        <argument
+            android:name="employee"
+            app:argType="com.witelokk.hrapp.api.model.Employee" />
     </fragment>
     <fragment
         android:id="@+id/selectActionToAddFragment"

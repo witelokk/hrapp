@@ -79,8 +79,8 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        EmployeesAdapter adapter = new EmployeesAdapter(new ArrayList<>(), employeeId -> {
-            getNavController().navigate(DepartmentFragmentDirections.actionDepartmentFragmentToEmployeeFragment(employeeId));
+        EmployeesAdapter adapter = new EmployeesAdapter(new ArrayList<>(), employee -> {
+            getNavController().navigate(DepartmentFragmentDirections.actionDepartmentFragmentToEmployeeFragment(employee));
         });
         binding.recyclerView.setAdapter(adapter);
 

@@ -28,8 +28,8 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         args = EmployeeFragmentArgs.fromBundle(getArguments());
-        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getEmployeeId()), EmployeeViewModel.class);
-        viewModel.setEmployeeId(args.getEmployeeId());
+        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getEmployee().getId()), EmployeeViewModel.class);
+        viewModel.setEmployeeId(args.getEmployee().getId());
     }
 
     @Nullable
@@ -44,6 +44,11 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
         super.onViewCreated(view, savedInstanceState);
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        binding.textViewEmployeeName.setText(args.getEmployee().getName());
+        binding.textViewDepartment.setText(args.getEmployee().getCurrentInfo().getDepartment().getName());
+        binding.textViewPosition.setText(args.getEmployee().getCurrentInfo().getPosition());
+        binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) args.getEmployee().getCurrentInfo().getSalary()));
 
         viewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
             binding.textViewEmployeeName.setText(employee.getName());
