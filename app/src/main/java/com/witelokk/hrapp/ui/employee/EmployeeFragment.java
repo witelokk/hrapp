@@ -70,6 +70,9 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
                 case "salary_change":
                     getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToSalaryChangeActionFragment(action, viewModel.getEmployee().getValue()));
                     break;
+                case "dismissal":
+                    getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToDismissalActionFragment(action, viewModel.getEmployee().getValue()));
+                    break;
             }
         });
         binding.recyclerView.setAdapter(adapter);

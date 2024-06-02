@@ -14,5 +14,6 @@ public interface ActionsRepository {
     public LiveData<Result<Void>> createDepartmentTransferAction(int employeeId, int newDepartmentId, Date date);
     public LiveData<Result<Void>> createPositionTransferAction(int employeeId, String newPosition, Date date);
     public LiveData<Result<Void>> createSalaryChangeAction(int employeeId, float newSalary, Date date);
+    public LiveData<Result<Void>> createDismissalAction(int employeeId, Date date);
     public LiveData<Result<Void>> deleteAction(int actionId);
 }

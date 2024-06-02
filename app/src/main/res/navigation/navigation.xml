@@ -158,6 +158,16 @@
                 app:argType="com.witelokk.hrapp.api.model.Employee" />
 
         </action>
+        <action
+            android:id="@+id/action_employeeFragment_to_dismissalActionFragment"
+            app:destination="@id/dismissalActionFragment">
+            <argument
+                android:name="dismissal_action"
+                app:argType="com.witelokk.hrapp.api.model.Action"/>
+            <argument
+                android:name="employee"
+                app:argType="com.witelokk.hrapp.api.model.Employee" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/selectActionToAddFragment"
@@ -178,6 +188,10 @@
         <action
             android:id="@+id/action_selectActionToAddFragment_to_salaryChangeActionFragment"
             app:destination="@id/salaryChangeActionFragment"
+            app:popUpTo="@id/employeeFragment" />
+        <action
+            android:id="@+id/action_positionTransferActionFragment_to_dismissalActionFragment"
+            app:destination="@id/dismissalActionFragment"
             app:popUpTo="@id/employeeFragment" />
     </fragment>
     <fragment
@@ -256,6 +270,20 @@
         android:label="SalaryChangeActionFragment" >
         <argument
             android:name="salary_change_action"
+            app:argType="com.witelokk.hrapp.api.model.Action"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="employee"
+            app:argType="com.witelokk.hrapp.api.model.Employee" />
+    </fragment>
+    <fragment
+        android:id="@+id/dismissalActionFragment"
+        android:name="com.witelokk.hrapp.ui.dismissal_action.DismissalActionFragment"
+        tools:layout="@layout/fragment_dismissal_action"
+        android:label="DismissalActionFragment">
+        <argument
+            android:name="dismissal_action"
             app:argType="com.witelokk.hrapp.api.model.Action"
             app:nullable="true"
             android:defaultValue="@null"/>

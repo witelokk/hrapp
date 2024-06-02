@@ -9,6 +9,7 @@ import com.witelokk.hrapp.Result;
 import com.witelokk.hrapp.api.ActionsApi;
 import com.witelokk.hrapp.api.model.Action;
 import com.witelokk.hrapp.api.model.CreateDepartmentTransferActionRequest;
+import com.witelokk.hrapp.api.model.CreateDismissalAction;
 import com.witelokk.hrapp.api.model.CreatePositionTransferActionRequest;
 import com.witelokk.hrapp.api.model.CreateRecruitmentActionRequest;
 import com.witelokk.hrapp.api.model.CreateSalaryChangeAction;
@@ -132,6 +133,31 @@ public class ActionsRepositoryImpl implements ActionsRepository {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
 
         CreateSalaryChangeAction createSalaryChangeAction = new CreateSalaryChangeAction(date, newSalary);
+        actionsApi.createAction(employeeId, createSalaryChangeAction).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
+    public LiveData<Result<Void>> createDismissalAction(int employeeId, Date date) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
+
+        CreateDismissalAction createSalaryChangeAction = new CreateDismissalAction(date);
         actionsApi.createAction(employeeId, createSalaryChangeAction).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {

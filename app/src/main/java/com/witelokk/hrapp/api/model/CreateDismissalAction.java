@@ -7,14 +7,18 @@ import java.util.Date;
 public class CreateDismissalAction {
     @SerializedName("action_type")
     private final String actionType = "dismissal";
-    @SerializedName("dismissal_date")
-    private Date dismissalDate;
+    @SerializedName("date")
+    private Date date;
 
-    public Date getDismissalDate() {
-        return dismissalDate;
+    public CreateDismissalAction(Date date) {
+        this.date = date;
     }
 
-    public void setDismissalDate(Date dismissalDate) {
-        this.dismissalDate = dismissalDate;
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
