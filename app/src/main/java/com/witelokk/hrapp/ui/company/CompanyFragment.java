@@ -33,7 +33,7 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         args = CompanyFragmentArgs.fromBundle(getArguments());
-        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getCompanyId()), CompanyViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getCompany().getId()), CompanyViewModel.class);
     }
 
     @Nullable
@@ -47,8 +47,13 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.toolbar.setTitle(args.getCompanyName());
-        viewModel.setCompanyId(args.getCompanyId());
+        binding.toolbar.setTitle(args.getCompany().getName());
+        viewModel.setCompanyId(args.getCompany().getId());
+
+        viewModel.getCompany().observe(getViewLifecycleOwner(), company -> {
+            binding.toolbar.setTitle(company.getName());
+            viewModel.setCompanyId(company.getId());
+        });
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
         ((MenuHost) requireActivity()).addMenuProvider(new MenuProvider() {
@@ -61,12 +66,13 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.menu_edit) {
                     Company company = viewModel.getCompany().getValue();
-                    CompanyFragmentDirections.ActionCompanyFragmentToAddCompanyFragment action = CompanyFragmentDirections.actionCompanyFragmentToAddCompanyFragment(args.getCompanyId(), company.getName(), company.getInn(), company.getKpp());
+                    CompanyFragmentDirections.ActionCompanyFragmentToAddCompanyFragment action = CompanyFragmentDirections.actionCompanyFragmentToAddCompanyFragment(company.getId(), company.getName(), company.getInn(), company.getKpp());
                     getNavController().navigate(action);
                 } else if (menuItem.getItemId() == R.id.menu_delete) {
                     showDeleteDialog();
                 } else if (menuItem.getItemId() == R.id.menu_reports) {
-                    CompanyFragmentDirections.ActionCompanyFragmentToReportsFragment action = CompanyFragmentDirections.actionCompanyFragmentToReportsFragment(args.getCompanyId());
+                    Company company = viewModel.getCompany().getValue();
+                    CompanyFragmentDirections.ActionCompanyFragmentToReportsFragment action = CompanyFragmentDirections.actionCompanyFragmentToReportsFragment(company.getId());
                     getNavController().navigate(action);
                 }
                 return false;
@@ -89,7 +95,7 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
             }
         });
 
-        binding.fabAddDepartment.setOnClickListener(v -> getNavController().navigate(CompanyFragmentDirections.actionCompanyFragmentToAddEditDepartmentFragment(args.getCompanyId())));
+        binding.fabAddDepartment.setOnClickListener(v -> getNavController().navigate(CompanyFragmentDirections.actionCompanyFragmentToAddEditDepartmentFragment(args.getCompany().getId())));
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 

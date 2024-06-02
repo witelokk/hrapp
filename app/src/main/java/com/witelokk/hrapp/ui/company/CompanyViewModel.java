@@ -53,7 +53,8 @@ public class CompanyViewModel extends BaseViewModel {
         departmentsRepository.getDepartmentsByCompany(companyId).observeForever(result -> {
             if (result.isSuccess()) {
                 departments.setValue(result.getData());
-                isLoading.setValue(false);
+                if (company.getValue() != null)
+                    isLoading.setValue(false);
             } else {
                 setError(result.getError());
             }
@@ -61,7 +62,8 @@ public class CompanyViewModel extends BaseViewModel {
         companiesRepository.getCompany(companyId).observeForever(result -> {
             if (result.isSuccess()) {
                 company.setValue(result.getData());
-                isLoading.setValue(false);
+                if (departments.getValue() != null)
+                    isLoading.setValue(false);
             } else {
                 setError(result.getError());
             }
