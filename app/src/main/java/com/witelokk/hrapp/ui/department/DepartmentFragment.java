@@ -33,7 +33,7 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         args = DepartmentFragmentArgs.fromBundle(getArguments());
-        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getDepartmentId()), DepartmentViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getDepartment().getId()), DepartmentViewModel.class);
     }
 
     @Nullable
@@ -67,8 +67,9 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
-        int departmentId = args.getDepartmentId();
-        viewModel.setDepartmentId(departmentId);
+        binding.toolbar.setTitle(args.getDepartment().getName());
+
+        viewModel.setDepartmentId(args.getDepartment().getId());
 
         viewModel.getDepartment().observe(getViewLifecycleOwner(), department -> {
             binding.toolbar.setTitle(department.getName());
@@ -88,7 +89,7 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
         });
 
         binding.fabAddEmployee.setOnClickListener(v -> {
-            DepartmentFragmentDirections.ActionDepartmentFragmentToAddEmployeeFragment action = DepartmentFragmentDirections.actionDepartmentFragmentToAddEmployeeFragment(args.getDepartmentId());
+            DepartmentFragmentDirections.ActionDepartmentFragmentToAddEmployeeFragment action = DepartmentFragmentDirections.actionDepartmentFragmentToAddEmployeeFragment(args.getDepartment().getId());
             getNavController().navigate(action);
         });
 

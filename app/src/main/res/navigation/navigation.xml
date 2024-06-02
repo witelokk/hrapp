@@ -99,9 +99,6 @@
         android:name="com.witelokk.hrapp.ui.department.DepartmentFragment"
         tools:layout="@layout/fragment_department"
         android:label="DepartmentFragment">
-        <argument
-            android:name="department_id"
-            app:argType="integer" />
         <action
             android:id="@+id/action_departmentFragment_to_employeeFragment"
             app:destination="@id/employeeFragment" />
@@ -118,6 +115,9 @@
         <action
             android:id="@+id/action_departmentFragment_to_addEmployeeFragment"
             app:destination="@id/addEmployeeFragment" />
+        <argument
+            android:name="department"
+            app:argType="com.witelokk.hrapp.api.model.Department" />
     </fragment>
     <fragment
         android:id="@+id/employeeFragment"

@@ -53,6 +53,7 @@ public class DepartmentViewModel extends BaseViewModel {
     }
 
     public void loadData() {
+        isLoading.setValue(true);
         departmentsRepository.getDepartment(departmentId).observeForever(result -> {
             if (result.isSuccess()) {
                 department.setValue(result.getData());

@@ -84,11 +84,10 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         DepartmentsAdapter adapter = new DepartmentsAdapter(new ArrayList<>(), department -> {
-            CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department.getId());
+            CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department);
             getNavController().navigate(action);
         });
         binding.recyclerView.setAdapter(adapter);
-
 
         viewModel.getDepartments().observe(getViewLifecycleOwner(), departments -> {
             adapter.setDepartments(departments);
