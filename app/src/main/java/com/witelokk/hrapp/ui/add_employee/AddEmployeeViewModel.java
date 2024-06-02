@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.witelokk.hrapp.Event;
 import com.witelokk.hrapp.api.model.Employee;
 import com.witelokk.hrapp.data.repository.ActionsRepository;
 import com.witelokk.hrapp.data.repository.EmployeesRepository;
@@ -20,7 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class AddEmployeeViewModel extends BaseViewModel {
     private final EmployeesRepository employeesRepository;
     private final ActionsRepository actionsRepository;
-    private final MutableLiveData<Boolean> isCreated = new MutableLiveData<>();
+    private final MutableLiveData<Event<Boolean>> isCreated = new MutableLiveData<>();
 
     @Inject
     public AddEmployeeViewModel(SharedPreferences sharedPreferences, EmployeesRepository employeesRepository, ActionsRepository actionsRepository) {
@@ -29,7 +30,7 @@ public class AddEmployeeViewModel extends BaseViewModel {
         this.actionsRepository = actionsRepository;
     }
 
-    public LiveData<Boolean> getIsCreated() {
+    public LiveData<Event<Boolean>> getIsCreated() {
         return isCreated;
     }
 
@@ -44,7 +45,7 @@ public class AddEmployeeViewModel extends BaseViewModel {
                 if (!createEmployeeResult.isSuccess()) {
                     setError(createEmployeeResult.getError());
                 } else {
-                    isCreated.setValue(true);
+                    isCreated.setValue(new Event<>(true));
                 }
             });
 

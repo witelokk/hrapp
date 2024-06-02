@@ -92,7 +92,7 @@ public class EditEmployeeFragment extends BaseFragment<EditEmployeeViewModel> {
         });
 
         viewModel.getIsChanged().observe(getViewLifecycleOwner(), isChanged -> {
-            if (isChanged)
+            if (isChanged.getContent() == Boolean.TRUE)
                 getNavController().navigateUp();
         });
     }

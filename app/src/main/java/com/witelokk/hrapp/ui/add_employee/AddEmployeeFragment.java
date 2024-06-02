@@ -92,7 +92,7 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
         });
 
         viewModel.getIsCreated().observe(getViewLifecycleOwner(), isCreated -> {
-            if (isCreated) {
+            if (isCreated.getContent() == Boolean.TRUE) {
                 getNavController().navigateUp();
             }
         });

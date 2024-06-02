@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.witelokk.hrapp.Event;
 import com.witelokk.hrapp.data.repository.EmployeesRepository;
 import com.witelokk.hrapp.ui.BaseViewModel;
 
@@ -17,7 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class EditEmployeeViewModel extends BaseViewModel {
     EmployeesRepository employeesRepository;
-    private final MutableLiveData<Boolean> isChanged = new MutableLiveData<>();
+    private final MutableLiveData<Event<Boolean>> isChanged = new MutableLiveData<>();
 
     @Inject
     public EditEmployeeViewModel(SharedPreferences sharedPreferences, EmployeesRepository employeesRepository) {
@@ -25,14 +26,14 @@ public class EditEmployeeViewModel extends BaseViewModel {
         this.employeesRepository = employeesRepository;
     }
 
-    public LiveData<Boolean> getIsChanged() {
+    public LiveData<Event<Boolean>> getIsChanged() {
         return isChanged;
     }
 
     void editEmployee(int employeeId, String name, String gender, Date birthdate, String inn, String snils, String address, String passportIssuer, String passportNumber, Date passportDate) {
         employeesRepository.editEmployee(employeeId, name, gender, birthdate, inn, snils, address, passportIssuer, passportNumber, passportDate).observeForever(result -> {
             if (result.isSuccess()) {
-                isChanged.setValue(true);
+                isChanged.setValue(new Event<>(true));
             } else {
                 setError(result.getError());
             }
