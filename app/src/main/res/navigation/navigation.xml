@@ -14,6 +14,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.witelokk.hrapp.ui.auth.LoginFragment"
+        tools:layout="@layout/fragment_login"
         android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
@@ -24,6 +25,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.witelokk.hrapp.ui.home.HomeFragment"
+        tools:layout="@layout/fragment_home"
         android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_addCompanyFragment"
@@ -35,6 +37,7 @@
     <fragment
         android:id="@+id/addCompanyFragment"
         android:name="com.witelokk.hrapp.ui.add_edit_company.AddEditCompanyFragment"
+        tools:layout="@layout/fragment_add_edit_company"
         android:label="AddCompanyFragment">
         <argument
             android:name="company_id"
@@ -59,6 +62,7 @@
     <fragment
         android:id="@+id/companyFragment"
         android:name="com.witelokk.hrapp.ui.company.CompanyFragment"
+        tools:layout="@layout/fragment_company"
         android:label="CompanyFragment">
         <argument
             android:name="company_id"
@@ -96,6 +100,7 @@
     <fragment
         android:id="@+id/departmentFragment"
         android:name="com.witelokk.hrapp.ui.department.DepartmentFragment"
+        tools:layout="@layout/fragment_department"
         android:label="DepartmentFragment">
         <argument
             android:name="department_id"
@@ -123,6 +128,7 @@
     <fragment
         android:id="@+id/employeeFragment"
         android:name="com.witelokk.hrapp.ui.employee.EmployeeFragment"
+        tools:layout="@layout/fragment_employee"
         android:label="EmployeeFragment">
         <argument
             android:name="employee_id"
@@ -151,6 +157,7 @@
     <fragment
         android:id="@+id/selectActionToAddFragment"
         android:name="com.witelokk.hrapp.ui.select_action_to_add.SelectActionToAddFragment"
+        tools:layout="@layout/fragment_select_action_type"
         android:label="SelectActionToAddFragment" >
         <action
             android:id="@+id/action_selectActionToAddFragment_to_departmentTransferActionFragment"
@@ -167,6 +174,7 @@
     <fragment
         android:id="@+id/reportsFragment"
         android:name="com.witelokk.hrapp.ui.reports.ReportsFragment"
+        tools:layout="@layout/fragment_reports"
         android:label="ReportsFragment" >
         <argument
             android:name="company_id"
@@ -175,6 +183,7 @@
     <fragment
         android:id="@+id/addEditDepartmentFragment"
         android:name="com.witelokk.hrapp.ui.add_edit_department.AddEditDepartmentFragment"
+        tools:layout="@layout/fragment_add_edit_department"
         android:label="AddEditDepartmentFragment">
         <argument
             android:name="company_id"
@@ -192,6 +201,7 @@
     <fragment
         android:id="@+id/addEmployeeFragment"
         android:name="com.witelokk.hrapp.ui.add_employee.AddEmployeeFragment"
+        tools:layout="@layout/fragment_add_employee"
         android:label="AddEmployeeFragment">
         <argument
             android:name="department_id"
@@ -200,6 +210,7 @@
     <fragment
         android:id="@+id/editEmployeeFragment"
         android:name="com.witelokk.hrapp.ui.edit_employee.EditEmployeeFragment"
+        tools:layout="@layout/fragment_edit_employee"
         android:label="EditEmployeeFragment" >
         <argument
             android:name="employee"
@@ -208,6 +219,7 @@
     <fragment
         android:id="@+id/departmentTransferActionFragment"
         android:name="com.witelokk.hrapp.ui.department_transfer_action.DepartmentTransferActionFragment"
+        tools:layout="@layout/fragment_department_transfer_action"
         android:label="DepartmentTransferActionFragment">
         <argument
             android:name="employee"
@@ -221,6 +233,7 @@
     <fragment
         android:id="@+id/positionTransferActionFragment"
         android:name="com.witelokk.hrapp.ui.position_transfer_action.PositionTransferActionFragment"
+        tools:layout="@layout/fragment_position_transfer_action"
         android:label="PositionTransferActionFragment">
         <argument
             android:name="employee"
