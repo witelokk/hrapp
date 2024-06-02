@@ -8,18 +8,23 @@ public class CreatePositionTransferActionRequest {
     @SerializedName("action_type")
     private final String actionType = "position_transfer";
 
-    @SerializedName("transfer_date")
-    private Date transferDate;
+    @SerializedName("date")
+    private Date date;
 
     @SerializedName("new_position")
     private String newPosition;
 
-    public Date getTransferDate() {
-        return transferDate;
+    public CreatePositionTransferActionRequest(Date date, String newPosition) {
+        this.date = date;
+        this.newPosition = newPosition;
     }
 
-    public void setTransferDate(Date transferDate) {
-        this.transferDate = transferDate;
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getNewPosition() {

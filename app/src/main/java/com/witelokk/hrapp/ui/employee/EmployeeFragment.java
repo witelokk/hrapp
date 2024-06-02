@@ -59,8 +59,13 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
             binding.textViewPersonalInformationData.setText(getString(R.string.personal_information_data, DateFormat.getDateInstance().format(employee.getBirthdate()), employee.getGender(), employee.getAddress(), employee.getSnils(), employee.getInn(), employee.getPassportNumber(), employee.getPasswordIssuer(), DateFormat.getDateInstance().format(employee.getPassportDate())));
 
             ActionsAdapter adapter = new ActionsAdapter(employee.getActions(), action -> {
-                if (Objects.equals(action.getType(), "department_transfer")){
-                    getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToDepartmentTransferActionFragment(action, viewModel.getEmployee().getValue()));
+                switch (action.getType()) {
+                    case "department_transfer":
+                        getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToDepartmentTransferActionFragment(action, viewModel.getEmployee().getValue()));
+                        break;
+                    case "position_transfer":
+                        getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToPositionTransferActionFragment(action, viewModel.getEmployee().getValue()));
+                        break;
                 }
             });
             binding.recyclerView.setAdapter(adapter);

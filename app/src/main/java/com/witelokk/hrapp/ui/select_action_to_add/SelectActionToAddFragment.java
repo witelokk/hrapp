@@ -39,5 +39,9 @@ public class SelectActionToAddFragment extends BaseFragment<BaseViewModel> {
         binding.cardViewDepartmentTransfer.setOnClickListener(v -> {
             getNavController().navigate(SelectActionToAddFragmentDirections.actionSelectActionToAddFragmentToDepartmentTransferActionFragment(args.getEmployee()));
         });
+
+        binding.cardViewPositionTransfer.setOnClickListener(v -> {
+            getNavController().navigate(SelectActionToAddFragmentDirections.actionSelectActionToAddFragmentToPositionTransferActionFragment(args.getEmployee()));
+        });
     }
 }

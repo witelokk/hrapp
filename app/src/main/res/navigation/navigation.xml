@@ -140,6 +140,13 @@
                 android:name="department_transfer_action"
                 app:argType="com.witelokk.hrapp.api.model.Action"/>
         </action>
+        <action
+            android:id="@+id/action_employeeFragment_to_positionTransferActionFragment"
+            app:destination="@id/positionTransferActionFragment">
+            <argument
+                android:name="position_transfer_action"
+                app:argType="com.witelokk.hrapp.api.model.Action"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/selectActionToAddFragment"
@@ -152,6 +159,10 @@
         <argument
             android:name="employee"
             app:argType="com.witelokk.hrapp.api.model.Employee" />
+        <action
+            android:id="@+id/action_selectActionToAddFragment_to_positionTransferActionFragment"
+            app:destination="@id/positionTransferActionFragment"
+            app:popUpTo="@id/employeeFragment" />
     </fragment>
     <fragment
         android:id="@+id/reportsFragment"
@@ -203,6 +214,19 @@
             app:argType="com.witelokk.hrapp.api.model.Employee" />
         <argument
             android:name="department_transfer_action"
+            android:defaultValue="@null"
+            app:argType="com.witelokk.hrapp.api.model.Action"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/positionTransferActionFragment"
+        android:name="com.witelokk.hrapp.ui.position_transfer_action.PositionTransferActionFragment"
+        android:label="PositionTransferActionFragment">
+        <argument
+            android:name="employee"
+            app:argType="com.witelokk.hrapp.api.model.Employee" />
+        <argument
+            android:name="position_transfer_action"
             android:defaultValue="@null"
             app:argType="com.witelokk.hrapp.api.model.Action"
             app:nullable="true" />

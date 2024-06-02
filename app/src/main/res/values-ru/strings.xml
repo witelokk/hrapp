@@ -78,4 +78,5 @@
     <string name="save">Сохранить</string>
     <string name="delete_action">Удаление действия</string>
     <string name="delete_action_confirmation">Вы действительно хотите удалить это действие?</string>
+    <string name="new_position">Новая должность</string>
 </resources>
