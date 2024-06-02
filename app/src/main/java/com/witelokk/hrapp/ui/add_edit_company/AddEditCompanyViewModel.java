@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.witelokk.hrapp.Event;
 import com.witelokk.hrapp.data.repository.CompaniesRepository;
 import com.witelokk.hrapp.ui.BaseViewModel;
 
@@ -14,7 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class AddEditCompanyViewModel extends BaseViewModel {
-    private final MutableLiveData<Boolean> isCompanyCreated = new MutableLiveData<>();
+    private final MutableLiveData<Event<Boolean>> isDone = new MutableLiveData<>();
     private final CompaniesRepository companiesRepository;
 
     @Inject
@@ -23,14 +24,14 @@ public class AddEditCompanyViewModel extends BaseViewModel {
         this.companiesRepository = companiesRepository;
     }
 
-    LiveData<Boolean> getIsCompanyCreated() {
-        return isCompanyCreated;
+    LiveData<Event<Boolean>> getIsDone() {
+        return isDone;
     }
 
     void createCompany(String name, String inn, String kpp) {
         companiesRepository.addCompany(name, inn, kpp).observeForever(result -> {
             if (result.isSuccess()) {
-                isCompanyCreated.setValue(true);
+                isDone.setValue(new Event<>(true));
             } else {
                 setError(result.getError());
             }
@@ -40,7 +41,7 @@ public class AddEditCompanyViewModel extends BaseViewModel {
     void editCompany(int companyId, String name, String inn, String kpp) {
         companiesRepository.editCompany(companyId, name, inn, kpp).observeForever(result -> {
             if (result.isSuccess()) {
-                isCompanyCreated.setValue(true);
+                isDone.setValue(new Event<>(true));
             } else {
                 setError(result.getError());
             }

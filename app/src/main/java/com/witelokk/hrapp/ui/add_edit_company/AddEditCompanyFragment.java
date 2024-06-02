@@ -46,8 +46,8 @@ public class AddEditCompanyFragment extends BaseFragment<AddEditCompanyViewModel
 
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.toolbar);
 
-        viewModel.getIsCompanyCreated().observe(getViewLifecycleOwner(), isCompanyCreated -> {
-            if (isCompanyCreated) {
+        viewModel.getIsDone().observe(getViewLifecycleOwner(), isCompanyCreatedEvent -> {
+            if (isCompanyCreatedEvent.getContent() == Boolean.TRUE) {
                 getNavController().navigateUp();
             }
         });
