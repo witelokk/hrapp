@@ -38,12 +38,10 @@ public class SelectActionToAddFragment extends BaseFragment<BaseViewModel> {
 
         binding.materialToolbar.setSubtitle(args.getEmployee().getName());
 
-        binding.cardViewDepartmentTransfer.setOnClickListener(v -> {
-            getNavController().navigate(SelectActionToAddFragmentDirections.actionSelectActionToAddFragmentToDepartmentTransferActionFragment(args.getEmployee()));
-        });
+        binding.cardViewDepartmentTransfer.setOnClickListener(v -> getNavController().navigate(SelectActionToAddFragmentDirections.actionSelectActionToAddFragmentToDepartmentTransferActionFragment(args.getEmployee())));
 
-        binding.cardViewPositionTransfer.setOnClickListener(v -> {
-            getNavController().navigate(SelectActionToAddFragmentDirections.actionSelectActionToAddFragmentToPositionTransferActionFragment(args.getEmployee()));
-        });
+        binding.cardViewPositionTransfer.setOnClickListener(v -> getNavController().navigate(SelectActionToAddFragmentDirections.actionSelectActionToAddFragmentToPositionTransferActionFragment(args.getEmployee())));
+
+        binding.cardViewSalaryChange.setOnClickListener(v -> getNavController().navigate(SelectActionToAddFragmentDirections.actionSelectActionToAddFragmentToSalaryChangeActionFragment(args.getEmployee())));
     }
 }

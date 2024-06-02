@@ -11,6 +11,7 @@ import com.witelokk.hrapp.api.model.Action;
 import com.witelokk.hrapp.api.model.CreateDepartmentTransferActionRequest;
 import com.witelokk.hrapp.api.model.CreatePositionTransferActionRequest;
 import com.witelokk.hrapp.api.model.CreateRecruitmentActionRequest;
+import com.witelokk.hrapp.api.model.CreateSalaryChangeAction;
 
 import java.net.HttpURLConnection;
 import java.util.Date;
@@ -107,6 +108,31 @@ public class ActionsRepositoryImpl implements ActionsRepository {
 
         CreatePositionTransferActionRequest createPositionTransferActionRequest = new CreatePositionTransferActionRequest(date, newPosition);
         actionsApi.createAction(employeeId, createPositionTransferActionRequest).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
+    public LiveData<Result<Void>> createSalaryChangeAction(int employeeId, float newSalary, Date date) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
+
+        CreateSalaryChangeAction createSalaryChangeAction = new CreateSalaryChangeAction(date, newSalary);
+        actionsApi.createAction(employeeId, createSalaryChangeAction).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {

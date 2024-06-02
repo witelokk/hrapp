@@ -6,20 +6,25 @@ import java.util.Date;
 
 public class CreateSalaryChangeAction {
     @SerializedName("action_type")
-    private final String actionType = "dismissal";
+    private final String actionType = "salary_change";
 
-    @SerializedName("change_date")
-    private Date changeDate;
+    @SerializedName("date")
+    private Date date;
 
     @SerializedName("new_salary")
     private float newSalary;
 
-    public Date getChangeDate() {
-        return changeDate;
+    public CreateSalaryChangeAction(Date date, float newSalary) {
+        this.date = date;
+        this.newSalary = newSalary;
     }
 
-    public void setChangeDate(Date changeDate) {
-        this.changeDate = changeDate;
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public float getNewSalary() {

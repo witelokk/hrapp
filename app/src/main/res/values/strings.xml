@@ -79,4 +79,5 @@
     <string name="delete_action">Delete action</string>
     <string name="delete_action_confirmation">Do you really want to delete this action?</string>
     <string name="new_position">New Position</string>
+    <string name="new_salary">New Salary</string>
 </resources>

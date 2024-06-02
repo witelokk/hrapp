@@ -147,6 +147,17 @@
         <argument
             android:name="employee"
             app:argType="com.witelokk.hrapp.api.model.Employee" />
+        <action
+            android:id="@+id/action_employeeFragment_to_salaryChangeActionFragment"
+            app:destination="@id/salaryChangeActionFragment">
+            <argument
+                android:name="salary_change_action"
+                app:argType="com.witelokk.hrapp.api.model.Action" />
+            <argument
+                android:name="employee"
+                app:argType="com.witelokk.hrapp.api.model.Employee" />
+
+        </action>
     </fragment>
     <fragment
         android:id="@+id/selectActionToAddFragment"
@@ -163,6 +174,10 @@
         <action
             android:id="@+id/action_selectActionToAddFragment_to_positionTransferActionFragment"
             app:destination="@id/positionTransferActionFragment"
+            app:popUpTo="@id/employeeFragment" />
+        <action
+            android:id="@+id/action_selectActionToAddFragment_to_salaryChangeActionFragment"
+            app:destination="@id/salaryChangeActionFragment"
             app:popUpTo="@id/employeeFragment" />
     </fragment>
     <fragment
@@ -233,5 +248,19 @@
             android:defaultValue="@null"
             app:argType="com.witelokk.hrapp.api.model.Action"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/salaryChangeActionFragment"
+        android:name="com.witelokk.hrapp.ui.salary_change_action.SalaryChangeActionFragment"
+        tools:layout="@layout/fragment_salary_change_action"
+        android:label="SalaryChangeActionFragment" >
+        <argument
+            android:name="salary_change_action"
+            app:argType="com.witelokk.hrapp.api.model.Action"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="employee"
+            app:argType="com.witelokk.hrapp.api.model.Employee" />
     </fragment>
 </navigation>
