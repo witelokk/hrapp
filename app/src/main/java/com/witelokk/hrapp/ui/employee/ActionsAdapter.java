@@ -5,8 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewbinding.ViewBinding;
 
 import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.api.model.Action;
@@ -186,5 +186,38 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
     @Override
     public int getItemCount() {
         return actions.size();
+    }
+
+    public void setActions(List<Action> actions) {
+        DiffUtil.Callback callback = new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return ActionsAdapter.this.actions.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return actions.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                Action oldAction = ActionsAdapter.this.actions.get(oldItemPosition);
+                Action newAction = actions.get(newItemPosition);
+                return oldAction.getId() == newAction.getId();
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                Action oldAction = ActionsAdapter.this.actions.get(oldItemPosition);
+                Action newAction = actions.get(newItemPosition);
+                return oldAction.equals(newAction);
+            }
+        };
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback);
+        this.actions.clear();
+        this.actions.addAll(actions);
+        diffResult.dispatchUpdatesTo(this);
     }
 }

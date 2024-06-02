@@ -17,6 +17,7 @@ import com.witelokk.hrapp.ui.BaseFragment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -43,12 +44,23 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
         binding.textViewEmployeeName.setText(args.getEmployee().getName());
         binding.textViewDepartment.setText(args.getEmployee().getCurrentInfo().getDepartment().getName());
         binding.textViewPosition.setText(args.getEmployee().getCurrentInfo().getPosition());
         binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) args.getEmployee().getCurrentInfo().getSalary()));
+
+        ActionsAdapter adapter = new ActionsAdapter(new ArrayList<>(), action -> {
+            switch (action.getType()) {
+                case "department_transfer":
+                    getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToDepartmentTransferActionFragment(action, viewModel.getEmployee().getValue()));
+                    break;
+                case "position_transfer":
+                    getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToPositionTransferActionFragment(action, viewModel.getEmployee().getValue()));
+                    break;
+            }
+        });
+        binding.recyclerView.setAdapter(adapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         viewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
             binding.textViewEmployeeName.setText(employee.getName());
@@ -63,17 +75,7 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
 
             binding.textViewPersonalInformationData.setText(getString(R.string.personal_information_data, DateFormat.getDateInstance().format(employee.getBirthdate()), employee.getGender(), employee.getAddress(), employee.getSnils(), employee.getInn(), employee.getPassportNumber(), employee.getPasswordIssuer(), DateFormat.getDateInstance().format(employee.getPassportDate())));
 
-            ActionsAdapter adapter = new ActionsAdapter(employee.getActions(), action -> {
-                switch (action.getType()) {
-                    case "department_transfer":
-                        getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToDepartmentTransferActionFragment(action, viewModel.getEmployee().getValue()));
-                        break;
-                    case "position_transfer":
-                        getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToPositionTransferActionFragment(action, viewModel.getEmployee().getValue()));
-                        break;
-                }
-            });
-            binding.recyclerView.setAdapter(adapter);
+            adapter.setActions(employee.getActions());
         });
 
         binding.cardViewPersonalInfo.setOnClickListener(v -> {

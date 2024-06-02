@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class Action implements Serializable {
 
@@ -20,6 +21,19 @@ public class Action implements Serializable {
 
         public Department getNewDepartment() {
             return newDepartment;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof DepartmentTransferAction)) return false;
+            DepartmentTransferAction that = (DepartmentTransferAction) o;
+            return Objects.equals(previousDepartment, that.previousDepartment) && Objects.equals(newDepartment, that.newDepartment);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(previousDepartment, newDepartment);
         }
     }
 
@@ -39,6 +53,19 @@ public class Action implements Serializable {
 
         public float getNewSalary() {
             return newSalary;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof SalaryChangeAction)) return false;
+            SalaryChangeAction that = (SalaryChangeAction) o;
+            return Float.compare(previousSalary, that.previousSalary) == 0 && Float.compare(newSalary, that.newSalary) == 0;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(previousSalary, newSalary);
         }
     }
 
@@ -64,6 +91,19 @@ public class Action implements Serializable {
         public void setNewPosition(String newPosition) {
             this.newPosition = newPosition;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof PositionTransferAction)) return false;
+            PositionTransferAction that = (PositionTransferAction) o;
+            return Objects.equals(previousPosition, that.previousPosition) && Objects.equals(newPosition, that.newPosition);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(previousPosition, newPosition);
+        }
     }
 
     static public class RecruitmentAction {
@@ -86,6 +126,19 @@ public class Action implements Serializable {
 
         public float getSalary() {
             return salary;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof RecruitmentAction)) return false;
+            RecruitmentAction that = (RecruitmentAction) o;
+            return Float.compare(salary, that.salary) == 0 && Objects.equals(department, that.department) && Objects.equals(position, that.position);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(department, position, salary);
         }
     }
 
@@ -144,5 +197,18 @@ public class Action implements Serializable {
 
     public SalaryChangeAction getSalaryChange() {
         return salaryChange;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Action)) return false;
+        Action action = (Action) o;
+        return id == action.id && Objects.equals(type, action.type) && Objects.equals(date, action.date) && Objects.equals(recruitment, action.recruitment) && Objects.equals(departmentTransfer, action.departmentTransfer) && Objects.equals(dismissal, action.dismissal) && Objects.equals(positionTransfer, action.positionTransfer) && Objects.equals(salaryChange, action.salaryChange);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, date, recruitment, departmentTransfer, dismissal, positionTransfer, salaryChange);
     }
 }
