@@ -8,7 +8,6 @@ import com.witelokk.hrapp.Error;
 import com.witelokk.hrapp.Result;
 import com.witelokk.hrapp.api.EmployeesApi;
 import com.witelokk.hrapp.api.model.CreateEmployeeRequest;
-import com.witelokk.hrapp.api.model.EditEmployeeRequest;
 import com.witelokk.hrapp.api.model.Employee;
 
 import retrofit2.Call;
@@ -122,8 +121,8 @@ public class EmployeesRepositoryImpl implements EmployeesRepository {
     @Override
     public LiveData<Result<Void>> editEmployee(int employeeId, String name, String gender, Date birthdate, String inn, String snils, String address, String passportIssuer, String passportNumber, Date passportDate) {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
-        EditEmployeeRequest editEmployeeRequest = new EditEmployeeRequest(name, gender, birthdate, inn, snils, address, passportIssuer, passportNumber, passportDate);
-        employeesApi.editEmployee(employeeId, editEmployeeRequest).enqueue(new Callback<Void>() {
+        CreateEmployeeRequest createEmployeeRequest = new CreateEmployeeRequest(name, gender, birthdate, inn, snils, address, passportIssuer, passportNumber, passportDate);
+        employeesApi.editEmployee(employeeId, createEmployeeRequest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {

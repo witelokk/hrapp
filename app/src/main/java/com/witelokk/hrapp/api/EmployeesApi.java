@@ -1,7 +1,6 @@
 package com.witelokk.hrapp.api;
 
 import com.witelokk.hrapp.api.model.CreateEmployeeRequest;
-import com.witelokk.hrapp.api.model.EditEmployeeRequest;
 import com.witelokk.hrapp.api.model.Employee;
 
 import java.util.List;
@@ -10,8 +9,8 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -28,8 +27,8 @@ public interface EmployeesApi {
     @DELETE("/employees/{employee_id}")
     Call<Void> deleteEmployee(@Path("employee_id") int employeeId);
 
-    @PATCH("/employees/{employee_id}")
-    Call<Void> editEmployee(@Path("employee_id") int employeeId, @Body EditEmployeeRequest editEmployeeRequest);
+    @PUT("/employees/{employee_id}")
+    Call<Void> editEmployee(@Path("employee_id") int employeeId, @Body CreateEmployeeRequest createEmployeeRequest);
 
     @POST("/employees/")
     Call<Employee> createEmployee(@Body CreateEmployeeRequest createEmployeeRequest);
