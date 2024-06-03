@@ -61,6 +61,9 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
 
         ActionsAdapter adapter = new ActionsAdapter(new ArrayList<>(), action -> {
             switch (action.getType()) {
+                case "recruitment":
+                    getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToRecruitmentActionFragment(action, viewModel.getEmployee().getValue()));
+                    break;
                 case "department_transfer":
                     getNavController().navigate(EmployeeFragmentDirections.actionEmployeeFragmentToDepartmentTransferActionFragment(action, viewModel.getEmployee().getValue()));
                     break;

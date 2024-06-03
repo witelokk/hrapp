@@ -168,6 +168,9 @@
                 android:name="employee"
                 app:argType="com.witelokk.hrapp.api.model.Employee" />
         </action>
+        <action
+            android:id="@+id/action_employeeFragment_to_recruitmentActionFragment"
+            app:destination="@id/recruitmentActionFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectActionToAddFragment"
@@ -287,6 +290,18 @@
             app:argType="com.witelokk.hrapp.api.model.Action"
             app:nullable="true"
             android:defaultValue="@null"/>
+        <argument
+            android:name="employee"
+            app:argType="com.witelokk.hrapp.api.model.Employee" />
+    </fragment>
+    <fragment
+        android:id="@+id/recruitmentActionFragment"
+        android:name="com.witelokk.hrapp.ui.recruitment_action.RecruitmentActionFragment"
+        tools:layout="@layout/fragment_recruitment_action"
+        android:label="RecruitmentActionFragment" >
+        <argument
+            android:name="recruitment_action"
+            app:argType="com.witelokk.hrapp.api.model.Action" />
         <argument
             android:name="employee"
             app:argType="com.witelokk.hrapp.api.model.Employee" />

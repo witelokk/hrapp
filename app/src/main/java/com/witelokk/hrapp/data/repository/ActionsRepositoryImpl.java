@@ -54,10 +54,10 @@ public class ActionsRepositoryImpl implements ActionsRepository {
     }
 
     @Override
-    public LiveData<Result<Void>> createRecruitmentAction(int employeeId, int departmentId, Date recruitmentDate, String position, float salary) {
+    public LiveData<Result<Void>> createRecruitmentAction(int employeeId, int departmentId, Date date, String position, float salary) {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
 
-        CreateRecruitmentActionRequest createRecruitmentActionRequest = new CreateRecruitmentActionRequest(recruitmentDate, departmentId, position, salary);
+        CreateRecruitmentActionRequest createRecruitmentActionRequest = new CreateRecruitmentActionRequest(date, departmentId, position, salary);
         actionsApi.createAction(employeeId, createRecruitmentActionRequest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
@@ -180,10 +180,10 @@ public class ActionsRepositoryImpl implements ActionsRepository {
     }
 
     @Override
-    public LiveData<Result<Void>> editRecruitmentAction(int actionId, int departmentId, Date recruitmentDate, String position, float salary) {
+    public LiveData<Result<Void>> editRecruitmentAction(int actionId, int departmentId, Date date, String position, float salary) {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
 
-        CreateRecruitmentActionRequest createRecruitmentActionRequest = new CreateRecruitmentActionRequest(recruitmentDate, departmentId, position, salary);
+        CreateRecruitmentActionRequest createRecruitmentActionRequest = new CreateRecruitmentActionRequest(date, departmentId, position, salary);
         actionsApi.editAction(actionId, createRecruitmentActionRequest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
