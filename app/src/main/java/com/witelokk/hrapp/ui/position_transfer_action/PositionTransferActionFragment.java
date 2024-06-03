@@ -149,7 +149,7 @@ public class PositionTransferActionFragment extends BaseFragment<PositionTransfe
         }
         String newPosition = binding.editTextNewPosition.getText().toString();
 
-        viewModel.editAction(args.getEmployee().getId(), date, newPosition);
+        viewModel.editAction(args.getPositionTransferAction().getId(), date, newPosition);
     }
 
     private boolean validateFields() {

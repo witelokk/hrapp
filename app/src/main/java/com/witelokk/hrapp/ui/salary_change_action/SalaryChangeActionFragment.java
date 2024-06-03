@@ -148,7 +148,7 @@ public class SalaryChangeActionFragment extends BaseFragment<SalaryChangeActionF
         }
         Float newSalary = Float.parseFloat(binding.editTextNewSalary.getText().toString());
 
-        viewModel.editAction(args.getEmployee().getId(), date, newSalary);
+        viewModel.editAction(args.getSalaryChangeAction().getId(), date, newSalary);
     }
 
     private boolean validateFields() {

@@ -161,7 +161,7 @@ public class DepartmentTransferActionFragment extends BaseFragment<DepartmentTra
         }
         int newDepartmentId = viewModel.getDepartments().getValue().get(departmentPosition).getId();
 
-        viewModel.editAction(args.getEmployee().getId(), date, newDepartmentId);
+        viewModel.editAction(args.getDepartmentTransferAction().getId(), date, newDepartmentId);
     }
 
     private boolean validateFields() {

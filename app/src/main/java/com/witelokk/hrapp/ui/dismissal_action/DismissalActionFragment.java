@@ -145,7 +145,7 @@ public class DismissalActionFragment extends BaseFragment<DismissalFragmentViewM
             throw new RuntimeException(e);
         }
 
-        viewModel.editAction(args.getEmployee().getId(), date);
+        viewModel.editAction(args.getDismissalAction().getId(), date);
     }
 
     private boolean validateFields() {

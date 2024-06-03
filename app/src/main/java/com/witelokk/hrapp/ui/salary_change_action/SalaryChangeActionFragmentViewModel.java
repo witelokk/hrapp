@@ -42,8 +42,14 @@ public class SalaryChangeActionFragmentViewModel extends BaseViewModel {
         });
     }
 
-    void editAction(int employeeId, Date date, float newSalary) {
-        throw new NotImplementedError();
+    void editAction(int actionId, Date date, float newSalary) {
+        actionsRepository.editSalaryChangeAction(actionId, newSalary, date).observeForever(result -> {
+            if (result.isSuccess()) {
+                isDone.setValue(new Event<>(true));
+            } else {
+                setError(result.getError());
+            }
+        });
     }
 
     void deleteAction(int actionId) {

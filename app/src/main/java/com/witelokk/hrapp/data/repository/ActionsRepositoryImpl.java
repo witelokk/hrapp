@@ -179,6 +179,132 @@ public class ActionsRepositoryImpl implements ActionsRepository {
         return resultLiveData;
     }
 
+    @Override
+    public LiveData<Result<Void>> editRecruitmentAction(int actionId, int departmentId, Date recruitmentDate, String position, float salary) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
+
+        CreateRecruitmentActionRequest createRecruitmentActionRequest = new CreateRecruitmentActionRequest(recruitmentDate, departmentId, position, salary);
+        actionsApi.editAction(actionId, createRecruitmentActionRequest).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
+    public LiveData<Result<Void>> editDepartmentTransferAction(int actionId, int newDepartmentId, Date date) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
+
+        CreateDepartmentTransferActionRequest createDepartmentActionRequest = new CreateDepartmentTransferActionRequest(date, newDepartmentId);
+        actionsApi.editAction(actionId, createDepartmentActionRequest).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
+    public LiveData<Result<Void>> editPositionTransferAction(int actionId, String newPosition, Date date) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
+
+        CreatePositionTransferActionRequest createPositionTransferActionRequest = new CreatePositionTransferActionRequest(date, newPosition);
+        actionsApi.editAction(actionId, createPositionTransferActionRequest).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
+    public LiveData<Result<Void>> editSalaryChangeAction(int actionId, float newSalary, Date date) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
+
+        CreateSalaryChangeAction createSalaryChangeAction = new CreateSalaryChangeAction(date, newSalary);
+        actionsApi.editAction(actionId, createSalaryChangeAction).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
+    public LiveData<Result<Void>> editDismissalAction(int actionId, Date date) {
+        MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
+
+        CreateDismissalAction createSalaryChangeAction = new CreateDismissalAction(date);
+        actionsApi.editAction(actionId, createSalaryChangeAction).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    resultLiveData.setValue(Result.error(new Error.Unauthorized()));
+                } else if (response.isSuccessful()) {
+                    resultLiveData.setValue(Result.success(response.body()));
+                } else {
+                    resultLiveData.setValue(Result.error(new Error.Unknown()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable throwable) {
+                resultLiveData.setValue(Result.error(new Error.Network()));
+            }
+        });
+
+        return resultLiveData;
+    }
+
     public LiveData<Result<Void>> deleteAction(int actionId) {
         MutableLiveData<Result<Void>> resultLiveData = new MutableLiveData<>();
 

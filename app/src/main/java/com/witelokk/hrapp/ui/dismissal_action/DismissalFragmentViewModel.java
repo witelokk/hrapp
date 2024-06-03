@@ -42,8 +42,14 @@ public class DismissalFragmentViewModel extends BaseViewModel {
         });
     }
 
-    void editAction(int employeeId, Date date) {
-        throw new NotImplementedError();
+    void editAction(int actionId, Date date) {
+        actionsRepository.editDismissalAction(actionId, date).observeForever(result -> {
+            if (result.isSuccess()) {
+                isDone.setValue(new Event<>(true));
+            } else {
+                setError(result.getError());
+            }
+        });
     }
 
     void deleteAction(int actionId) {

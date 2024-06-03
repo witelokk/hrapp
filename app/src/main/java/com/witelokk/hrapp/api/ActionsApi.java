@@ -14,6 +14,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ActionsApi {
@@ -31,6 +32,21 @@ public interface ActionsApi {
 
     @POST("/actions/employee/{employee_id}")
     Call<Void> createAction(@Path("employee_id") int employeeId, @Body CreateSalaryChangeAction request);
+
+    @PUT("/actions/{action_id}")
+    Call<Void> editAction(@Path("action_id") int actionId, @Body CreateDepartmentTransferActionRequest request);
+
+    @PUT("/actions/{action_id}")
+    Call<Void> editAction(@Path("action_id") int actionId, @Body CreateDismissalAction request);
+
+    @PUT("/actions/{action_id}")
+    Call<Void> editAction(@Path("action_id") int actionId, @Body CreatePositionTransferActionRequest request);
+
+    @PUT("/actions/{action_id}")
+    Call<Void> editAction(@Path("action_id") int actionId, @Body CreateRecruitmentActionRequest request);
+
+    @PUT("/actions/{action_id}")
+    Call<Void> editAction(@Path("action_id") int actionId, @Body CreateSalaryChangeAction request);
 
     @GET("/actions/{action_id}")
     Call<Action> getAction(@Path("action_id") int actionId);

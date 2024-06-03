@@ -61,8 +61,14 @@ public class DepartmentTransferActionFragmentViewModel extends BaseViewModel {
         });
     }
 
-    void editAction(int employeeId, Date date, int newDepartmentId) {
-        throw new NotImplementedError();
+    void editAction(int actionId, Date date, int newDepartmentId) {
+        actionsRepository.editDepartmentTransferAction(actionId, newDepartmentId, date).observeForever(result -> {
+            if (result.isSuccess()) {
+                isDone.setValue(new Event<>(true));
+            } else {
+                setError(result.getError());
+            }
+        });
     }
 
     void deleteAction(int actionId) {

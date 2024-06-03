@@ -45,8 +45,14 @@ public class PositionTransferActionFragmentViewModel extends BaseViewModel {
         });
     }
 
-    void editAction(int employeeId, Date date, String newPosition) {
-        throw new NotImplementedError();
+    void editAction(int actionId, Date date, String newPosition) {
+        actionsRepository.editPositionTransferAction(actionId, newPosition, date).observeForever(result -> {
+            if (result.isSuccess()) {
+                isDone.setValue(new Event<>(true));
+            } else {
+                setError(result.getError());
+            }
+        });
     }
 
     void deleteAction(int actionId) {
