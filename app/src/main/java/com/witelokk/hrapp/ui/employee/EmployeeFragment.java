@@ -54,7 +54,7 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.textViewEmployeeName.setText(args.getEmployee().getName());
+        binding.toolbar.setTitle(args.getEmployee().getName());
         binding.textViewDepartment.setText(args.getEmployee().getCurrentInfo().getDepartment().getName());
         binding.textViewPosition.setText(args.getEmployee().getCurrentInfo().getPosition());
         binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) args.getEmployee().getCurrentInfo().getSalary()));
@@ -82,7 +82,7 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         viewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
-            binding.textViewEmployeeName.setText(employee.getName());
+            binding.toolbar.setTitle(employee.getName());
             binding.textViewPosition.setText(employee.getCurrentInfo().getPosition());
             binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) employee.getCurrentInfo().getSalary()));
             binding.textViewDepartment.setText(String.valueOf(employee.getCurrentInfo().getDepartment().getName()));
@@ -106,10 +106,6 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
             EmployeeFragmentDirections.ActionEmployeeFragmentToSelectActionToAddFragment action = EmployeeFragmentDirections.actionEmployeeFragmentToSelectActionToAddFragment(viewModel.getEmployee().getValue());
             getNavController().navigate(action);
         });
-
-//
-//        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading ->
-//                binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
         viewModel.loadData();
     }

@@ -56,6 +56,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
             ((ViewGroup.MarginLayoutParams)binding.fabAddCompany.getLayoutParams()).bottomMargin+=systemBars.bottom;
             binding.companiesRecyclerView.setPaddingRelative(0, 0, 0, systemBars.bottom);
             binding.companiesRecyclerView.setClipToPadding(false);
+            binding.getRoot().setPadding(0, systemBars.top, 0, 0);
             return insets;
         });
         return binding.getRoot();

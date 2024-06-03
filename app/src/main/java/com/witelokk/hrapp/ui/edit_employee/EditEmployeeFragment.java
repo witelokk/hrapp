@@ -46,6 +46,7 @@ public class EditEmployeeFragment extends BaseFragment<EditEmployeeViewModel> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             binding.scrollView.setPaddingRelative(0, 0, 0, systemBars.bottom);
             binding.scrollView.setClipToPadding(false);
+            binding.getRoot().setPadding(0, systemBars.top, 0, 0);
             return insets;
         });
         return binding.getRoot();

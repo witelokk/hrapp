@@ -50,6 +50,7 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
             ((ViewGroup.MarginLayoutParams)binding.fabAddDepartment.getLayoutParams()).bottomMargin+=systemBars.bottom;
             binding.recyclerView.setPaddingRelative(0, 0, 0, systemBars.bottom);
             binding.recyclerView.setClipToPadding(false);
+            binding.getRoot().setPadding(0, systemBars.top, 0, 0);
             return insets;
         });
         return binding.getRoot();
