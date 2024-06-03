@@ -38,6 +38,7 @@
     <string name="cancel">Cancel</string>
     <string name="delete_company_confirmation">Do you really want to delete this company?</string>
     <string name="delete_department_confirmation">Do you really want to delete this department?</string>
+    <string name="delete_employee_confirmation">Do you really want to delete this employee?</string>
     <string name="logout_confirmation">Do you really want to logout?</string>
     <string name="name">Name</string>
     <string name="employee_name">Name</string>
@@ -81,4 +82,5 @@
     <string name="new_position">New Position</string>
     <string name="new_salary">New Salary</string>
     <string name="department">Department</string>
+    <string name="delete_employee">Delete Employee</string>
 </resources>

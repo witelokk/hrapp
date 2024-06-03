@@ -2,19 +2,30 @@ package com.witelokk.hrapp.ui.employee;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.witelokk.hrapp.R;
+import com.witelokk.hrapp.databinding.DialogDeleteDepartmentBinding;
+import com.witelokk.hrapp.databinding.DialogDeleteEmployeeBinding;
 import com.witelokk.hrapp.databinding.FragmentEmployeeBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
@@ -42,7 +53,7 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
         binding = FragmentEmployeeBinding.inflate(inflater, container, false);
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            ((ViewGroup.MarginLayoutParams)binding.fabAddAction.getLayoutParams()).bottomMargin+=systemBars.bottom;
+            ((ViewGroup.MarginLayoutParams) binding.fabAddAction.getLayoutParams()).bottomMargin += systemBars.bottom;
             binding.recyclerView.setPaddingRelative(0, 0, 0, systemBars.bottom);
             binding.recyclerView.setClipToPadding(false);
             return insets;
@@ -53,6 +64,23 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
+
+        ((MenuHost) requireActivity()).addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.menu_employee, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.menu_delete) {
+                    showDeleteDialog();
+                }
+                return false;
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         binding.toolbar.setTitle(args.getEmployee().getName());
         binding.textViewDepartment.setText(args.getEmployee().getCurrentInfo().getDepartment().getName());
@@ -97,6 +125,11 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
             adapter.setActions(employee.getActions());
         });
 
+        viewModel.getIsDeleted().observe(getViewLifecycleOwner(), isDeletedEvent -> {
+            if (isDeletedEvent.getContent() == Boolean.TRUE)
+                getNavController().navigateUp();
+        });
+
         binding.cardViewPersonalInfo.setOnClickListener(v -> {
             com.witelokk.hrapp.ui.employee.EmployeeFragmentDirections.ActionEmployeeFragmentToEditEmployeeFragment action = EmployeeFragmentDirections.actionEmployeeFragmentToEditEmployeeFragment(viewModel.getEmployee().getValue());
             getNavController().navigate(action);
@@ -108,5 +141,21 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
         });
 
         viewModel.loadData();
+    }
+
+    private void showDeleteDialog() {
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(requireContext());
+        DialogDeleteEmployeeBinding dialogBinding = DialogDeleteEmployeeBinding.inflate(getLayoutInflater());
+        dialogBuilder.setView(dialogBinding.getRoot());
+
+        dialogBuilder.setTitle(R.string.delete_employee);
+        dialogBuilder.setPositiveButton(R.string.delete, (dialog, whichButton) -> {
+            viewModel.deleteEmployee();
+        });
+        dialogBuilder.setNegativeButton(R.string.cancel, (dialog, whichButton) -> {
+        });
+
+        AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
     }
 }

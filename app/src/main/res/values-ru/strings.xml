@@ -39,6 +39,7 @@
     <string name="cancel">Отмена</string>
     <string name="delete_company_confirmation">Вы действительно хотите удалить эту компанию?</string>
     <string name="delete_department_confirmation">Вы действительно хотите удалить этот отдел?</string>
+    <string name="delete_employee_confirmation">Вы действительно хотите удалить этого сотрудника?</string>
     <string name="logout_confirmation">Вы действительно хотите выйти?</string>
     <string name="name">Название</string>
     <string name="employee_name">ФИО</string>
@@ -81,4 +82,5 @@
     <string name="new_position">Новая должность</string>
     <string name="new_salary">Новая зарплата</string>
     <string name="department">Отдел</string>
+    <string name="delete_employee">Удаление сотрудника</string>
 </resources>
