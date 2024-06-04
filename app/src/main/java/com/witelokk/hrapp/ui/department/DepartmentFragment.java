@@ -27,6 +27,7 @@ import com.witelokk.hrapp.api.model.Department;
 import com.witelokk.hrapp.databinding.DialogDeleteDepartmentBinding;
 import com.witelokk.hrapp.databinding.FragmentDepartmentBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
+import com.witelokk.hrapp.ui.EmployeesAdapter;
 
 import java.util.ArrayList;
 

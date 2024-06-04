@@ -316,5 +316,20 @@
         <action
             android:id="@+id/action_companyFragment_to_companyDepartmentsFragment"
             app:destination="@id/companyDepartmentsFragment" />
+        <action
+            android:id="@+id/action_companyFragment_to_companyEmployeesFragment"
+            app:destination="@id/companyEmployeesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyEmployeesFragment"
+        android:name="com.witelokk.hrapp.ui.company_employees.CompanyEmployeesFragment"
+        tools:layout="@layout/fragment_company_employees"
+        android:label="CompanyEmployeesFragment">
+        <argument
+            android:name="company"
+            app:argType="com.witelokk.hrapp.api.model.Company" />
+        <action
+            android:id="@+id/action_companyEmployeesFragment_to_employeeFragment"
+            app:destination="@id/employeeFragment" />
     </fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package com.witelokk.hrapp.ui.department;
+package com.witelokk.hrapp.ui;
 
 import com.witelokk.hrapp.api.model.Employee;
 

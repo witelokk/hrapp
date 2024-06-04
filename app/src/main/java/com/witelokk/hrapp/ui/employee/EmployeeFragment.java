@@ -83,9 +83,15 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         binding.toolbar.setTitle(args.getEmployee().getName());
-        binding.textViewDepartment.setText(args.getEmployee().getCurrentInfo().getDepartment().getName());
-        binding.textViewPosition.setText(args.getEmployee().getCurrentInfo().getPosition());
-        binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) args.getEmployee().getCurrentInfo().getSalary()));
+        if (args.getEmployee().getCurrentInfo() != null) {
+            binding.textViewDepartment.setText(args.getEmployee().getCurrentInfo().getDepartment().getName());
+            binding.textViewPosition.setText(args.getEmployee().getCurrentInfo().getPosition());
+            binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) args.getEmployee().getCurrentInfo().getSalary()));
+        } else {
+            binding.textViewDepartment.setText("—");
+            binding.textViewPosition.setText("—");
+            binding.textViewSalary.setText("—");
+        }
 
         ActionsAdapter adapter = new ActionsAdapter(new ArrayList<>(), action -> {
             switch (action.getType()) {
@@ -111,9 +117,15 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
 
         viewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
             binding.toolbar.setTitle(employee.getName());
-            binding.textViewPosition.setText(employee.getCurrentInfo().getPosition());
-            binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) employee.getCurrentInfo().getSalary()));
-            binding.textViewDepartment.setText(String.valueOf(employee.getCurrentInfo().getDepartment().getName()));
+            if (employee.getCurrentInfo() != null) {
+                binding.textViewPosition.setText(employee.getCurrentInfo().getPosition());
+                binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) employee.getCurrentInfo().getSalary()));
+                binding.textViewDepartment.setText(String.valueOf(employee.getCurrentInfo().getDepartment().getName()));
+            } else {
+                binding.textViewDepartment.setText("—");
+                binding.textViewPosition.setText("—");
+                binding.textViewSalary.setText("—");
+            }
 
             if (employee.getGender().equals("male"))
                 binding.imageView.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.male));

@@ -104,7 +104,7 @@ public class RecruitmentActionFragment extends BaseFragment<RecruitmentActionFra
                 getNavController().navigateUp();
         });
 
-        viewModel.loadDepartments(args.getEmployee().getCurrentInfo().getDepartment().getCompanyId());
+        viewModel.loadDepartments(args.getEmployee().getCompanyId());
     }
 
 

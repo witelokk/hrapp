@@ -90,6 +90,12 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
             getNavController().navigate(action);
         });
 
+        binding.cardviewEmployees.setOnClickListener(v -> {
+            Company company = viewModel.getCompany().getValue();
+            CompanyFragmentDirections.ActionCompanyFragmentToCompanyEmployeesFragment action = CompanyFragmentDirections.actionCompanyFragmentToCompanyEmployeesFragment(company);
+            getNavController().navigate(action);
+        });
+
         binding.cardviewReports.setOnClickListener(v -> {
             Company company = viewModel.getCompany().getValue();
             CompanyFragmentDirections.ActionCompanyFragmentToReportsFragment action = CompanyFragmentDirections.actionCompanyFragmentToReportsFragment(company.getId());

@@ -119,7 +119,7 @@ public class DepartmentTransferActionFragment extends BaseFragment<DepartmentTra
                 getNavController().navigateUp();
         });
 
-        viewModel.loadDepartments(args.getEmployee().getCurrentInfo().getDepartment().getCompanyId());
+        viewModel.loadDepartments(args.getEmployee().getCompanyId());
     }
 
     private void showDeleteDialog() {

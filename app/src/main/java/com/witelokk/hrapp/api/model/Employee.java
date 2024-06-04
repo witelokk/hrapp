@@ -48,6 +48,9 @@ public class Employee implements Serializable {
     @SerializedName("actions")
     private List<Action> actions;
 
+    @SerializedName("company_id")
+    private int companyId;
+
     public Employee(int id, String name, String gender, CurrentInfo currentInfo, Date birthdate, String inn, String snils, String address, String passportNumber, Date passportDate, String passwordIssuer, List<Action> actions) {
         this.id = id;
         this.name = name;
@@ -109,5 +112,9 @@ public class Employee implements Serializable {
 
     public List<Action> getActions() {
         return actions;
+    }
+
+    public int getCompanyId() {
+        return companyId;
     }
 }

@@ -1,5 +1,6 @@
-package com.witelokk.hrapp.ui.department;
+package com.witelokk.hrapp.ui;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.View
     private final List<Employee> employees;
     private final OnEmployeeItemClickListener onItemClickListener;
 
-    EmployeesAdapter(List<Employee> employees, OnEmployeeItemClickListener onItemClickListener) {
+    public EmployeesAdapter(List<Employee> employees, OnEmployeeItemClickListener onItemClickListener) {
         this.employees = employees;
         this.onItemClickListener = onItemClickListener;
     }
@@ -45,8 +46,13 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.View
         Employee employee = employees.get(position);
         holder.binding.textViewName.setText(employee.getName());
         if (employee.getCurrentInfo() != null) {
+            holder.binding.employeeCurrentInfo.setVisibility(View.VISIBLE);
+            holder.binding.textViewName.setPaintFlags(0);;
             holder.binding.textViewPosition.setText(employee.getCurrentInfo().getPosition());
             holder.binding.textViewSalary.setText(String.format(Locale.getDefault(), "%,d", (int) employee.getCurrentInfo().getSalary()));
+        } else {
+            holder.binding.textViewName.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);;
+            holder.binding.employeeCurrentInfo.setVisibility(View.GONE);
         }
 
         if (onItemClickListener != null) {
