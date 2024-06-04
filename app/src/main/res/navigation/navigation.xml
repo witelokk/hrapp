@@ -31,8 +31,8 @@
             android:id="@+id/action_homeFragment_to_addCompanyFragment"
             app:destination="@id/addCompanyFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_companyFragment"
-            app:destination="@id/companyFragment" />
+            android:id="@+id/action_homeFragment_to_companyDepartmentsFragment"
+            app:destination="@id/companyDepartmentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCompanyFragment"
@@ -60,16 +60,16 @@
             android:defaultValue="@null" />
     </fragment>
     <fragment
-        android:id="@+id/companyFragment"
-        android:name="com.witelokk.hrapp.ui.company.CompanyFragment"
-        tools:layout="@layout/fragment_company"
-        android:label="CompanyFragment">
+        android:id="@+id/companyDepartmentsFragment"
+        android:name="com.witelokk.hrapp.ui.company_departments.CompanyDepartmentsFragment"
+        android:label="CompanyDepartmentsFragment"
+        tools:layout="@layout/fragment_company_departments">
         <action
-            android:id="@+id/action_companyFragment_to_departmentFragment"
+            android:id="@+id/action_companyDepartmentsFragment_to_departmentFragment"
             app:destination="@id/departmentFragment" />
         <action
-            android:id="@+id/action_companyFragment_to_addCompanyFragment"
-            app:destination="@id/addCompanyFragment" >
+            android:id="@+id/action_companyDepartmentsFragment_to_addCompanyFragment"
+            app:destination="@id/addCompanyFragment">
             <argument
                 android:name="company_id"
                 app:argType="integer" />
@@ -84,12 +84,11 @@
                 app:argType="string" />
         </action>
         <action
-            android:id="@+id/action_companyFragment_to_reportsFragment"
+            android:id="@+id/action_companyDepartmentsFragment_to_reportsFragment"
             app:destination="@id/reportsFragment" />
         <action
-            android:id="@+id/action_companyFragment_to_addEditDepartmentFragment"
-            app:destination="@id/addEditDepartmentFragment">
-        </action>
+            android:id="@+id/action_companyDepartmentsFragment_to_addEditDepartmentFragment"
+            app:destination="@id/addEditDepartmentFragment"></action>
         <argument
             android:name="company"
             app:argType="com.witelokk.hrapp.api.model.Company" />

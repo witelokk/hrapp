@@ -1,4 +1,4 @@
-package com.witelokk.hrapp.ui.company;
+package com.witelokk.hrapp.ui.company_departments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,26 +25,26 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.databinding.DialogDeleteCompanyBinding;
-import com.witelokk.hrapp.databinding.FragmentCompanyBinding;
+import com.witelokk.hrapp.databinding.FragmentCompanyDepartmentsBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
 import java.util.ArrayList;
 
-public class CompanyFragment extends BaseFragment<CompanyViewModel> {
-    FragmentCompanyBinding binding;
-    CompanyFragmentArgs args;
+public class CompanyDepartmentsFragment extends BaseFragment<CompanyDepartmentsViewModel> {
+    FragmentCompanyDepartmentsBinding binding;
+    CompanyDepartmentsFragmentArgs args;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        args = CompanyFragmentArgs.fromBundle(getArguments());
-        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getCompany().getId()), CompanyViewModel.class);
+        args = CompanyDepartmentsFragmentArgs.fromBundle(getArguments());
+        viewModel = new ViewModelProvider(requireActivity()).get(String.valueOf(args.getCompany().getId()), CompanyDepartmentsViewModel.class);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentCompanyBinding.inflate(inflater, container, false);
+        binding = FragmentCompanyDepartmentsBinding.inflate(inflater, container, false);
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             ((ViewGroup.MarginLayoutParams)binding.fabAddDepartment.getLayoutParams()).bottomMargin+=systemBars.bottom;
@@ -78,13 +78,13 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.menu_edit) {
                     Company company = viewModel.getCompany().getValue();
-                    CompanyFragmentDirections.ActionCompanyFragmentToAddCompanyFragment action = CompanyFragmentDirections.actionCompanyFragmentToAddCompanyFragment(company.getId(), company.getName(), company.getInn(), company.getKpp());
+                    CompanyDepartmentsFragmentDirections.ActionCompanyDepartmentsFragmentToAddCompanyFragment action = CompanyDepartmentsFragmentDirections.actionCompanyDepartmentsFragmentToAddCompanyFragment(company.getId(), company.getName(), company.getInn(), company.getKpp());
                     getNavController().navigate(action);
                 } else if (menuItem.getItemId() == R.id.menu_delete) {
                     showDeleteDialog();
                 } else if (menuItem.getItemId() == R.id.menu_reports) {
                     Company company = viewModel.getCompany().getValue();
-                    CompanyFragmentDirections.ActionCompanyFragmentToReportsFragment action = CompanyFragmentDirections.actionCompanyFragmentToReportsFragment(company.getId());
+                    CompanyDepartmentsFragmentDirections.ActionCompanyDepartmentsFragmentToReportsFragment action = CompanyDepartmentsFragmentDirections.actionCompanyDepartmentsFragmentToReportsFragment(company.getId());
                     getNavController().navigate(action);
                 }
                 return false;
@@ -94,7 +94,7 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         DepartmentsAdapter adapter = new DepartmentsAdapter(new ArrayList<>(), department -> {
-            CompanyFragmentDirections.ActionCompanyFragmentToDepartmentFragment action = CompanyFragmentDirections.actionCompanyFragmentToDepartmentFragment(department);
+            CompanyDepartmentsFragmentDirections.ActionCompanyDepartmentsFragmentToDepartmentFragment action = CompanyDepartmentsFragmentDirections.actionCompanyDepartmentsFragmentToDepartmentFragment(department);
             getNavController().navigate(action);
         });
         binding.recyclerView.setAdapter(adapter);
@@ -104,7 +104,7 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
             binding.textNoDepartments.setVisibility(departments.isEmpty()? View.VISIBLE: View.GONE);
         });
 
-        binding.fabAddDepartment.setOnClickListener(v -> getNavController().navigate(CompanyFragmentDirections.actionCompanyFragmentToAddEditDepartmentFragment(args.getCompany().getId())));
+        binding.fabAddDepartment.setOnClickListener(v -> getNavController().navigate(CompanyDepartmentsFragmentDirections.actionCompanyDepartmentsFragmentToAddEditDepartmentFragment(args.getCompany().getId())));
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 

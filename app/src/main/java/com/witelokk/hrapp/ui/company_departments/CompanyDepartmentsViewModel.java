@@ -1,4 +1,4 @@
-package com.witelokk.hrapp.ui.company;
+package com.witelokk.hrapp.ui.company_departments;
 
 import android.content.SharedPreferences;
 
@@ -18,7 +18,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class CompanyViewModel extends BaseViewModel {
+public class CompanyDepartmentsViewModel extends BaseViewModel {
     private final MutableLiveData<Company> company = new MutableLiveData<>();
     private final MutableLiveData<List<Department>> departments = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(true);
@@ -27,7 +27,7 @@ public class CompanyViewModel extends BaseViewModel {
     private int companyId;
 
     @Inject
-    CompanyViewModel(SharedPreferences sharedPreferences, CompaniesRepository companiesRepository, DepartmentsRepository departmentsRepository) {
+    CompanyDepartmentsViewModel(SharedPreferences sharedPreferences, CompaniesRepository companiesRepository, DepartmentsRepository departmentsRepository) {
         super(sharedPreferences);
         this.companiesRepository = companiesRepository;
         this.departmentsRepository = departmentsRepository;

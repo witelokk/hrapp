@@ -1,4 +1,4 @@
-package com.witelokk.hrapp.ui.company;
+package com.witelokk.hrapp.ui.company_departments;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.witelokk.hrapp.R;
-import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.api.model.Department;
 import com.witelokk.hrapp.databinding.ItemDepartmentBinding;
-import com.witelokk.hrapp.ui.home.CompaniesAdapter;
 
 import java.util.List;
 
