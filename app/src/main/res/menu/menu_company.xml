@@ -12,9 +12,4 @@
         android:icon="@drawable/outline_delete_24"
         android:title="@string/delete_company"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/menu_reports"
-        android:icon="@drawable/outline_file_24"
-        android:title="@string/reports"
-        app:showAsAction="always" />
 </menu>

@@ -104,7 +104,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
     }
 
     private void navigateToCompanyFragment(Company company) {
-        HomeFragmentDirections.ActionHomeFragmentToCompanyDepartmentsFragment action = HomeFragmentDirections.actionHomeFragmentToCompanyDepartmentsFragment(company);
+        HomeFragmentDirections.ActionHomeFragmentToCompanyFragment action = HomeFragmentDirections.actionHomeFragmentToCompanyFragment(company);
         getNavController().navigate(action);
     }
 

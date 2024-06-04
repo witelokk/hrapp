@@ -19,17 +19,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class CompanyDepartmentsViewModel extends BaseViewModel {
-    private final MutableLiveData<Company> company = new MutableLiveData<>();
     private final MutableLiveData<List<Department>> departments = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(true);
     private final DepartmentsRepository departmentsRepository;
-    private final CompaniesRepository companiesRepository;
     private int companyId;
 
     @Inject
-    CompanyDepartmentsViewModel(SharedPreferences sharedPreferences, CompaniesRepository companiesRepository, DepartmentsRepository departmentsRepository) {
+    CompanyDepartmentsViewModel(SharedPreferences sharedPreferences, DepartmentsRepository departmentsRepository) {
         super(sharedPreferences);
-        this.companiesRepository = companiesRepository;
         this.departmentsRepository = departmentsRepository;
     }
 
@@ -41,9 +38,6 @@ public class CompanyDepartmentsViewModel extends BaseViewModel {
         return departments;
     }
 
-    public LiveData<Company> getCompany() {
-        return company;
-    }
 
     public LiveData<Boolean> getIsLoading() {
         return isLoading;
@@ -53,17 +47,7 @@ public class CompanyDepartmentsViewModel extends BaseViewModel {
         departmentsRepository.getDepartmentsByCompany(companyId).observeForever(result -> {
             if (result.isSuccess()) {
                 departments.setValue(result.getData());
-                if (company.getValue() != null)
-                    isLoading.setValue(false);
-            } else {
-                setError(result.getError());
-            }
-        });
-        companiesRepository.getCompany(companyId).observeForever(result -> {
-            if (result.isSuccess()) {
-                company.setValue(result.getData());
-                if (departments.getValue() != null)
-                    isLoading.setValue(false);
+                isLoading.setValue(false);
             } else {
                 setError(result.getError());
             }

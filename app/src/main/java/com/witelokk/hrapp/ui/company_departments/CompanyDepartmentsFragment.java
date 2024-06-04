@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
-import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,10 +19,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.witelokk.hrapp.R;
-import com.witelokk.hrapp.api.model.Company;
-import com.witelokk.hrapp.databinding.DialogDeleteCompanyBinding;
 import com.witelokk.hrapp.databinding.FragmentCompanyDepartmentsBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
@@ -62,35 +57,6 @@ public class CompanyDepartmentsFragment extends BaseFragment<CompanyDepartmentsV
         binding.toolbar.setTitle(args.getCompany().getName());
         viewModel.setCompanyId(args.getCompany().getId());
 
-        viewModel.getCompany().observe(getViewLifecycleOwner(), company -> {
-            binding.toolbar.setTitle(company.getName());
-            viewModel.setCompanyId(company.getId());
-        });
-
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
-        ((MenuHost) requireActivity()).addMenuProvider(new MenuProvider() {
-            @Override
-            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-                menuInflater.inflate(R.menu.menu_company, menu);
-            }
-
-            @Override
-            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.menu_edit) {
-                    Company company = viewModel.getCompany().getValue();
-                    CompanyDepartmentsFragmentDirections.ActionCompanyDepartmentsFragmentToAddCompanyFragment action = CompanyDepartmentsFragmentDirections.actionCompanyDepartmentsFragmentToAddCompanyFragment(company.getId(), company.getName(), company.getInn(), company.getKpp());
-                    getNavController().navigate(action);
-                } else if (menuItem.getItemId() == R.id.menu_delete) {
-                    showDeleteDialog();
-                } else if (menuItem.getItemId() == R.id.menu_reports) {
-                    Company company = viewModel.getCompany().getValue();
-                    CompanyDepartmentsFragmentDirections.ActionCompanyDepartmentsFragmentToReportsFragment action = CompanyDepartmentsFragmentDirections.actionCompanyDepartmentsFragmentToReportsFragment(company.getId());
-                    getNavController().navigate(action);
-                }
-                return false;
-            }
-        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
-
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         DepartmentsAdapter adapter = new DepartmentsAdapter(new ArrayList<>(), department -> {
@@ -111,19 +77,4 @@ public class CompanyDepartmentsFragment extends BaseFragment<CompanyDepartmentsV
         viewModel.loadData();
     }
 
-    void showDeleteDialog() {
-        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(requireContext());
-        DialogDeleteCompanyBinding dialogBinding = DialogDeleteCompanyBinding.inflate(getLayoutInflater());
-        dialogBuilder.setView(dialogBinding.getRoot());
-
-        dialogBuilder.setTitle(R.string.delete_company);
-        dialogBuilder.setPositiveButton(R.string.delete, (dialog, whichButton) -> {
-            // delete company
-        });
-        dialogBuilder.setNegativeButton(R.string.cancel, (dialog, whichButton) -> {
-        });
-
-        AlertDialog dialog = dialogBuilder.create();
-        dialog.show();
-    }
 }

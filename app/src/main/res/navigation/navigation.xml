@@ -31,8 +31,8 @@
             android:id="@+id/action_homeFragment_to_addCompanyFragment"
             app:destination="@id/addCompanyFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_companyDepartmentsFragment"
-            app:destination="@id/companyDepartmentsFragment" />
+            android:id="@+id/action_homeFragment_to_companyFragment"
+            app:destination="@id/companyFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCompanyFragment"
@@ -68,27 +68,8 @@
             android:id="@+id/action_companyDepartmentsFragment_to_departmentFragment"
             app:destination="@id/departmentFragment" />
         <action
-            android:id="@+id/action_companyDepartmentsFragment_to_addCompanyFragment"
-            app:destination="@id/addCompanyFragment">
-            <argument
-                android:name="company_id"
-                app:argType="integer" />
-            <argument
-                android:name="company_name"
-                app:argType="string" />
-            <argument
-                android:name="company_inn"
-                app:argType="string" />
-            <argument
-                android:name="company_kpp"
-                app:argType="string" />
-        </action>
-        <action
-            android:id="@+id/action_companyDepartmentsFragment_to_reportsFragment"
-            app:destination="@id/reportsFragment" />
-        <action
             android:id="@+id/action_companyDepartmentsFragment_to_addEditDepartmentFragment"
-            app:destination="@id/addEditDepartmentFragment"></action>
+            app:destination="@id/addEditDepartmentFragment" />
         <argument
             android:name="company"
             app:argType="com.witelokk.hrapp.api.model.Company" />
@@ -304,5 +285,36 @@
         <argument
             android:name="employee"
             app:argType="com.witelokk.hrapp.api.model.Employee" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyFragment"
+        android:name="com.witelokk.hrapp.ui.company.CompanyFragment"
+        tools:layout="@layout/fragment_company"
+        android:label="CompanyFragment">
+        <action
+            android:id="@+id/action_companyFragment_to_addCompanyFragment"
+            app:destination="@id/addCompanyFragment">
+            <argument
+                android:name="company_id"
+                app:argType="integer" />
+            <argument
+                android:name="company_name"
+                app:argType="string" />
+            <argument
+                android:name="company_inn"
+                app:argType="string" />
+            <argument
+                android:name="company_kpp"
+                app:argType="string" />
+        </action>
+        <action
+            android:id="@+id/action_companyFragment_to_reportsFragment"
+            app:destination="@id/reportsFragment" />
+        <argument
+            android:name="company"
+            app:argType="com.witelokk.hrapp.api.model.Company" />
+        <action
+            android:id="@+id/action_companyFragment_to_companyDepartmentsFragment"
+            app:destination="@id/companyDepartmentsFragment" />
     </fragment>
 </navigation>
