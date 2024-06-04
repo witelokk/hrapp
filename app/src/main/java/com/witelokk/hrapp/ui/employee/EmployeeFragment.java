@@ -66,6 +66,7 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
         super.onViewCreated(view, savedInstanceState);
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ((MenuHost) requireActivity()).addMenuProvider(new MenuProvider() {
             @Override
@@ -75,7 +76,9 @@ public class EmployeeFragment extends BaseFragment<EmployeeViewModel> {
 
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.menu_delete) {
+                if (menuItem.getItemId() == android.R.id.home) {
+                    getNavController().navigateUp();
+                } else if (menuItem.getItemId() == R.id.menu_delete) {
                     showDeleteDialog();
                 }
                 return false;

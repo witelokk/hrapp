@@ -14,11 +14,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentScrim="?colorSurfaceContainer"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:subtitle="@string/employees">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
+                app:subtitle="@string/employees"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"

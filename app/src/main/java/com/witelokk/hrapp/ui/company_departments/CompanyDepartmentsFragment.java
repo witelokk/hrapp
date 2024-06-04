@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
+import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -20,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.witelokk.hrapp.R;
+import com.witelokk.hrapp.api.model.Company;
 import com.witelokk.hrapp.databinding.FragmentCompanyDepartmentsBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
@@ -56,6 +58,22 @@ public class CompanyDepartmentsFragment extends BaseFragment<CompanyDepartmentsV
 
         binding.toolbar.setTitle(args.getCompany().getName());
         viewModel.setCompanyId(args.getCompany().getId());
+
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MenuHost) requireActivity()).addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == android.R.id.home) {
+                    getNavController().navigateUp();
+                }
+                return false;
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 

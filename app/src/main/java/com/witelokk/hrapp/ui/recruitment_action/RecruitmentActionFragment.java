@@ -62,6 +62,9 @@ public class RecruitmentActionFragment extends BaseFragment<RecruitmentActionFra
         super.onViewCreated(view, savedInstanceState);
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        binding.toolbar.setNavigationIcon(R.drawable.baseline_close_24);
+
         binding.toolbar.setSubtitle(args.getEmployee().getName());
 
         ((MenuHost) requireActivity()).addMenuProvider(new MenuProvider() {
@@ -72,7 +75,9 @@ public class RecruitmentActionFragment extends BaseFragment<RecruitmentActionFra
 
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.menu_save) {
+                if (menuItem.getItemId() == android.R.id.home) {
+                    getNavController().navigateUp();
+                } else if (menuItem.getItemId() == R.id.menu_save) {
                     saveAction();
                 }
                 return false;

@@ -59,6 +59,7 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
         binding.toolbar.setTitle(args.getCompany().getName());
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((MenuHost) requireActivity()).addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
@@ -67,7 +68,9 @@ public class CompanyFragment extends BaseFragment<CompanyViewModel> {
 
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.menu_edit) {
+                if (menuItem.getItemId() == android.R.id.home) {
+                    getNavController().navigateUp();
+                } else if (menuItem.getItemId() == R.id.menu_edit) {
                     Company company = viewModel.getCompany().getValue();
                     CompanyFragmentDirections.ActionCompanyFragmentToAddCompanyFragment action = CompanyFragmentDirections.actionCompanyFragmentToAddCompanyFragment(company.getId(), company.getName(), company.getInn(), company.getKpp());
                     getNavController().navigate(action);

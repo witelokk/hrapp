@@ -65,6 +65,8 @@ public class DismissalActionFragment extends BaseFragment<DismissalFragmentViewM
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
         binding.toolbar.setSubtitle(args.getEmployee().getName());
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        binding.toolbar.setNavigationIcon(R.drawable.baseline_close_24);
 
         ((MenuHost) requireActivity()).addMenuProvider(new MenuProvider() {
             @Override
@@ -78,7 +80,9 @@ public class DismissalActionFragment extends BaseFragment<DismissalFragmentViewM
 
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.menu_create) {
+                if (menuItem.getItemId() == android.R.id.home) {
+                    getNavController().navigateUp();
+                } else if (menuItem.getItemId() == R.id.menu_create) {
                     createAction();
                 } else if (menuItem.getItemId() == R.id.menu_save) {
                     saveAction();
