@@ -10,18 +10,12 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             app:contentScrim="?colorSurfaceContainer"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                tools:title="Department Name" />
-        </com.google.android.material.appbar.MaterialToolbar>
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            tools:title="Department Name" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -44,27 +38,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_employee" />
 
-            <TextView
-                android:id="@+id/textNoEmployees"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_employees_yet"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/recycler_view"
-                app:layout_constraintStart_toStartOf="@+id/recycler_view"
-                app:layout_constraintTop_toTopOf="@+id/recycler_view" />
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/recycler_view"
-                app:layout_constraintEnd_toEndOf="@+id/recycler_view"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -78,5 +51,19 @@
         android:layout_gravity="bottom|end"
         app:srcCompat="@drawable/baseline_add_24" />
 
+    <TextView
+        android:id="@+id/textNoEmployees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_employees_yet"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

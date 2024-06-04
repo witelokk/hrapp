@@ -11,19 +11,13 @@
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             app:contentScrim="?colorSurfaceContainer"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                app:subtitle="@string/employees"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                tools:title="Company Name" />
-        </com.google.android.material.appbar.MaterialToolbar>
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:subtitle="@string/employees"
+            tools:title="Company Name" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
