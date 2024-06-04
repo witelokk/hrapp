@@ -50,7 +50,6 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
             ((ViewGroup.MarginLayoutParams)binding.fabAddEmployee.getLayoutParams()).bottomMargin+=systemBars.bottom;
             binding.recyclerView.setPaddingRelative(0, 0, 0, systemBars.bottom);
             binding.recyclerView.setClipToPadding(false);
-            binding.getRoot().setPadding(0, systemBars.top, 0, 0);
             return insets;
         });
         return binding.getRoot();
@@ -117,7 +116,7 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
 
         dialogBuilder.setTitle(R.string.delete_company);
         dialogBuilder.setPositiveButton(R.string.delete, (dialog, whichButton) -> {
-            // delete company
+            // delete department
         });
         dialogBuilder.setNegativeButton(R.string.cancel, (dialog, whichButton) -> {
         });
