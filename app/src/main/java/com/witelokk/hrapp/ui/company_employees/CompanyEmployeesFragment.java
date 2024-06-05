@@ -20,6 +20,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.databinding.FragmentCompanyEmployeesBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 import com.witelokk.hrapp.ui.EmployeesAdapter;
@@ -88,6 +89,9 @@ public class CompanyEmployeesFragment extends BaseFragment<CompanyEmployeesViewM
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             binding.progressBar.setVisibility(isLoading? View.VISIBLE: View.GONE);
         });
+
+        binding.fabAddEmployee.setOnClickListener(v ->
+                getNavController().navigate(CompanyEmployeesFragmentDirections.actionCompanyEmployeesFragmentToAddEmployeeFragment(args.getCompany().getId())));
 
         viewModel.loadEmployees(args.getCompany().getId());
     }

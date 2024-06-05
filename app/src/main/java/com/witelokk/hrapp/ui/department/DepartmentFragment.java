@@ -104,7 +104,7 @@ public class DepartmentFragment extends BaseFragment<DepartmentViewModel> {
         });
 
         binding.fabAddEmployee.setOnClickListener(v -> {
-            DepartmentFragmentDirections.ActionDepartmentFragmentToAddEmployeeFragment action = DepartmentFragmentDirections.actionDepartmentFragmentToAddEmployeeFragment(args.getDepartment().getId());
+            DepartmentFragmentDirections.ActionDepartmentFragmentToAddEmployeeFragment action = DepartmentFragmentDirections.actionDepartmentFragmentToAddEmployeeFragment(args.getDepartment());
             getNavController().navigate(action);
         });
 

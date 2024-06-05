@@ -99,8 +99,8 @@ public class RecruitmentActionFragment extends BaseFragment<RecruitmentActionFra
         });
 
         viewModel.getDepartments().observe(getViewLifecycleOwner(), departments -> {
-            Object[] companyNames = departments.stream().map(Department::getName).toArray();
-            ArrayAdapter<Object> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, companyNames);
+            Object[] departmentNames = departments.stream().map(Department::getName).toArray();
+            ArrayAdapter<Object> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, departmentNames);
             binding.editTextDepartment.setAdapter(adapter);
         });
 

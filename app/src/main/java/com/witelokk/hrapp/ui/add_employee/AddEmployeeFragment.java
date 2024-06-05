@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.witelokk.hrapp.R;
+import com.witelokk.hrapp.api.model.Department;
 import com.witelokk.hrapp.databinding.FragmentAddEmployeeBinding;
 import com.witelokk.hrapp.ui.BaseFragment;
 
@@ -121,7 +122,13 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-            int departmentId = args.getDepartmentId();
+            int departmentId;
+            if (args.getDepartment() != null) {
+                departmentId = args.getDepartment().getId();
+            } else {
+                int departmentPosition = Arrays.asList(viewModel.getDepartments().getValue().stream().map(Department::getName).toArray()).indexOf(binding.editTextDepartment.getText().toString());
+                departmentId = viewModel.getDepartments().getValue().get(departmentPosition).getId();
+            }
             viewModel.addEmployee(departmentId, name, gender, birthdate, inn, snils, address, passportIssuer, passportNumber, passportDate, recruitmentDate, position, salary);
         });
 
@@ -130,6 +137,19 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
                 getNavController().navigateUp();
             }
         });
+
+        viewModel.getDepartments().observe(getViewLifecycleOwner(), departments -> {
+            Object[] departmentNames = departments.stream().map(Department::getName).toArray();
+            ArrayAdapter<Object> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, departmentNames);
+            binding.editTextDepartment.setAdapter(adapter);
+        });
+
+        if (args.getDepartment() != null) {
+            binding.textInputLayoutDepartment.setVisibility(View.GONE);
+        } else {
+            viewModel.loadDepartments(args.getCompanyId());
+            binding.textInputLayoutDepartment.setVisibility(View.VISIBLE);
+        }
     }
 
     private boolean validateFields() {
@@ -142,10 +162,11 @@ public class AddEmployeeFragment extends BaseFragment<AddEmployeeViewModel> {
         boolean isPassportNumberValid = validateLength(binding.textInputLayoutPassportNumber, 10);
         boolean isPassportIssuerValid = validateNotEmpty(binding.textInputLayoutPassportIssuer);
         boolean isPassportDateValid = validateNotEmpty(binding.textInputLayoutPassportDate);
+        boolean isDepartmentValid = args.getDepartment() != null || validateNotEmpty(binding.textInputLayoutDepartment);
         boolean isRecruitmentDateValid = validateNotEmpty(binding.textInputLayoutRecruitmentDate);
         boolean isPositionValid = validateNotEmpty(binding.textInputLayoutPosition);
         boolean isSalaryValid = validateNotEmpty(binding.textInputLayoutSalary);
 
-        return isNameValid && isGenderValid && isBirthdateValid && isInnValid && isSnilsValid && isAddressValid && isPassportNumberValid && isPassportIssuerValid && isPassportDateValid && isRecruitmentDateValid && isPositionValid && isSalaryValid;
+        return isNameValid && isGenderValid && isBirthdateValid && isInnValid && isSnilsValid && isAddressValid && isPassportNumberValid && isPassportIssuerValid && isPassportDateValid && isRecruitmentDateValid && isPositionValid && isSalaryValid && isDepartmentValid;
     }
 }
