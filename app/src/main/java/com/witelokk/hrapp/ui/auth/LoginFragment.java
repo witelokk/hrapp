@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.witelokk.hrapp.R;
 import com.witelokk.hrapp.databinding.FragmentLoginBinding;
 
@@ -68,12 +69,42 @@ public class LoginFragment extends Fragment {
         });
 
         binding.buttonRegister.setOnClickListener(v -> {
+            boolean isEmailValid = validateEmail();
+            boolean isPasswordValid = validatePassword();
+
+            if (!(isEmailValid && isPasswordValid))
+                return;
+
             String email = binding.editTextEmail.getText().toString();
             String password = binding.editTextPassword.getText().toString();
 
             viewModel.registerAndLogin(email, password);
         });
     }
+
+    private boolean validateEmail() {
+        String email = binding.editTextEmail.getText().toString();
+        boolean isValid = email.matches("[^@]+@[^@]+\\.[^@]+");
+
+        if (!isValid) {
+            binding.textInputLayoutEmail.setError(getString(R.string.invalid_email));
+        } else {
+            binding.textInputLayoutEmail.setErrorEnabled(false);
+        }
+
+        return isValid;
+    }
+
+    protected boolean validatePassword() {
+        boolean isValid = binding.editTextPassword.getText().length() != 0;
+        if (!isValid) {
+            binding.textInputLayoutPassword.setError(getText(R.string.empty_field_error));
+        } else {
+            binding.textInputLayoutPassword.setErrorEnabled(false);
+        }
+        return isValid;
+    }
+
 
     private NavController getNavController() {
         NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
