@@ -15,7 +15,8 @@
             android:layout_height="?attr/actionBarSize"
             app:contentScrim="?colorSurfaceContainer"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            tools:title="Company Name" />
+            tools:title="Company Name"
+            app:subtitle="@string/departments"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
